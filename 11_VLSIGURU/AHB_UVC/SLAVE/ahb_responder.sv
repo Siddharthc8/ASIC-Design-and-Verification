@@ -1,7 +1,10 @@
-class ahb_drv extends uvm_driver#(ahb_tx);
-`uvm_component_utils(ahb_drv)
+class ahb_responder extends uvm_driver#(ahb_tx);
     
     virtual ahb_intf vif;
+    
+    `uvm_component_utils_begin(ahb_responder)
+    `uvm_component_utils_end
+
 
    `NEW_COMP
    
@@ -14,12 +17,7 @@ class ahb_drv extends uvm_driver#(ahb_tx);
     endfunction
 
    task run_phase(uvm_phase phase);
-        forever begin
-            seq_item_port.get_next_item(req);
-            req.print();
-            seq_item_port.item_done();
-        end
-
+    // Pass
    endtask
 
 endclass
