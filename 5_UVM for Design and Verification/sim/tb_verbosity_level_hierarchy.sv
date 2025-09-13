@@ -15,7 +15,6 @@ class driver extends uvm_driver;
   task run_phase(uvm_phase phase);
     `uvm_info("DRV", "Executed Driver Code", UVM_HIGH);
   endtask
-  
 endclass
 
 ///////////////////////////////////////////////////
@@ -30,7 +29,6 @@ class monitor extends uvm_monitor;
   task run_phase(uvm_phase phase);
     `uvm_info("MON", "Executed Monitor Code", UVM_HIGH);
   endtask
-  
 endclass
 
 //////////////////////////////////////////////////
@@ -44,7 +42,7 @@ class env extends uvm_env;
   function new(string name, uvm_component parent);
     super.new(name, parent);
   endfunction
-
+  
   function void build_phase(uvm_phase phase);
     super.build_phase(phase);
     drv = driver::type_id::create("DRV", this);
@@ -55,7 +53,6 @@ class env extends uvm_env;
     // Components run automatically - no need to call manually
     `uvm_info("ENV", "Environment run_phase started", UVM_HIGH);
   endtask
-  
 endclass
 
 ////////////////////
@@ -95,19 +92,8 @@ endclass
 //////////////////////    MAIN MODULE    //////////////////////////////////////  
 
 initial begin
-  // Register the test with UVM and start
-  uvm_config_db#(uvm_verbosity)::set(null, "*", "recording_detail", UVM_HIGH);
+  // Simply start the test - no config_db needed for basic verbosity
   run_test("test");
 end
 
-endmodule
-
-   uvm_top.set_report_verbosity_level(UVM_LOW);
-   e  = new("ENV", null);
-   e.set_report_verbosity_level(UVM_HIGH);  // Sets verbosity level limit of that particular class but NOT to the handlers inside them
-   e.set_report_verbosity_level_hier(UVM_HIGH);  // Sets the verbosity level limit for Env to be HIGH and for all the handlers in them as well
-   e.run(); 
-  end
-  
-  
 endmodule
