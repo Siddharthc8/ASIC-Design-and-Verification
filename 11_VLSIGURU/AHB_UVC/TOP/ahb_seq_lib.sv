@@ -26,10 +26,10 @@ endclass
 
 
 
-class ahb_wr_rd_seq extends uvm_base_seq;
+class ahb_wr_rd_seq extends ahb_base_seq;
 `uvm_object_utils(ahb_wr_rd_seq)
 
-    function new(string name = "ahb_wr_rd_seq);
+    function new(string name = "ahb_wr_rd_seq");
         super.new(name);
     endfunction
 

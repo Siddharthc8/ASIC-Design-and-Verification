@@ -9,8 +9,8 @@ class ahb_env extends uvm_env;
     endfunction
     
     function build_phase(uvm_phase phase);
-        magent = ahb_magent::type_id::create(magent, this);
-        sagent = ahb_sagent::type_id::create(sagent, this);
+        magent = ahb_magent::type_id::create("magent", this);
+        sagent = ahb_sagent::type_id::create("sagent", this);
     endfunction
 
 
