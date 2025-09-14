@@ -2,7 +2,7 @@ class ahb_magent extends uvm_agent;
 `uvm_component_utils(ahb_magent)
     
     ahb_drv drv;
-    ahb_ser sqr;
+    ahb_seq sqr;
     ahb_mon mon;
     ahb_cov cov;
 
