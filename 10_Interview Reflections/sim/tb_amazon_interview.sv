@@ -379,7 +379,7 @@ class driver extends uvm_driver;
         super.new(path, parent);
     endfunction
     
-    semaphore sem;           // Since no objects is created or keys are assigned it should be connected from agent or env with a semaphore with key(s)
+    semaphore sem;           // Since no object is created or keys are assigned it should be connected from agent or env with a semaphore with key(s)
     
     virtual task run_phase(uvm_phase phase);
         
