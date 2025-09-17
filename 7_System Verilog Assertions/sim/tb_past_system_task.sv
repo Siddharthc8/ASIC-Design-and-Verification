@@ -54,6 +54,7 @@ module tb_past_system_task();
  begin
  $display("Value of a:%0d and b:%0d", $sampled(a), $sampled(b));
  $display("Value of $past(a):%0d $past(b):%0d", $past(a), $past(b));
+ $display("Value of $past(a):%0d $past(b):%0d", $past(a,2), $past(b,2));
  $display("-----------------------------------");
  //$info("Value of $past(a) : %0d", $past(b,1,en));
  end 
@@ -68,8 +69,8 @@ module tb_past_system_task();
 // $display("-----------------------------------");
 // //$info("Value of $past(a) : %0d", $past(b,1,en));
 // end 
- 
-  
+
+
 initial begin
 $dumpfile("dump.vcd");
 $dumpvars;

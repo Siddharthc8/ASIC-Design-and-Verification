@@ -78,9 +78,9 @@
      q_int ={q_int[0:2],4,q_int[3]}; // {2,3,0,4,1} insert
      q_int ={q_int[0:1],q_int[3:4]}; // {2,3,4,1} delete
      q_int ={q_int[0:1],5,q_int[2:3]}; // {2,3,5,4,1} insert
-     data =q_int[$];q_int= q_int[0:$-1]; // {2,3,5,4} data = 1 pop_back
-     data =q_int[0];q_int= q_int[1:$]; // {3,5,4} data = 2 pop_front
-     while (q_int.size()> 0) begin // checking queue size
+     data =q_int[$]; /* OR */ q_int= q_int[0:$-1]; // {2,3,5,4} data = 1 pop_back
+     data =q_int[0]; /* OR */ q_int= q_int[1:$]; // {3,5,4} data = 2 pop_front
+     while (q_int.size()> 0) begin // checking queue size 
      data= q_int[$]; // loop executes 3 times pop_back
      q_int= q_int[0:$-1];end
      end

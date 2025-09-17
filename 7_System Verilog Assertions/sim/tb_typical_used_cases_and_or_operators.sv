@@ -65,7 +65,7 @@ module tb_typical_used_cases_and_or_operators();
  ##1 rd[*2];
  endsequence
  
- // Strong qualifier returns a property so can only be used in a property
+ // Strong qualifier returns a property so ---- can only be used in a property
  property wrrd;
  strong (##[0:$] wr && rd) ; 
  endproperty

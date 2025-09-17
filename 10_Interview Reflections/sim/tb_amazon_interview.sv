@@ -36,7 +36,7 @@ module tb_amazon_interview();
 // Q2) Explain I2C working
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Q3) Explain back pressure and clock stretching and checking scenarios
+// Q3) Explain back pressure and clock stretching and test checking scenarios
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Q4) Write an assertion to check -> Within 1:10 cycles grant should get asserted after req is asserted
@@ -49,7 +49,8 @@ module tb_amazon_interview();
     assert property( @(posedge clk) disable iff (rst) $rose(req) |-> $stable(req) throughout ##[1:10] $rose(grant)) else `uvm_error("ASSERT", "Assertion failed check logs"); 
     // This will not work as -> P throughout Q means P must hold during every cycle when Q holds - but Q must be a sequence that describes a time range or event pattern, not a delay operator.
     
-    assert property (@(posedge clk) disable iff (rst) req |-> (req && !grant)[*0:9] ##1 grant) else `uvm_error("ASSERT", "Assertion failed check logs"); 
+    assert property (@(posedge clk) disable iff (rst) req |-> (req && !grant)[*0:9] ##1 (req && grant)) else `uvm_error("ASSERT", "Assertion failed check logs"); 
+    assert property (@(posedge clk) disable iff (rst) req |-> (req && !grant)[*0:9] ##1 (!req)) `uvm_error("ASSERT", "Assertion failed check logs");
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Q5) What is the differnece between UVM_TLM_FIFO and UVM_ANALYSIS_FIFO
