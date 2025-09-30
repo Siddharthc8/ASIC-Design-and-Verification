@@ -84,7 +84,7 @@ class Main;
   
   
   task run();      // This task instantiates the required classes and helps us run the code in one command
-    sem = new(123);      //   Calling a constructor for semaphore should be with a name as each semaphore has its name in the braces
+    sem = new(1);      //   This is the number of keys and not the name
     f = new();
     s = new();
   
