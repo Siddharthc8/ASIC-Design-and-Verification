@@ -13,7 +13,7 @@ module tb_weight();
    
    coverpoint a
    {
-   option.weight = 5;            // w(a) + w(b) / n    =    50%(3) + 75%(3) / 8     
+   option.weight = 5;            // w(a) + w(b) / n    =    50%(5) + 75%(3) / 8     
    }                             // % is the output after analysis
    
    
