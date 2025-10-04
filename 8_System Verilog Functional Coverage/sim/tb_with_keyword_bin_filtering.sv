@@ -65,7 +65,7 @@ module tb_with_keyword_bin_filtering();
   initial begin
     $dumpfile("dump.vcd"); 
     $dumpvars;
-    #200;
+    #400;
     $finish();
   end
   
