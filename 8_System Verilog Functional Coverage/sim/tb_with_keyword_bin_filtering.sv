@@ -54,7 +54,7 @@ module tb_with_keyword_bin_filtering();
     for (i = 0; i <20; i++) begin
       btemp = $urandom();
       x = btemp;                      // Just using btemp(7-bit) and x as a medium to display
-      $display("Value of x : %0d",x);
+      $display("Value of x : %0d",x);  // Since btemp is 8 bits and x is 32 bit integer type rest of the values will be 0
       ci.sample();
       #10;
     end
