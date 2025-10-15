@@ -1,0 +1,154 @@
+GVIM NOTES
+
+~/.vimrc        is the Root configuration file
+
+Two Modes
+
+ESCAPE MODE
+INSERT MODE
+
+In Insert mode you can only type
+
+ctrl + p           - To accept suggestion (just like tab in Notepad++)
+
+
+
+In Escape mode all shortcuts work
+
+ctrl + d               - to show available suggestions
+
+
+// Word commands
+
+w                      - Jump front one word to the beginning of the word
+e                      - Jump front one word to the end of the word
+
+b                      - Jump back: one word to the beginning of the word
+
+
+// Line Commands
+
+0(zero)                - Start of the line
+$                      - End of the line
+
+
+// Copy, Cut and Paste Commands
+
+yy                     - Copy the entire line
+p                      - Paste the line
+
+yl                     - Copy character to the right ( l or h for right and left) 
+10yl                   - Copy 10 characters
+
+yw                     - Copy(Yank) a word
+10yw                   - Copy 10 words
+
+x                      - Cut the character 
+4x                     - Cut 4 characters
+
+dw 			     - Cut the word/space							
+10dw                   - Cut 10 words to the right
+
+dd                     - Cut the line
+10dd                   - Cut 10 lines down from current cursor line
+
+p                      - Paste in the current line
+P(CAPS)                - Paste in the line above
+10p                    - Paste 10 times
+
+v + arrow keys         - Select visually like we do with shift
+x                      - Cut after selection
+
+
+u                      - Undo 
+3u                     - Undo prev 3 actions
+
+Ctrl + R               - Redo
+
+// Split screen commands
+
+ctrl + w + Sht + -     - To maximize current split screen
+ctrl + w + arrow keys  - To jump to right, left, up, down screen
+ctrl + w + =           - To resize all screens equally
+
+spl <file_name.ext>    - To open files in split mode ie multiple files in split screen
+(sp or spl split)
+
+vsp or vspl or vsplit  - To split horizontally
+
+:w                  - Save the progress
+:q                  - Quit the file
+:wq                 - write and quit
+:q!                 - Quit not saving
+:wq!                - Write(Save) and quit forcefully
+:qa                 - Quits all the files
+:wqa                - Write and quit all
+
+// common commands
+
+:syntax on/off      - To turn on/off syntax	
+
+// Set Line Number
+:set number   or    :se nu
+
+// Clear the numbering
+:set nonumber     or   :se nonu 
+
+
+
+gg                 - First line of the file
+G                  - Last line of the file
+:20                - 20th line of the file
+
+H                  - To top line of the screen
+M                  - To middle line of the screen
+L                  - To last line of the screen
+
+
+					
+h                  - Move left by one word
+j                  - Move down by one word  ( J for joules energy goes down)
+k                  - Move up by one word    ( K is gold and its price goes up)
+l                  - Move right by one word
+
+10j                - To move 10 lines down   ( "j" can be replaced with h,j,k,l )
+
+
+
+// Check for matching brackets
+
+%                  - Match the brackets
+
+
+// Search and Replace
+
+/<word>            - To search the word (Case sensitive)
+
+*(keep the cursor on word)  - To search for the current word(Forward direction)
+#(keep the cursor on word)  - To search for the current word(Reverse direction)
+
+n                  - To move to the next occurance after search
+4n                 - To the 4th occurance from cursor
+
+N                  - Prev occurance
+5N                 - 5 occurances before
+
+// To replace all
+
+:%s/<og_word>/<replacement>/g         -  % stands for all 
+
+// To replace in a specific range
+:121:143s/<og_word>/<replacement>/g   - s stands for search and substitute
+
+":" for range
+"," for lines
+
+// Slightly complicated
+:g/<og_word>/s//<replacement>/g       - g stands for globally and s stands for search and substitute
+
+
+
+
+
+
+
