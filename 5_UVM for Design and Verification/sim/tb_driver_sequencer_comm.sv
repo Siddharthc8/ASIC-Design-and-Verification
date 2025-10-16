@@ -164,7 +164,7 @@ class test extends uvm_test;
         
         seq = my_seq::type_id::create("seq");
         seq.start(e.agt.seqr);
-        
+        phase.phase_done.set_drain_time(this, 100);
         #100;
         phase.drop_objection(this);
     endtask
