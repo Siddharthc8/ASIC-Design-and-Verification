@@ -1,6 +1,12 @@
-/* "UVM config_db precedence test: Sets same parameter from both test (value=100) and env (value=200) classes using null context. 
-Demonstrates 'last write wins' - agent retrieves 200 since env's build_phase executes after test's."
-"Tests UVM config_db override: test sets 100, env sets 200, agent gets 200. Shows last-write-wins behavior." */
+/* 
+
+    UVM config_db precedence test: Sets same parameter from both test (value=100) and env (value=200) classes using null context. 
+    
+    Demonstrates 'last write wins' - agent retrieves 200 since env's build_phase executes after test's.
+
+    Tests UVM config_db override: test sets 100, env sets 200, agent gets 200. Shows last-write-wins behavior."
+
+*/
 
 
 
