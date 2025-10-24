@@ -96,10 +96,3 @@ endmodule
     
     UVM_INFO testbench.sv(17) @ 0: uvm_test_top.env.agent [my_agent] Got my_value = 200
 */ 
-// The End
-
-
-
-1
-2
-3
