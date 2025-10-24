@@ -98,4 +98,4 @@ endmodule
 */
 
 
-main
+test
