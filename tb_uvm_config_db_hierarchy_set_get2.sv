@@ -107,5 +107,9 @@ test
 >>>>>>> eacd1d1 (learning)
 =======
 
+<<<<<<< HEAD
 main
 >>>>>>> ba26bd8 (learning)
+=======
+test
+>>>>>>> bc7c57c (learning)
