@@ -59,7 +59,7 @@ transaction trans;
  
    virtual task body();
      
-     lock(m_sequencer);
+     lock(m_sequencer);    // Can also use "this.get_sequencer()"
      
            repeat(3) begin
  
@@ -82,8 +82,41 @@ transaction trans;
 endclass
 ////////////////////////////////////////////////////////////////
  
- 
 class sequence2 extends uvm_sequence#(transaction);
+  `uvm_object_utils(sequence1)
+ 
+transaction trans;
+ 
+  function new(input string inst = "seq1");
+  super.new(inst);
+  endfunction
+ 
+   virtual task body();
+     
+     lock(m_sequencer);    // Can also use "this.get_sequencer()"
+     
+           repeat(3) begin
+ 
+           `uvm_info("SEQ1", "SEQ1 Started" , UVM_NONE); 
+            trans = transaction::type_id::create("trans");
+            start_item(trans);
+            assert(trans.randomize);
+            finish_item(trans);
+           `uvm_info("SEQ1", "SEQ1 Ended" , UVM_NONE); 
+ 
+           end
+     
+     unlock(m_sequencer);
+     
+     
+   endtask
+  
+  
+  
+endclass
+////////////////////////////////////////////////////////
+ 
+class sequence3 extends uvm_sequence#(transaction);
   `uvm_object_utils(sequence2)
  
 transaction trans;
@@ -95,7 +128,7 @@ transaction trans;
   
   virtual task body();
                                                   // Syntax is as you see
-    lock(m_sequencer);                            // Lock here  
+    grab(m_sequencer);                            // Lock here  
     
     repeat(3) begin
     
@@ -108,7 +141,7 @@ transaction trans;
       
     end  
     
-    unlock(m_sequencer);                         // Unlock here 
+    ungrab(m_sequencer);                         // Unlock here 
     
   endtask
   
@@ -216,7 +249,16 @@ env e;
        s2.start(e.a.seqr, null, 200);            // Here SEQ 2 has more priority than SEQ 1 so SEQ 2 is executed first
        s1.start(e.a.seqr, null, 100);  
     join  
-      
+    
+    /*
+      Can also be executes as below,
+
+      // Sequence B gets grab first  
+          seqB.grab(sequencer);
+      // Then Sequence A tries to lock
+          seqA.lock(sequencer);
+
+    */
       
     phase.drop_objection(this);
     endtask
@@ -229,3 +271,5 @@ initial begin
 end
  
 endmodule
+
+

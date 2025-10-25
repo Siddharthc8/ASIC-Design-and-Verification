@@ -555,7 +555,7 @@ endfunction
  
 virtual task run_phase(uvm_phase phase);
 phase.raise_objection(this);
-wrrdb.start(e.a.seqr);
+wrrdb.start(e.a.seqr);   
 #20;
 phase.drop_objection(this);
 endtask

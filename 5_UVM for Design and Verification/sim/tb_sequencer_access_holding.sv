@@ -213,3 +213,13 @@ initial begin
 end
  
 endmodule
+
+
+
+IMPORTANT NOTE:  If there are three sequences let's say seq1 seq2 and seq3 with each 3 transactions.
+
+  The order of execution is like   seq1 1st transaction -> seq2 1st transaction ->  seq3 1st transaction ->
+                                   seq1 2nd transaction -> seq2 2nd transaction ->  seq3 2nd transaction ->
+                                   seq1 3rd transaction -> seq2 3rd transaction ->  seq3 3rd transaction ->
+
+

@@ -223,3 +223,20 @@ endclass
     run_test("test");
   end
 endmodule
+
+
+
+wr extens uvm_seq;
+repeat 10
+
+rd_seq
+repeat10
+
+rd_wr begin
+  
+
+  fork begin
+  rd_seq
+  wr_seq
+  join
+end

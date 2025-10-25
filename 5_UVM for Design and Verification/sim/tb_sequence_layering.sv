@@ -49,7 +49,7 @@ class my_tx extends uvm_sequence_item();
 endclass
 
  
-class base_seq extends uvm_sequence#(my_tx);      // ONLY contains pre and post body to maintain the phase raise nd drop and drain time
+class base_seq extends uvm_sequence#(my_tx);      // ONLY contains pre and post body to maintain the phase raise and drop and drain time
 `uvm_object_utils(my_tx) 
 
     `NEW_OBJ

@@ -25,7 +25,7 @@
 /*
 SEQ_ARB_FIFO (DEF) first in first out ..priority won't work --priority do not effect
 SEQ_ARB_WEIGHTED  : weight is use for priority
-SEQ_ARB_RANDOM  strictly random --priority do not effect
+SEQ_ARB_RANDOM  strictly random --priority does not effect
 SEQ_ARB_STRICT_FIFO    support pri
 SEQ_ARB_STRICT_RANDOM  support pri
 SEQ_ARB_USER
@@ -142,13 +142,13 @@ super.new(inst,c);
 endfunction
  
 driver d;
-uvm_sequencer #(transaction) seq;
+uvm_sequencer #(transaction) seqr;
  
  
 virtual function void build_phase(uvm_phase phase);
 super.build_phase(phase);
 d = driver::type_id::create("DRV",this);
-seq = uvm_sequencer #(transaction)::type_id::create("seq",this);
+seqr = uvm_sequencer #(transaction)::type_id::create("seqr",this);
 endfunction
  
 virtual function void connect_phase(uvm_phase phase);
@@ -199,10 +199,10 @@ env e;
  
     phase.raise_objection(this);
       
-      e.a.seq.set_arbitration(UVM_SEQ_ARB_STRICT_RANDOM);   // Priority has no effect
+      e.a.seqr.set_arbitration(UVM_SEQ_ARB_STRICT_RANDOM);   // Priority has no effect
     fork  
-      repeat(5) s2.start(e.a.seq, null, 100); ///sequencer, parent sequence, priority, call_pre_post 
-      repeat(5) s1.start(e.a.seq, null, 100); //300 threshold 250 ...(0-300)
+      repeat(5) s2.start(e.a.seqr, null, 100); ///sequencer, parent sequence, priority, call_pre_post 
+      repeat(5) s1.start(e.a.seqr, null, 100); //300 threshold 250 ...(0-300)
     join 
       
     phase.drop_objection(this);
