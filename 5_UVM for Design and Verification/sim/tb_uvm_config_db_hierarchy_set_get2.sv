@@ -96,3 +96,13 @@ endmodule
     
     UVM_INFO testbench.sv(17) @ 0: uvm_test_top.env.agent [my_agent] Got my_value = 200
 */
+
+/*
+Combinations for Output
+ 
+Test   =    null                        null      this     this
+
+Env    =    null                        this      null     this
+
+Out    =    latest set(build order)     Test      Env      Test(top_level)
+*/
