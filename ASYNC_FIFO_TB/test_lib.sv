@@ -1,5 +1,7 @@
-class aync_fifo_base_test extends uvm_test;
-`uvm_component_utils(aync_fifo_base_test)
+class async_fifo_base_test extends uvm_test;
+`uvm_component_utils(async_fifo_base_test)
+
+async_fifo_env env;
 
 `NEW_COMP
 

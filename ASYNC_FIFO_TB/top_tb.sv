@@ -3,8 +3,24 @@ import uvm_pkg::*;
 `include "async_fifo_common.sv"
 `include "async_fifo.sv"
 `include "async_fifo_intf.sv"
+
+
+// Write components
+`include "write_tx.sv"
+`include "write_drv.sv"
+`include "write_sqr.sv"
+`include "write_mon.sv"
+`include "write_cov.sv"
 `include "write_agent.sv"
+
+// Read components
+`include "read_tx.sv"
+`include "read_drv.sv"
+`include "read_sqr.sv"
+`include "read_mon.sv"
+`include "read_cov.sv"
 `include "read_agent.sv"
+
 `include "async_fifo_env.sv"
 `include "test_lib.sv"
 
@@ -57,14 +73,15 @@ end
 
 
 initial begin
+    uvm_config_db#(virtual async_fifo_intf)::set(null, "*", "PIF", pif);
     reset_dut();
 end
 
 task reset_dut();
     rst_i = 1;
-    wr_en_i = 0;
-    rd_en_i = 0;
-    wdata_i = 0;
+    pif.wr_en_i = 0;
+    pif.rd_en_i = 0;
+    pif.wdata_i = 0;
     #20;
     rst_i = 0;
 endtask
