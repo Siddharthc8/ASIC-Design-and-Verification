@@ -27,15 +27,15 @@ async_fifo dut(
     .rd_clk_i (rd_clk_i), 
     .rst_i   (rst_i),
 
-    .wr_en_i. (pif.wr_en_i), 
-    .wdata_i. (pif.wdata_i), 
-    .full_o.  (pif.full_o),
+    .wr_en_i (pif.wr_en_i), 
+    .wdata_i (pif.wdata_i), 
+    .full_o  (pif.full_o),
 
-    .rd_en_i. (pif.rd_en_i), 
-    .rdata_o. (pif.rdata_o), 
-    .empty_o. (pif.empty_o),
+    .rd_en_i (pif.rd_en_i), 
+    .rdata_o (pif.rdata_o), 
+    .empty_o (pif.empty_o),
 
-    .error_o. (pif.error_o)
+    .error_o (pif.error_o)
 );
 
 // Write domain clock
