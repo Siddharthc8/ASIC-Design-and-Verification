@@ -1,4 +1,11 @@
-class async_fifo_common extends uvm_component;
+
+`define NEW_COMP \
+function new(string name = "", uvm_component parent); \
+    super.new(name, parent); \
+endfunction
 
 
-endclass
+`define NEW_OBJ \
+function new(string name = ""); \
+    super.new(name); \
+endfunction
