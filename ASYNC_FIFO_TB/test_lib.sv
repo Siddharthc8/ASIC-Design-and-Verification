@@ -55,3 +55,30 @@ class fifo_wr_rd_test extends async_fifo_base_test;
     endtask
 
 endclass
+
+
+class fifo_full_error extends async_fifo_base_test;
+`uvm_component_utils(fifo_wr_rd_test)
+
+    `NEW_COMP
+    
+    virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+        if(!uvm_config_db#(int)::set(this, "*", "COUNT", `DEPTH+1)) 
+            $error(get_type_name(), "COUNT not set");
+    endfunction
+
+    task run_phase(uvm_phase phase);
+        write_seq write_seq_i;
+        read_seq read_seq_i;
+        write_seq_i = write_seq::type_id::create("write_seq_i");
+        // read_seq_i = read_seq::type_id::create("read_seq_i");   // Read not required for this test_case
+
+        phase.raise_objection(this);
+        phase.phase_done.set_drain_time(this, 100);
+            write_seq_i.start(env.write_agent_i.sqr);
+            // read_seq_i.start(env.read_agent_i.sqr);
+        phase.drop_objection(this);
+    endtask
+
+endclass
