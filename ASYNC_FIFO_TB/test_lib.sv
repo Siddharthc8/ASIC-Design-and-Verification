@@ -19,7 +19,7 @@ endclass
 
 
 class fifo_wr_rd_test extends async_fifo_base_test;
-`uvm_component_utils(wr_rd_fifo_test)
+`uvm_component_utils(fifo_wr_rd_test)
 
     `NEW_COMP
 
@@ -42,8 +42,8 @@ class fifo_wr_rd_test extends async_fifo_base_test;
 
         phase.raise_objection(this);
         phase.phase_done.set_drain_time(this, 100);
-            write_seq_i.start(env.write_agent.sqr);
-            read_seq_i.start(env.read_agent.sqr);
+            write_seq_i.start(env.write_agent_i.sqr);
+            read_seq_i.start(env.read_agent_i.sqr);
         phase.drop_objection(this);
     endtask
 

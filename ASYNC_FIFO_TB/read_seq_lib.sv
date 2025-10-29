@@ -1,10 +1,11 @@
 class read_base_seq extends uvm_sequence#(read_tx);
 `uvm_object_utils(read_base_seq)
 
+uvm_phase phase;
+
 `NEW_OBJ
 
 task pre_body();
-    uvm_phase phase;
     phase = get_starting_phase();
     if(phase != null) 
         phase.raise_objection(this);

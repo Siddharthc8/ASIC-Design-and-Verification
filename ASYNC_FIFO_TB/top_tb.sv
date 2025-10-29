@@ -75,7 +75,7 @@ end
 
 
 initial begin
-    run_test("async_fifo_base_test");
+    run_test("fifo_wr_rd_test");
 end
 
 

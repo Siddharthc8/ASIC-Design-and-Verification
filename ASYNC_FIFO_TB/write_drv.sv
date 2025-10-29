@@ -17,6 +17,7 @@ class write_drv extends uvm_driver#(write_tx);
     forever begin
 
         seq_item_port.get_next_item(req);
+        $display("Entry-2 - driver calling drive tx");
         drive_tx(req);
         seq_item_port.item_done();
 
@@ -25,9 +26,11 @@ class write_drv extends uvm_driver#(write_tx);
     endtask
 
     task drive_tx(write_tx tx);
+        $display("Entry-3 - inside drive tx");
         @(posedge vif.wr_clk_i);
         vif.wr_en_i <= 1;          // Defaulting to 1 as it is write seq
         vif.wdata_i <= tx.data;
+        $display("Entry-4 - Done driving");
         @(posedge vif.wr_clk_i);
         vif.wr_en_i <= 0; 
         vif.wdata_i <= 0;

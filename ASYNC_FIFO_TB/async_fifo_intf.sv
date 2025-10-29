@@ -1,5 +1,5 @@
 interface async_fifo_intf(
-    input bit wr_clk_i, rd_clk_i, rst_i
+    input bit rst_i, wr_clk_i, rd_clk_i
 );
 
 bit wr_en_i, rd_en_i;

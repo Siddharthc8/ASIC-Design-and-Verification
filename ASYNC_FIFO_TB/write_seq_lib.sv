@@ -1,10 +1,11 @@
 class write_base_seq extends uvm_sequence#(write_tx);
 `uvm_object_utils(write_base_seq)
 
+uvm_phase phase;
+
 `NEW_OBJ
 
 task pre_body();
-    uvm_phase phase;
     phase = get_starting_phase();
     if(phase != null) 
         phase.raise_objection(this);
@@ -26,6 +27,7 @@ class write_seq extends write_base_seq;
 
 task body();
     repeat(`DEPTH) begin
+        $display("Entry-1 - generate item in write sequence");
         `uvm_do(req);
     end
 endtask
