@@ -28,7 +28,7 @@ Can either be blocking or non-blocking
 //////      "implementation" should be the end point
 PUT Operation, Get Operation and Transport Operation(bi-directional)
 PUT port and GET port
-Transport port is iused between Sequenceer -> Driver   (SEQ_ITEM_PORT)     
+Transport port is used between Sequencer -> Driver   (SEQ_ITEM_PORT)     
 Analysis port is used between Monitor -> Scoreboard    (UVM_ANALYSIS_PORT)      
 ///////      Should create new object just like we did for mailboxes    
 //////       Lastly "put" task method should be mentioned in the consumer component  XXXXXXXXXX  .....    XXXXXXX      

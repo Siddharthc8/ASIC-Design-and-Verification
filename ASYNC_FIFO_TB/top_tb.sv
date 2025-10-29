@@ -7,6 +7,7 @@ import uvm_pkg::*;
 
 // Write components
 `include "write_tx.sv"
+`include "write_seq_lib.sv"
 `include "write_drv.sv"
 `include "write_sqr.sv"
 `include "write_mon.sv"
@@ -15,6 +16,7 @@ import uvm_pkg::*;
 
 // Read components
 `include "read_tx.sv"
+`include "read_seq_lib.sv"
 `include "read_drv.sv"
 `include "read_sqr.sv"
 `include "read_mon.sv"
@@ -27,10 +29,15 @@ import uvm_pkg::*;
 
 module top;
 
-parameter DEPTH = 16, WIDTH = 8;
-parameter NUM_TXS = 100;
-parameter MAX_WR_DELAY = 13;
-parameter MAX_RD_DELAY = 10;
+// The following parameters don't work as it is needed in intf and is compiled before this code below 
+// Define it in the common file and add it before the intf file so all the following files can see it
+/*
+    parameter DEPTH = 16
+    parameter WIDTH = 8;
+    parameter NUM_TXS = 100;
+    parameter MAX_WR_DELAY = 13;
+    parameter MAX_RD_DELAY = 10;
+*/
 
 reg wr_clk_i, rd_clk_i, rst_i;
 

@@ -25,9 +25,12 @@ class write_drv extends uvm_driver#(write_tx);
     endtask
 
     task drive_tx(write_tx tx);
-
-
-
+        @(posedge vif.wr_clk_i);
+        vif.wr_en_i <= 1;          // Defaulting to 1 as it is write seq
+        vif.wdata_i <= tx.data;
+        @(posedge vif.wr_clk_i);
+        vif.wr_en_i <= 0; 
+        vif.wdata_i <= 0;
     endtask
 
 endclass

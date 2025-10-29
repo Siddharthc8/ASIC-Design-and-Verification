@@ -7,7 +7,7 @@ class read_drv extends uvm_driver#(read_tx);
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
-        if(!uvm_config_db#(virtual async_fifo_intf):get(this, "", "PIF", vif)) 
+        if(!uvm_config_db#(virtual async_fifo_intf)::get(this, "", "PIF", vif)) 
             $error(get_type_name(), "Interface not found");
     endfunction
 
@@ -24,10 +24,12 @@ class read_drv extends uvm_driver#(read_tx);
 
     endtask
 
-    task drive_tx(write_tx tx);
-
-        
-
+    task drive_tx(read_tx tx);
+        @(posedge vif.rd_clk_i);
+        vif.rd_en_i <= 1;          // Defaulting to 1 as it is write seq
+        @(posedge vif.rd_clk_i);
+        tx.data = vif.rdata_o; 
+        vif.wdata_i <= 0;
     endtask
 
 endclass

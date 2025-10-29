@@ -11,10 +11,4 @@ class write_tx extends uvm_sequence_item;
 
     `NEW_OBJ
 
-    task body();
-
-
-    endtask
-    
-
 endclass
