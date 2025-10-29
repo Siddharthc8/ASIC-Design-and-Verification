@@ -23,9 +23,15 @@ endclass
 class read_seq extends read_base_seq;
 `uvm_object_utils(read_seq)
 
+int tx_num;
+
 `NEW_OBJ
 
 task body();
+
+    if(!uvm_config_db#(int)::get(this, "", "COUNT", tx_num)) 
+            $error(get_type_name(), "COUNT/tx_num not received");
+
     repeat(`DEPTH) begin
         `uvm_do(req);
     end

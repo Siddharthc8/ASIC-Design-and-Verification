@@ -23,10 +23,16 @@ endclass
 class write_seq extends write_base_seq;
 `uvm_object_utils(write_seq)
 
+int tx_num;
+
 `NEW_OBJ
 
 task body();
-    repeat(`DEPTH) begin
+
+    if(!uvm_config_db#(int)::get(this, "", "COUNT", tx_num)) 
+            $error(get_type_name(), "COUNT/tx_num not received");
+
+    repeat(tx_num) begin
         $display("Entry-1 - generate item in write sequence");
         `uvm_do(req);
     end

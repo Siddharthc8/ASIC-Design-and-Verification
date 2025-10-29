@@ -34,6 +34,13 @@ class fifo_wr_rd_test extends async_fifo_base_test;
         read_seq_i = read_seq::type_id::create("read_seq_i");
     endfunction
 */
+    
+    virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+        if(!uvm_config_db#(int)::set(this, "*", "COUNT", `DEPTH)) 
+            $error(get_type_name(), "COUNT not set");
+    endfunction
+
     task run_phase(uvm_phase phase);
         write_seq write_seq_i;
         read_seq read_seq_i;
