@@ -23,25 +23,19 @@ class fifo_wr_rd_test extends async_fifo_base_test;
 
     `NEW_COMP
 
-// The following commented out method can be used or seqs can be instantiated and created in run_phase
-/*
-    write_seq write_seq_i;
-    read_seq read_seq_i;
 
-    virtual function void build_phase(uvm_phase phase);
-    super.build_phase(phase);
-        write_seq_i = write_seq::type_id::create("write_seq_i");
-        read_seq_i = read_seq::type_id::create("read_seq_i");
-    endfunction
-*/
     
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH);
-            // `uvm_error(get_type_name(), "WRITE_COUNT not set");
-        uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH); 
-            // `uvm_error(get_type_name(), "READ_COUNT not set");
+      
+      uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH);
+      
+      uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH);
+      
+      $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH);
+      
       `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
+      
     endfunction
 
     task run_phase(uvm_phase phase);
@@ -67,16 +61,16 @@ class fifo_write_error_test extends fifo_wr_rd_test;
     
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH+1);    // Count value is DEPTH + 1 to raise full flag
-            // $error(get_type_name(), "WRITE_COUNT not set");
-        uvm_config_db#(int)::set(null, "*", "READ_COUNT", 0);        // We do not need read seq so we can set the count value to be zero
-            // $error(get_type_name(), "READ_COUNT not set");
-        `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
-    endfunction
+      
+      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH+1);    // Count value is DEPTH + 1 to raise full flag
 
-    task run_phase(uvm_phase phase);
-    super.run_phase(phase);
-    endtask
+      uvm_config_db#(int)::set(this, "*", "READ_COUNT", 0);        // We do not need read seq so we can set the count value to be zero
+      
+      $display("Value of wr and rd count %d, %d", `DEPTH+1, 0);  
+      
+      `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
+      
+    endfunction
 
     // No run_phase we shall extend it from wr_rd test
     // To turn off the write/read seq we can set their respective count value to 0 in config_db
@@ -89,16 +83,15 @@ class fifo_read_error_test extends fifo_wr_rd_test;
 
     `NEW_COMP
     
-    virtual function void build_phase(uvm_phase phase);
+  virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH); 
-            // $error(get_type_name(), "WRITE_COUNT not set");
-        uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH+1);  // Count value is DEPTH + 1 to raise empty flag and reading one after empty flag
-            // $error(get_type_name(), "READ_COUNT not set");
+      
+      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
+      
+      uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH+1);  // Count value is DEPTH + 1 to raise empty flag and reading one after empty flag
+      
+      $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH+1);
+      
     endfunction
-
-    task run_phase(uvm_phase phase);
-    super.run_phase(phase);
-    endtask
 
 endclass

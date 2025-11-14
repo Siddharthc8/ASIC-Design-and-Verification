@@ -2,6 +2,7 @@ class read_drv extends uvm_driver#(read_tx);
 `uvm_component_utils(read_drv)
 
     virtual async_fifo_intf vif;
+  static int count = 0;
 
     `NEW_COMP
 
@@ -14,13 +15,12 @@ class read_drv extends uvm_driver#(read_tx);
     task run_phase(uvm_phase phase);
     super.run_phase(phase);
 
-    wait(vif.rst_i == 0);    // Waiting for reset so all reads happen after reset
-
     forever begin
 
         seq_item_port.get_next_item(req);
         drive_tx(req);
         seq_item_port.item_done();
+      $display("Read Driver seq count %0d", ++count);
 
     end
 

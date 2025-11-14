@@ -33,7 +33,7 @@ task body();
             $error(get_type_name(), "WRITE_COUNT/tx_num not received");
 
     repeat(tx_num) begin
-        $display("Entry-1 - generate item in write sequence");
+        // $display("Entry-1 - generate item in write sequence");
         `uvm_do(req);
     end
 endtask
