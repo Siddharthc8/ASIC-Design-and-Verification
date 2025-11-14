@@ -29,7 +29,7 @@ int tx_num;
 
 task body();
 
-    if(!uvm_config_db#(int)::get(this, "", "WRITE_COUNT", tx_num)) 
+    if(!uvm_config_db#(int)::get(null, "", "WRITE_COUNT", tx_num)) 
             $error(get_type_name(), "WRITE_COUNT/tx_num not received");
 
     repeat(tx_num) begin

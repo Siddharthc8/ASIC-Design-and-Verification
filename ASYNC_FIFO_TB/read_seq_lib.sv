@@ -29,7 +29,7 @@ int tx_num;
 
 task body();
 
-    if(!uvm_config_db#(int)::get(this, "", "READ_COUNT", tx_num)) 
+    if(!uvm_config_db#(int)::get(null, "", "READ_COUNT", tx_num)) 
             $error(get_type_name(), "READ_COUNT/tx_num not received");
 
     repeat(`DEPTH) begin

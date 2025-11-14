@@ -37,11 +37,11 @@ class fifo_wr_rd_test extends async_fifo_base_test;
     
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH)
+        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH);
             // `uvm_error(get_type_name(), "WRITE_COUNT not set");
-        uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH) 
+        uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH); 
             // `uvm_error(get_type_name(), "READ_COUNT not set");
-        `uvm_info(get_type_name(), $sformat("Scope %s", this), UVM_MEDIUM);
+      `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
     endfunction
 
     task run_phase(uvm_phase phase);
@@ -67,11 +67,11 @@ class fifo_write_error_test extends fifo_wr_rd_test;
     
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH+1)    // Count value is DEPTH + 1 to raise full flag
+        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH+1);    // Count value is DEPTH + 1 to raise full flag
             // $error(get_type_name(), "WRITE_COUNT not set");
-        uvm_config_db#(int)::set(null, "*", "READ_COUNT", 0)        // We do not need read seq so we can set the count value to be zero
+        uvm_config_db#(int)::set(null, "*", "READ_COUNT", 0);        // We do not need read seq so we can set the count value to be zero
             // $error(get_type_name(), "READ_COUNT not set");
-        `uvm_info(get_type_name(), $sformat("Scope %s", this), UVM_MEDIUM);
+        `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
     endfunction
 
     task run_phase(uvm_phase phase);
@@ -91,10 +91,10 @@ class fifo_read_error_test extends fifo_wr_rd_test;
     
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-        if(!uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH)) 
-            $error(get_type_name(), "WRITE_COUNT not set");
-        if(!uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH+1))  // Count value is DEPTH + 1 to raise empty flag and reading one after empty flag
-            $error(get_type_name(), "READ_COUNT not set");
+        uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH); 
+            // $error(get_type_name(), "WRITE_COUNT not set");
+        uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH+1);  // Count value is DEPTH + 1 to raise empty flag and reading one after empty flag
+            // $error(get_type_name(), "READ_COUNT not set");
     endfunction
 
     task run_phase(uvm_phase phase);
