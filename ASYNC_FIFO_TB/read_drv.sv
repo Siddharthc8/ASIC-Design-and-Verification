@@ -15,6 +15,8 @@ class read_drv extends uvm_driver#(read_tx);
     task run_phase(uvm_phase phase);
     super.run_phase(phase);
 
+    wait(vif.rst_i == 0);         // This will avoid reset and stimuli overlapping
+
     forever begin
 
         seq_item_port.get_next_item(req);
