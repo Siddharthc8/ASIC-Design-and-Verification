@@ -42,7 +42,7 @@ endclass
 
 
 class write_delay_seq extends write_base_seq;
-`uvm_object_utils(write_seq)
+`uvm_object_utils(write_delay_seq)
 
 int tx_num;
 int write_delay;
@@ -55,8 +55,8 @@ task body();
             $error(get_type_name(), "WRITE_COUNT/tx_num not received");
 
     repeat(tx_num) begin
-        // $display("Entry-1 - generate item in write sequence");
-        `uvm_do(req);
+         write_delay = $urandom_range(1,`MAX_WR_DELAY);
+        `uvm_do_with( req, {req.delay == write_delay;} );
     end
 endtask
 

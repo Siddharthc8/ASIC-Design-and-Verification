@@ -35,10 +35,13 @@ class write_drv extends uvm_driver#(write_tx);
         @(posedge vif.wr_clk_i);
         vif.wr_en_i <= 1;          // Defaulting to 1 as it is write seq
         vif.wdata_i <= tx.data;
-//       	$display("Entry-4 - Done driving");
         @(posedge vif.wr_clk_i);
         vif.wr_en_i <= 0; 
         vif.wdata_i <= 0;
+
+        // For inducing delay
+        repeat(tr.delay) @(posedge vif.rd_clk_i);  // waits for delay cycles long
+        
     endtask
 
 endclass

@@ -38,3 +38,24 @@ task body();
 endtask
 
 endclass
+
+class read_delay_seq extends write_base_seq;
+`uvm_object_utils(read_delay_seq)
+
+int tx_num;
+int read_delay;
+
+`NEW_OBJ
+
+task body();
+
+    if(!uvm_config_db#(int)::get(get_sequencer(), "", "WRITE_COUNT", tx_num)) 
+            $error(get_type_name(), "WRITE_COUNT/tx_num not received");
+
+    repeat(tx_num) begin
+         read_delay = $urandom_range(1,`MAX_RD_DELAY);
+        `uvm_do_with( req, {req.delay == write_delay;} );
+    end
+endtask
+
+endclass
