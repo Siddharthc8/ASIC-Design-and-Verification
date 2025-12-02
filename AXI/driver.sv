@@ -82,6 +82,12 @@ endtask
       @(vif.cb);
       vif.cb.awid       <=     0;
       vif.cb.awaddr     <=     0;
+      vif.cb.awlen      <=     0;
+      vif.cb.awsize     <=     0;
+      vif.cb.awburst    <=     0;
+      vif.cb.awlock     <=     0;
+      vif.cb.awcache    <=     0;
+      vif.cb.awprot     <=     0;
       vif.cb.awvalid    <=     0;
       `uvm_info("Driver-write",$sformatf("WRITE ADDRESS BUS completed with addr=%0d",tr.awaddr),UVM_MEDIUM);
    endtask

@@ -15,6 +15,8 @@ class write_drv extends uvm_driver#(write_tx);
     task run_phase(uvm_phase phase);
     super.run_phase(phase);
 
+    wait(vif.rst_i == 0);
+
     forever begin
 
         seq_item_port.get_next_item(req);
