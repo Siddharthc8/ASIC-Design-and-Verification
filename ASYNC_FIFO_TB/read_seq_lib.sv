@@ -29,7 +29,7 @@ int tx_num;
 
 task body();
 
-    if(!uvm_config_db#(int)::get(null, "", "READ_COUNT", tx_num)) 
+    if(!uvm_config_db#(int)::get(get_sequencer(), "", "READ_COUNT", tx_num)) // We use get_sequencer() to set the context as the sequncer it runs rather than just "null"
             $error(get_type_name(), "READ_COUNT/tx_num not received");
 
     repeat(`DEPTH) begin
