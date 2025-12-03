@@ -15,6 +15,14 @@ super.end_of_elaboration_phase(phase);
     uvm_top.print_topology();
 endfunction
 
+// Extra from clause to print coverage in EDA
+function void report_phase(uvm_phase phase);
+    super.report_phase(phase);
+    `uvm_info(get_type_name(), 
+              "\n========================================\n COVERAGE SUMMARY\n========================================", 
+              UVM_LOW)
+endfunction
+
 endclass
 
 

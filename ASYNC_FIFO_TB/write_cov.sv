@@ -25,4 +25,14 @@ class write_cov extends uvm_subscriber#(write_tx);
         wr_cg.sample();
     endfunction
 
+
+    // Extra from clause to print coverage in EDA
+    function void report_phase(uvm_phase phase);
+        super.report_phase(phase);
+        `uvm_info(get_type_name(), 
+                  $sformatf("\n========================================\n WRITE COVERAGE REPORT\n========================================\n Write Coverage = %.2f%%\n========================================", 
+                  wr_cg.get_coverage()), 
+                  UVM_LOW)
+    endfunction
+
 endclass
