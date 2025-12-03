@@ -4,6 +4,7 @@ class write_cov extends uvm_subscriber#(write_tx);
     write_tx tx;
 
     covergroup wr_cg;
+        option.per_instance = 1;
         WR_DELAY_CP : coverpoint tx.delay {
             option.auto_bin_max = 10;
 
