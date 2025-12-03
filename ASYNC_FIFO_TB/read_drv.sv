@@ -36,7 +36,7 @@ class read_drv extends uvm_driver#(read_tx);
         vif.wdata_i <= 0;
 
         // For inducing delay
-        repeat(tr.delay) @(posedge vif.rd_clk_i);  // waits for delay cycles long
+        repeat(tx.delay) @(posedge vif.rd_clk_i);  // waits for delay cycles long
         
     endtask
 

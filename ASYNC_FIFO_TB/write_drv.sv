@@ -20,7 +20,6 @@ class write_drv extends uvm_driver#(write_tx);
     forever begin
 
         seq_item_port.get_next_item(req);
-//         $display("Entry-2 - driver calling drive tx");
         drive_tx(req);
         seq_item_port.item_done();
       
@@ -40,7 +39,7 @@ class write_drv extends uvm_driver#(write_tx);
         vif.wdata_i <= 0;
 
         // For inducing delay
-        repeat(tr.delay) @(posedge vif.rd_clk_i);  // waits for delay cycles long
+        repeat(tx.delay) @(posedge vif.wr_clk_i);  // waits for delay cycles long
         
     endtask
 
