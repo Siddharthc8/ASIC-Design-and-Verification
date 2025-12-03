@@ -54,7 +54,7 @@ task body();
 
     repeat(tx_num) begin
          read_delay = $urandom_range(1,`MAX_RD_DELAY);
-        `uvm_do_with( req, {req.delay == write_delay;} );
+        `uvm_do_with( req, {req.delay == read_delay;} );
     end
 endtask
 
