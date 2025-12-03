@@ -87,7 +87,7 @@ class fifo_read_error_test extends fifo_wr_rd_test;
 endclass
 
 
-class concurrent_write_read_test extends async_fifo_base_test;
+class concurrent_write_read_test extends fifo_wr_rd_test;
 `uvm_component_utils(concurrent_write_read_test)
 
     `NEW_COMP
@@ -95,9 +95,9 @@ class concurrent_write_read_test extends async_fifo_base_test;
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
       
-      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
-      uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH);
-      $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH);
+      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", 100);
+      uvm_config_db#(int)::set(this, "*", "READ_COUNT", 100);
+      $display("Value of wr and rd count %d, %d", 100, 100);
       `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
       
     endfunction
