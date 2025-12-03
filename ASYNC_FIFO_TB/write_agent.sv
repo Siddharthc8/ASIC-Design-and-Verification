@@ -19,7 +19,8 @@ endfunction
 function void connect_phase(uvm_phase phase);
 super.connect_phase(phase);
     drv.seq_item_port.connect(sqr.seq_item_export);
-    mon.ap_port.connect(cov.analysis_export);
+    drv.ap_port.connect(cov.analysis_export);
+    // mon.ap_port.connect(cov.analysis_export);
 endfunction
 
 endclass

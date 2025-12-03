@@ -16,14 +16,16 @@ class write_mon extends uvm_monitor;
     task run_phase(uvm_phase phase);
     super.run_phase(phase);
 
-    forever begin
+        forever begin
 
-        @(posedge vif.wr_clk_i);
-        if(vif.wr_en == 1) begin
-            tx = write_tx::type_id::create("tx");
+            @(posedge vif.wr_clk_i);
+
+            if(vif.wr_en == 1) begin
+                tx = write_tx::type_id::create("tx");
+                tx.data = vif.wdata_i;
+            end
+
         end
-
-    end
 
     endtask
 

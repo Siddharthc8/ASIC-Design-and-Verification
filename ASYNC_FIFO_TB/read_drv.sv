@@ -4,6 +4,8 @@ class read_drv extends uvm_driver#(read_tx);
     virtual async_fifo_intf vif;
   static int count = 0;
 
+  uvm_analysis_port#(read_tx) ap_port;       // We are creating this to send the delay to coverage
+
     `NEW_COMP
 
     function void build_phase(uvm_phase phase);
@@ -20,6 +22,7 @@ class read_drv extends uvm_driver#(read_tx);
     forever begin
 
         seq_item_port.get_next_item(req);
+        ap_port.write(req);
         drive_tx(req);
         seq_item_port.item_done();
       $display("Read Driver seq count %0d", ++count);

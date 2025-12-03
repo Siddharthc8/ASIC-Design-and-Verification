@@ -16,11 +16,16 @@ class read_mon extends uvm_monitor;
     task run_phase(uvm_phase phase);
     super.run_phase(phase);
 
-    // forever begin
+        // forever begin
 
-    //     //
+        //     @(posedge vif.rd_clk_i);
 
-    // end
+        //         if(vif.rd_en == 1) begin
+        //             tx = write_tx::type_id::create("tx");
+        //             tx.data = vif.rdata_o;
+        //         end
+
+        // end
 
     endtask
 

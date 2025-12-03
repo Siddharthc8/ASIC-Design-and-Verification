@@ -6,7 +6,10 @@ class read_cov extends uvm_subscriber#(read_tx);
     covergroup rd_cg;
         option.per_instance = 1;
         RD_DELAY_CP : coverpoint tx.delay {
-            option.auto_bin_max = 10;
+            bins ZERO = {0};
+            bins LOWER = {[1:3]};
+            bins MEDIUM = {[4:6]};
+            bins HIGHER = {[7:`MAX_RD_DELAY]};
 
         }
     endgroup
