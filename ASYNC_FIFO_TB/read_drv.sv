@@ -10,6 +10,7 @@ class read_drv extends uvm_driver#(read_tx);
 
     function void build_phase(uvm_phase phase);
         super.build_phase(phase);
+        ap_port = new("ap_port", this);
         if(!uvm_config_db#(virtual async_fifo_intf)::get(this, "", "PIF", vif)) 
             $error(get_type_name(), "Interface not found");
     endfunction

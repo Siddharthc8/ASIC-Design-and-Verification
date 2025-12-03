@@ -3,7 +3,8 @@ class write_mon extends uvm_monitor;
 
     virtual async_fifo_intf vif;
     uvm_analysis_port#(write_tx) ap_port;
-
+    write_tx tx;
+    
     `NEW_COMP
 
     function void build_phase(uvm_phase phase);
@@ -20,7 +21,7 @@ class write_mon extends uvm_monitor;
 
             @(posedge vif.wr_clk_i);
 
-            if(vif.wr_en == 1) begin
+            if(vif.wr_en_i == 1) begin
                 tx = write_tx::type_id::create("tx");
                 tx.data = vif.wdata_i;
             end
