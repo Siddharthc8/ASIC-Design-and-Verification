@@ -26,7 +26,7 @@ class read_cov extends uvm_subscriber#(read_tx);
     endfunction
 
 
-    // Extra from clause to print coverage in EDA
+    // Extra from claude to print coverage in EDA only
     function void report_phase(uvm_phase phase);
         super.report_phase(phase);
         `uvm_info(get_type_name(), 
