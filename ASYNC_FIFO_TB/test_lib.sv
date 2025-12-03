@@ -28,9 +28,9 @@ class fifo_wr_rd_test extends async_fifo_base_test;
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
       
-      uvm_config_db#(int)::set(null, "*", "WRITE_COUNT", `DEPTH);
+      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
       
-      uvm_config_db#(int)::set(null, "*", "READ_COUNT", `DEPTH);
+      uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH);
       
       $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH);
       
