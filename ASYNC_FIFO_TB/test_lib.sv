@@ -22,18 +22,13 @@ class fifo_wr_rd_test extends async_fifo_base_test;
 `uvm_component_utils(fifo_wr_rd_test)
 
     `NEW_COMP
-
-
-    
+  
     virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
       
       uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
-      
       uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH);
-      
       $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH);
-      
       `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
       
     endfunction
@@ -63,11 +58,8 @@ class fifo_write_error_test extends fifo_wr_rd_test;
     super.build_phase(phase);
       
       uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH+1);    // Count value is DEPTH + 1 to raise full flag
-
       uvm_config_db#(int)::set(this, "*", "READ_COUNT", 0);        // We do not need read seq so we can set the count value to be zero
-      
       $display("Value of wr and rd count %d, %d", `DEPTH+1, 0);  
-      
       `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
       
     endfunction
@@ -87,11 +79,40 @@ class fifo_read_error_test extends fifo_wr_rd_test;
     super.build_phase(phase);
       
       uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
-      
       uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH+1);  // Count value is DEPTH + 1 to raise empty flag and reading one after empty flag
-      
       $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH+1);
       
     endfunction
+
+endclass
+
+
+class concurrent_write_read_test extends async_fifo_base_test;
+`uvm_component_utils(concurrent_write_read_test)
+
+    `NEW_COMP
+  
+    virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+      
+      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
+      uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH);
+      $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH);
+      `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
+      
+    endfunction
+
+    task run_phase(uvm_phase phase);               // Do not use super as we do not want the previous seqeunce to run
+        write_delay_seq write_seq_i;
+        read_delay_seq read_seq_i;
+        write_seq_i = write_delay_seq::type_id::create("write_seq_i");
+        read_seq_i = read_delay_seq::type_id::create("read_seq_i");
+
+        phase.raise_objection(this);
+        phase.phase_done.set_drain_time(this, 100);
+            write_seq_i.start(env.write_agent_i.sqr);
+            read_seq_i.start(env.read_agent_i.sqr);
+        phase.drop_objection(this);
+    endtask
 
 endclass
