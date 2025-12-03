@@ -110,8 +110,10 @@ class concurrent_write_read_test extends async_fifo_base_test;
 
         phase.raise_objection(this);
         phase.phase_done.set_drain_time(this, 100);
+        fork
             write_seq_i.start(env.write_agent_i.sqr);
             read_seq_i.start(env.read_agent_i.sqr);
+        join
         phase.drop_objection(this);
     endtask
 

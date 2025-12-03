@@ -12,7 +12,7 @@ class write_tx extends uvm_sequence_item;
 
     `NEW_OBJ
 
-    contraint write_dealy_c{
+    constraint write_dealy_c{
         soft delay == 0;
     }
 

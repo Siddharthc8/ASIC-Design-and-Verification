@@ -13,7 +13,7 @@ class read_tx extends uvm_sequence_item;
 
     `NEW_OBJ
 
-    contraint read_dealy_c{
+    constraint read_dealy_c{
         soft delay == 0;
     }
 
