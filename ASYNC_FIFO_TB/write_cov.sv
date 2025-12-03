@@ -4,7 +4,10 @@ class write_cov extends uvm_subscriber#(write_tx);
     write_tx tx;
 
     covergroup wr_cg;
-        //
+        WR_DELAY_CP : coverpoint tx.delay {
+            option.autobin_max = 10;
+
+        }
     endgroup
 
     function new(string name, uvm_component parent);

@@ -4,7 +4,10 @@ class read_cov extends uvm_subscriber#(read_tx);
     read_tx tx;
 
     covergroup rd_cg;
-        //
+        RD_DELAY_CP : coverpoint tx.delay {
+            option.autobin_max = 10;
+
+        }
     endgroup
 
     function new(string name, uvm_component parent);
