@@ -39,7 +39,7 @@ endtask
 
 endclass
 
-class read_delay_seq extends write_base_seq;
+class read_delay_seq extends read_base_seq;
 `uvm_object_utils(read_delay_seq)
 
 int tx_num;

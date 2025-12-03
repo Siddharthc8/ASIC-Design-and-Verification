@@ -3,7 +3,7 @@
 `define WIDTH 16
 
 module async_fifo(
-	wr_clk_i, rd_clk_i, rst_i, wr_en_i, wdata_i, rd_en_i, rdata_o, full_o, empty_o, error_o
+	wr_clk_i, rd_clk_i, rst_i, wr_en_i, wdata_i, rd_en_i, rdata_o, full_o, empty_o, wr_error_o, rd_error_o
 );
 	//depth of fifo=16 loc, width of each data=8 bit
     parameter DEPTH = `DEPTH, WIDTH = `WIDTH;
@@ -17,8 +17,8 @@ module async_fifo(
   output reg[WIDTH-1:0] rdata_o;
 	output reg full_o;
 	output reg empty_o;
-	output reg error_o;
-// 	output reg rd_error_o;
+	output reg wr_error_o;
+	output reg rd_error_o;
 	
 	//declaration of internal registers and memories
 	reg[3:0]wr_ptr,rd_ptr;
@@ -40,8 +40,8 @@ module async_fifo(
 			rdata_o <=0;
 			full_o <=0;
 			empty_o <=0;
-			error_o <=0;
-			error_o <=0;
+			wr_error_o <=0;
+			rd_error_o <=0;
 			wr_ptr <=0;
 			rd_ptr <=0;
 			wr_ptr_gray <=0;
@@ -56,13 +56,13 @@ module async_fifo(
 				fifo[i] <=0;
 		end
 		else begin
-			error_o <=0;
+			wr_error_o <=0;
 			//normal operation
 			if(wr_en_i==1)begin
 				//is full flag high?
 				if(full_o==1)begin
 					//error raised
-					error_o <=1;
+					wr_error_o <=1;
 				end
 				else begin
 					//write operation
@@ -84,12 +84,12 @@ module async_fifo(
 
 	always@(posedge rd_clk_i)begin
 		if(rst_i==0)begin
-			error_o<=0;
+			rd_error_o<=0;
 			if(rd_en_i==1)begin
 				//is empty flag high?
 				if(empty_o==1)begin
 					//error raised
-					error_o <=1;
+					rd_error_o <=1;
 				end
 				else begin
 					//read operation

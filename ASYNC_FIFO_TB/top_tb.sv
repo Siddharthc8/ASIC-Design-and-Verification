@@ -58,7 +58,8 @@ async_fifo dut(
     .rdata_o (pif.rdata_o), 
     .empty_o (pif.empty_o),
 
-    .error_o (pif.error_o)
+    .wr_error_o (pif.wr_error_o),
+    .rd_error_o (pif.rd_error_o)
 );
 
 // Write domain clock
