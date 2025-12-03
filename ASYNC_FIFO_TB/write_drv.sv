@@ -39,7 +39,7 @@ class write_drv extends uvm_driver#(write_tx);
         vif.wdata_i <= 0;
 
         // For inducing delay
-        repeat(tx.delay) @(posedge vif.wr_clk_i);  // waits for delay cycles long
+        repeat(tx.delay) @(posedge vif.wr_clk_i);  // Waits for delay cycles long
         
     endtask
 
