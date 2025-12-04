@@ -36,6 +36,7 @@ task run_phase(uvm_phase phase);
 forever begin
     wait ( write_txQ.size() > 0 && read_txQ.size() > 0 );
     write_tx_i = write_txQ.pop_front();
+    read_tx_i = read_txQ.pop_front();
 
     if(write_tx_i.data == read_tx_i.data) begin
         async_fifo_common::num_matches++;
