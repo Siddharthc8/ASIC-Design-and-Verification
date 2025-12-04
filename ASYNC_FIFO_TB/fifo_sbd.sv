@@ -7,8 +7,8 @@
 class fifo_sbd extends uvm_scoreboard;
 `uvm_component_utils(fifo_sbd)
 
-uvm_analysis_imp#(write_tx, fifo_sbd) imp_write;
-uvm_analysis_imp#(read_tx, fifo_sbd) imp_read;
+uvm_analysis_imp_write#(write_tx, fifo_sbd) imp_write;
+uvm_analysis_imp_read#(read_tx, fifo_sbd) imp_read;
 
 write_tx write_txQ[$];
 read_tx read_txQ[$];
@@ -28,7 +28,7 @@ function void write_write(write_tx tx);
 endfunction
 
 
-function void write_write(read_tx tx);
+function void write_read(read_tx tx);
     read_txQ.push_back(tx);
 endfunction
 

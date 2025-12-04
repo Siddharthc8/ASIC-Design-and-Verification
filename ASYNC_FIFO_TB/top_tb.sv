@@ -77,7 +77,7 @@ end
 
 
 initial begin
-    run_test("fifo_wr_rd_test");
+    run_test("concurrent_write_read_test");
 end
 
 
@@ -95,6 +95,11 @@ task reset_dut();
     rst_i = 0;
 endtask
     
+
+initial begin
+    $dumpfile("waves.vcd");
+    $dumpvars(0, top);   // Replace with top module name
+end
 
 
 endmodule

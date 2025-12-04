@@ -3,6 +3,7 @@ class read_mon extends uvm_monitor;
 
     virtual async_fifo_intf vif;
     uvm_analysis_port#(read_tx) ap_port;
+    read_tx tx;
 
     `NEW_COMP
 
@@ -16,16 +17,22 @@ class read_mon extends uvm_monitor;
     task run_phase(uvm_phase phase);
     super.run_phase(phase);
 
-        // forever begin
+        forever begin
 
-        //     @(posedge vif.rd_clk_i);
+            @(posedge vif.rd_clk_i);
 
-        //         if(vif.rd_en == 1) begin
-        //             tx = write_tx::type_id::create("tx");
-        //             tx.data = vif.rdata_o;
-        //         end
+                if(vif.rd_en == 1) begin
+                    tx = read_tx::type_id::create("tx");
+                    fork 
+                        begin
+                            @(posedge vid.rd_clk_i);
+                            tx.data = vif.rdata_o;
+                            ap_port.write(tx);
+                        end
+                    join
+                end
 
-        // end
+        end
 
     endtask
 
