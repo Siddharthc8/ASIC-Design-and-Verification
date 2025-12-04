@@ -1,7 +1,7 @@
 `uvm_analysis_imp_decl(_write)
 `uvm_analysis_imp_decl(_read)
 // 1.Defines a class uvm_analysis_imp_write 
-// 2. Defines a method called write_write 
+// 2.Defines a method called write_write 
 
 
 class fifo_sbd extends uvm_scoreboard;
