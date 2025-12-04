@@ -19,11 +19,11 @@ class write_mon extends uvm_monitor;
 
         forever begin
 
-            @(posedge vif.wr_clk_i);
+            @(posedge vif.write_mon_cb);
 
-            if(vif.wr_en_i == 1) begin
+            if(vif.write_mon_cb.wr_en_i == 1) begin
                 tx = write_tx::type_id::create("tx");
-                tx.data = vif.wdata_i;
+                tx.data = vif.write_mon_cb.wdata_i;
                 ap_port.write(tx);
             end
 
