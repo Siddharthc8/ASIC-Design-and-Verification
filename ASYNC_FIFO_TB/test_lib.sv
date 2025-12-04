@@ -20,10 +20,11 @@ function void report_phase(uvm_phase phase);
     super.report_phase(phase);
 
     if(async_fifo_common::num_mismatches > 0 || async_fifo_common::num_matches == 0) begin
-        `uvm_error("STATUS", TEST FAIL");
+        `uvm_error("STATUS", $sformatf("TEST FAIL, num_matches = %0d, num_mismatches = %0d", async_fifo_common::num_matches, async_fifo_common::num_mismatches) );
     end  
     else begin
-        `uvm_info("STATUS", "TEST PASS" UVM_NONE);
+        // `uvm_info("STATUS", "TEST PASS" UVM_NONE);
+        `uvm_infor("STATUS", $sformatf("TEST FAIL, num_matches = %0d, num_mismatches = %0d", async_fifo_common::num_matches, async_fifo_common::num_mismatches), UVM_NONE );
     end
 
     // Extra from clause to print coverage in EDA
