@@ -19,13 +19,13 @@ class read_mon extends uvm_monitor;
 
         forever begin
 
-            @(posedge vif.read_mon_cb);
+            @(vif.read_mon_cb);
 
-                if(vif.read_mon_cb.rd_en_i == 1) begin
+                if(vif.rd_en_i == 1) begin
                     tx = read_tx::type_id::create("tx");
                     fork 
                         begin
-                            @(posedge vif.read_mon_cb);
+                            @(vif.read_mon_cb);
                             tx.data = vif.read_mon_cb.rdata_o;
                             ap_port.write(tx);
                         end

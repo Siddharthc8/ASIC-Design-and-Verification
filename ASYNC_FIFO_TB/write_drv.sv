@@ -35,15 +35,15 @@ class write_drv extends uvm_driver#(write_tx);
 
     task drive_tx(write_tx tx);
 //         $display("Entry-3 - inside drive tx");
-        @(posedge vif.write_mon_cb);
+        @(vif.write_mon_cb);
         vif.write_mon_cb.wr_en_i <= 1;          // Defaulting to 1 as it is write seq
         vif.write_mon_cb.wdata_i <= tx.data;
-        @(posedge vif.write_mon_cb);
+        @(vif.write_mon_cb);
         vif.write_mon_cb.wr_en_i <= 0; 
         vif.write_mon_cb.wdata_i <= 0;
 
         // For inducing delay
-        repeat(tx.delay) @(posedge vif.write_mon_cb);  // waits for delay cycles long
+        repeat(tx.delay) @(vif.write_mon_cb);  // waits for delay cycles long
         
     endtask
 

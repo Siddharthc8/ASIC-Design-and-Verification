@@ -9,23 +9,23 @@ bit wr_error_o, rd_error_o;
 bit full_o, empty_o;
 
 
-clocking write_mon_cb@(posedge wr_clk_i);
+clocking write_mon_cb @(posedge wr_clk_i);
 
     default input #1;    // To sample the values sent from tb
 
-    input wr_en_i;
-    input wdata_i;
+    output wr_en_i;
+    output wdata_i;
     input wr_error_o;
     input full_o, empty_o;
 
 endclocking
 
 
-clocking read_mon_cb@(posedge rd_clk_i);
+clocking read_mon_cb @(posedge rd_clk_i);
 
     default input #1;    // To sample the values sent from tb
 
-    input rd_en_i;
+    output rd_en_i;
     input rdata_o;
     input rd_error_o;
     input full_o, empty_o;
