@@ -26,6 +26,7 @@ class read_drv extends uvm_driver#(read_tx);
         ap_port.write(req);
         drive_tx(req);
         seq_item_port.item_done();
+        
       $display("Read Driver seq count %0d", ++count);
 
     end
