@@ -21,11 +21,11 @@ class read_mon extends uvm_monitor;
 
             @(posedge vif.rd_clk_i);
 
-                if(vif.rd_en == 1) begin
+                if(vif.rd_en_i == 1) begin
                     tx = read_tx::type_id::create("tx");
                     fork 
                         begin
-                            @(posedge vid.rd_clk_i);
+                            @(posedge vif.rd_clk_i);
                             tx.data = vif.rdata_o;
                             ap_port.write(tx);
                         end
