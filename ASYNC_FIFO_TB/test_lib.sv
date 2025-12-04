@@ -15,12 +15,22 @@ super.end_of_elaboration_phase(phase);
     uvm_top.print_topology();
 endfunction
 
-// Extra from clause to print coverage in EDA
+
 function void report_phase(uvm_phase phase);
     super.report_phase(phase);
+
+    if(async_fifo_common::num_mismatches > 0 || async_fifo_common::num_matches == 0) begin
+        `uvm_error("STATUS", TEST FAIL");
+    end  
+    else begin
+        `uvm_info("STATUS", "TEST PASS" UVM_NONE);
+    end
+
+    // Extra from clause to print coverage in EDA
     `uvm_info(get_type_name(), 
               "\n========================================\n COVERAGE SUMMARY\n========================================", 
               UVM_LOW)
+    
 endfunction
 
 endclass
