@@ -24,7 +24,7 @@ function void report_phase(uvm_phase phase);
     end  
     else begin
         // `uvm_info("STATUS", "TEST PASS" UVM_NONE);
-        `uvm_info("STATUS", $sformatf("TEST FAIL, num_matches = %0d, num_mismatches = %0d", async_fifo_common::num_matches, async_fifo_common::num_mismatches), UVM_NONE );
+        `uvm_info("STATUS", $sformatf("TEST PASS, num_matches = %0d, num_mismatches = %0d", async_fifo_common::num_matches, async_fifo_common::num_mismatches), UVM_NONE );
     end
 
     // Extra from clause to print coverage in EDA
