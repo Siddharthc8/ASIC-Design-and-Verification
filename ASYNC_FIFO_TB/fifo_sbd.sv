@@ -24,13 +24,19 @@ imp_read = new("imp_read", this);
 endfunction
 
 function void write_write(write_tx tx);
-    $display("$t : Storing %h into write_txQ", $time, tx.data);
+  
+  	$display("%0t : WRITING INTO QUEUE Storing %d into write_txQ", $time, tx.data);
     write_txQ.push_back(tx);
+  
 endfunction
 
 function void write_read(read_tx tx);
-    $display("$t : Storing %h into read_txQ", $time, tx.data);
+  
+  if(tx.error !== 1) begin
+  	$display("%0t : STORING QUEUE Storing %d into read_txQ", $time, tx.data);
     read_txQ.push_back(tx);
+  end
+  
 endfunction
 
 

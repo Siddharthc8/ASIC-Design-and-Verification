@@ -34,14 +34,14 @@ class read_drv extends uvm_driver#(read_tx);
     endtask
 
     task drive_tx(read_tx tx);
-        @(vif.read_mon_cb);
-        vif.read_mon_cb.rd_en_i <= 1;          // Defaulting to 1 as it is write seq
-        @(vif.read_mon_cb);
-        tx.data = vif.read_mon_cb.rdata_o; 
-        // vif.read_mon_cb.wdata_i <= 0;
+        @(vif.read_drv_cb);  // Use DRIVER clocking block
+        vif.read_drv_cb.rd_en_i <= 1;    // Defaulting to 1 as it is write seq
+        @(vif.read_drv_cb);
+        tx.data = vif.read_drv_cb.rdata_o; 
+        vif.read_drv_cb.rd_en_i <= 0;  // Disable read enable
 
         // For inducing delay
-        repeat(tx.delay) @(vif.read_mon_cb);  // waits for delay cycles long
+        repeat(tx.delay) @(vif.read_drv_cb);     // waits for delay cycles long
         
     endtask
 

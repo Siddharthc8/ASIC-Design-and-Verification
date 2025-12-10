@@ -19,12 +19,13 @@ class write_mon extends uvm_monitor;
 
         forever begin
 
-            @(vif.write_mon_cb);
+            @(vif.write_mon_cb);  // Use MONITOR clocking block
 
-            if(vif.write_mon_cb.wr_en_i == 1) begin
+            if(vif.write_mon_cb.wr_en_i == 1) begin  // Now reading INPUT
                 tx = write_tx::type_id::create("tx");
-                tx.data = vif.write_mon_cb.wdata_i;
+                tx.data = vif.write_mon_cb.wdata_i;   // Now reading INPUT
                 ap_port.write(tx);
+//               $display("Write Monitor: Captured data = 0x%0d at time %0t", tx.data, $time);
             end
 
         end
