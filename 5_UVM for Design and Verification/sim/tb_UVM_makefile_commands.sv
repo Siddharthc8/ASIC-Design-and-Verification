@@ -37,7 +37,7 @@ tb_phases_build_order.sv -| <log_file_name>.log
 #run -all
 
 
-////////////////////////////    zOne of instructor's        /////////////////////////////////////////
+////////////////////////////    One of instructor's        /////////////////////////////////////////
 
 vlog top.sv                                                       ---> File to elaborate
  
