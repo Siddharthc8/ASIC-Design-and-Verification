@@ -19,11 +19,11 @@ def parse_vcs_log(filename):
             for line in f:
                 # Extract WRITING statements
                 if 'WRITING INTO QUEUE' in line:
-                    match = re.match(r'(\d+)\s*:\s*WRITING INTO QUEUE Storing (\d+) into (write_txQ)', line)
-                    if match:
-                        timestamp = match.group(1)
-                        value = match.group(2)
-                        writing_write.append({
+                    match = re.match(r'(\d+)\s*:\s*WRITING INTO QUEUE Storing (\d+) into (write_txQ)', line)   # When you put in brackets it becomes a group
+                    if match:                                                                                         # \s - Whitespace , \d - Digit , ^ - Start of string, $ - End of string
+                        timestamp = match.group(1)                                                                    # * or ? - Zero or more of previous
+                        value = match.group(2)                                                                        # + - One or more of previous
+                        writing_write.append({                                                                        # . - Any single character (except newline)
                             'timestamp': int(timestamp),
                             'value': int(value),
                             'raw': line.strip()
