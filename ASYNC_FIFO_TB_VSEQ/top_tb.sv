@@ -23,7 +23,9 @@ import uvm_pkg::*;
 `include "read_cov.sv"
 `include "read_agent.sv"
 
-``include "fifo_sbd.sv"
+`include "top_sqr.sv"
+`include "top_seq_lib.sv"
+`include "fifo_sbd.sv"
 `include "async_fifo_env.sv"
 `include "test_lib.sv"
 

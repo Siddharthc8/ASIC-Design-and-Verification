@@ -160,7 +160,7 @@ class top_wr_rd_top_sqr_test extends async_fifo_base_test;
 
         phase.raise_objection(this);
         phase.phase_done.set_drain_time(this, 100);
-            top_seq.start(null);           // "null" because the p_sequencer is already mentioned in the top_sequence
+            top_seq.start(env.top_sqr_i);           // Run the top_seq on the top_sqr
         phase.drop_objection(this);
     endtask
 
