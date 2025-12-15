@@ -167,3 +167,33 @@ class top_wr_rd_top_sqr_test extends async_fifo_base_test;
 
 
 endclass
+
+
+class concurrent_wr_rd_top_sqr_test extends async_fifo_base_test;
+`uvm_component_utils( concurrent_wr_rd_top_sqr_test)
+
+    `NEW_COMP
+
+    virtual function void build_phase(uvm_phase phase);
+    super.build_phase(phase);
+      
+      uvm_config_db#(int)::set(this, "*", "WRITE_COUNT", `DEPTH);
+      uvm_config_db#(int)::set(this, "*", "READ_COUNT", `DEPTH);
+      $display("Value of wr and rd count %d, %d", `DEPTH, `DEPTH);
+      `uvm_info(get_type_name(), $sformatf("Scope %s", get_full_name()), UVM_MEDIUM);
+      
+    endfunction
+
+    task run_phase(uvm_phase phase);
+        concurrent_wr_rd_top_seq top_seq;
+        top_seq = concurrent_wr_rd_top_seq::type_id::create("top_seq");
+
+        phase.raise_objection(this);
+        phase.phase_done.set_drain_time(this, 100);
+            top_seq.start(env.top_sqr_i);           // Run the top_seq on the top_sqr
+        phase.drop_objection(this);
+    endtask
+
+
+
+endclass
