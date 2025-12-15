@@ -8,13 +8,13 @@ uvm_phase phase;
 task pre_body();
     phase = get_starting_phase();
     if(phase != null)
-        phase.raise_objection(this)
+        phase.raise_objection(this);
 endtask
 
 task post_body();
     phase = get_starting_phase();
     if(phase != null)
-        phase.drop_objection(this)
+        phase.drop_objection(this);
 endtask
 
 endclass
