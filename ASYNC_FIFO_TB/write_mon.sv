@@ -24,6 +24,8 @@ class write_mon extends uvm_monitor;
             if(vif.write_mon_cb.wr_en_i == 1) begin  // Now reading INPUT
                 tx = write_tx::type_id::create("tx");
                 tx.data = vif.write_mon_cb.wdata_i;   // Now reading INPUT
+                tx.error = vif.write_mon_cb.wr_error_o;
+                tx.full = vif.write_mon_cb.full_o;
                 ap_port.write(tx);
 //               $display("Write Monitor: Captured data = 0x%0d at time %0t", tx.data, $time);
             end

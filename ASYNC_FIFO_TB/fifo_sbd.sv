@@ -24,15 +24,16 @@ imp_read = new("imp_read", this);
 endfunction
 
 function void write_write(write_tx tx);
-  
+  if(tx.full != 1) begin
   	$display("%0t : WRITING INTO QUEUE Storing %d into write_txQ", $time, tx.data);
     write_txQ.push_back(tx);
+  end
   
 endfunction
 
 function void write_read(read_tx tx);
   
-  if(tx.error !== 1) begin
+  if(tx.empty != 1) begin
   	$display("%0t : STORING QUEUE Storing %d into read_txQ", $time, tx.data);
     read_txQ.push_back(tx);
   end
@@ -51,6 +52,7 @@ forever begin
     end
     else begin
         async_fifo_common::num_mismatches++;
+        `uvm_info(get_type_name(), "----------------->There is a mismatch", UVM_MEDIUM);
     end
 
 end

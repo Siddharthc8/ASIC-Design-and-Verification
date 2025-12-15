@@ -29,6 +29,7 @@ class read_mon extends uvm_monitor;
                 @(vif.read_mon_cb);  // Wait one cycle for data to be valid
                 tx.data = vif.read_mon_cb.rdata_o;   // Now reading INPUT
                 tx.error = vif.read_mon_cb.rd_error_o;
+                tx.empty = vif.read_mon_cb.empty_o;
                 ap_port.write(tx);
 //                 $display("Read Monitor: Captured data = 0x%0h at time %0t", tx.data, $time);
               
