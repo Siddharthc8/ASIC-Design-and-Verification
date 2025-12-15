@@ -119,8 +119,8 @@ if __name__ == "__main__":
     print(os.getcwd())
 
     # Change Directory
-    os.chdir("/Users/Siddharth1/Downloads/result 2")
-    log_file = "sim_output.log"
+    os.chdir("/Users/Siddharth1/Downloads/result")
+    log_file = "sim.log"
     data = parse_vcs_log(log_file)
 
     if data:
