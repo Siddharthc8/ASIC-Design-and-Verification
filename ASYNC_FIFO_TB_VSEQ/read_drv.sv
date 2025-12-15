@@ -1,0 +1,48 @@
+class read_drv extends uvm_driver#(read_tx);
+`uvm_component_utils(read_drv)
+
+    virtual async_fifo_intf vif;
+  static int count = 0;
+
+  uvm_analysis_port#(read_tx) ap_port;       // We are creating this to send the delay to coverage
+
+    `NEW_COMP
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        ap_port = new("ap_port", this);
+        if(!uvm_config_db#(virtual async_fifo_intf)::get(this, "", "PIF", vif)) 
+            $error(get_type_name(), "Interface not found");
+    endfunction
+
+    task run_phase(uvm_phase phase);
+    super.run_phase(phase);
+
+    wait(vif.rst_i == 0);         // This will avoid reset and stimuli overlapping
+
+    forever begin
+
+        seq_item_port.get_next_item(req);
+        ap_port.write(req);
+        drive_tx(req);
+        seq_item_port.item_done();
+
+      $display("Read Driver seq count %0d", ++count);
+
+    end
+
+    endtask
+
+    task drive_tx(read_tx tx);
+        @(vif.read_drv_cb);  // Use DRIVER clocking block
+        vif.read_drv_cb.rd_en_i <= 1;    // Defaulting to 1 as it is write seq
+        @(vif.read_drv_cb);
+        tx.data = vif.read_drv_cb.rdata_o; 
+        vif.read_drv_cb.rd_en_i <= 0;  // Disable read enable
+
+        // For inducing delay
+        repeat(tx.delay) @(vif.read_drv_cb);     // waits for delay cycles long
+        
+    endtask
+
+endclass
