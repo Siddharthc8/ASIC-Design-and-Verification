@@ -9,13 +9,14 @@ class axi_base_seq extends uvm_sequence#(axi_tx);
 
     task pre_body();
         phase = get_starting_phase();
-        if(phase != null);
+      if(phase != null) begin
             phase.raise_objection(this);
             phase.phase_done.set_drain_time(this, 100);
+      end
     endtask
 
     task post_body();
-        if(phase != null);
+        if(phase != null)
             phase.drop_objection(this);
     endtask
 
@@ -42,14 +43,14 @@ class axi_n_wr_n_rd_seq extends axi_base_seq;
         // Read txs just copying from the write to keep them alike
         repeat(count) begin
             if(txQ.size() > 0) begin
-                tx = txQ.push_back(tx);
+                tx = txQ.pop_front();
                 `uvm_do_with(req, {
                         req.wr_rd == 0;                      // 0 = READ
                         req.addr == tx.addr;                 // Same address
                         req.burst_len == tx.burst_len;       // Same burst length
                         req.burst_size == tx.burst_size;     // Same burst size
                         req.burst_type == tx.burst_type;     // Same burst type
-                    })
+                })
             end
         end
 

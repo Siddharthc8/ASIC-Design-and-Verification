@@ -37,7 +37,12 @@ module top;
     end
 
     initial begin
-        run_test("axi_base_test");
+        run_test("axi_wr_rd_test");
+    end
+
+    initial begin
+        $dumpfile("waves.vcd");
+        $dumpvars(0, top);   // Replace with top module name
     end
 
 endmodule
