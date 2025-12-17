@@ -14,7 +14,6 @@ rand bit[1:0]  burst_type;
 rand bit[1:0]  lock;
 rand bit[3:0]  cache;
 rand bit[2:0]  prot;
-rand bit[1:0]  lock;
 
 // Data phase fields
 rand bit[31:0] dataQ[$];
