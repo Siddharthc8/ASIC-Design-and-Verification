@@ -24,7 +24,7 @@ task run; //_phase(uvm_phase phase);
 
 endtask
 
-task drive_tx(tx);
+task drive_tx(axi_tx tx);
 
     `uvm_info(get_type_name(), "Driving tx", UVM_MEDIUM);
 

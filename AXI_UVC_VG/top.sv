@@ -18,10 +18,10 @@ import uvm_pkg::*;
 module top;
 
     reg clk, rst;
-    axi_intf pif(clk, rst);
+    axi_intf vif(clk, rst);
 
     initial begin
-        uvm_config_db#(virtual axi_intf)::set(this, "*", "PIF", pif);
+        uvm_config_db#(virtual axi_intf)::set(null, "*", "PIF", vif);
     end
 
     initial begin 
