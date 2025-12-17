@@ -6,12 +6,12 @@ class axi_drv extends uvm_driver#(axi_tx);
 axi_tx tx;
 virtual axi_intf vif;
 
-function void build; //_phase(uvm_phase phase);
+function void build(); //_phase(uvm_phase phase);
     if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
         `uvm_error(get_type_name(), "Interface not able to be retireved");
 endfunction
 
-task run; //_phase(uvm_phase phase);
+task run(); //_phase(uvm_phase phase);
     // super.run_phase(phase);
 
     forever begin
