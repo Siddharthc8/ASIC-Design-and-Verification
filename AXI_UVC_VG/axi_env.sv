@@ -9,8 +9,8 @@ axi_master_agent m_agent;
 axi_slave_agent s_agent;
 // axi_sbd sbd;
 
-function void build_phase(uvm_phase phase);
-super.build_phase(phase);
+function void build; //_phase(uvm_phase phase);
+// super.build_phase(phase);
     m_agent = axi_master_agent::type_id::create("m_agent", this);
     s_agent = axi_slave_agent::type_id::create("s_agent", this);
     // sbd = axi_sbd::type_id::create("sbd", this);
