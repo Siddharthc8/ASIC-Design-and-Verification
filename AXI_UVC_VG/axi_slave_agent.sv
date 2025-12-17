@@ -15,9 +15,9 @@ function void build(); //_phase(uvm_phase phase);
 endfunction
 
 // There are no connection for agent when we use responder only the slave's monitor connects to the sbd
-function void connect(); //_phase(uvm_phase phase);
+// function void connect(); //_phase(uvm_phase phase);
 // super.build_phase(phase);
     // 
-endfunction
+// endfunction
 
 endclass
