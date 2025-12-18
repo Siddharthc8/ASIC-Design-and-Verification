@@ -36,11 +36,11 @@ class axi_responder extends uvm_component;
                 vif.arready <= 1'b1;
                 rd_tx = new("rd_tx");
                 // Remembering all read addr info
-                rd_tx.rid = vif.rid;
-                rd_tx.addr = vif.araddr;
-                rd_tx.burst_len = vif.burst_len;
-                rd_tx.burst_size = vif.burst_size;
-                rd_tx.burst_type = vif.burst_type;
+                rd_tx.tx_id          =     vif.rid;
+                rd_tx.addr           =     vif.araddr;
+                rd_tx.burst_len      =     vif.burst_len;
+                rd_tx.burst_size     =     vif.burst_size;
+                rd_tx.burst_type     =     vif.burst_type;
 
                 read_data_phase(vif.arid);
             end
