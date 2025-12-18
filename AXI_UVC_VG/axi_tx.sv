@@ -49,6 +49,9 @@ constraint rsvd_c {
 constraint dataQ_c {
     dataQ.size() == burst_len + 1;
     strbQ.size() == burst_len + 1;
+    foreach(strbq[i]) {
+        soft strbq[i] == 4'hF;
+    }
     // RespQ will be updated by the driver
 }
 

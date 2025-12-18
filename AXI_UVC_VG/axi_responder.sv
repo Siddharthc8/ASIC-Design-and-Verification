@@ -3,7 +3,8 @@ class axi_responder extends uvm_component;
 
     `NEW_COMP
 
-    axi_tx tx;
+    axi_tx rd_tx;
+    axi_tx wr_tx;
     virtual axi_intf vif;
 
     function void build(); //_phase(uvm_phase phase);
@@ -26,11 +27,54 @@ class axi_responder extends uvm_component;
 
             if(vif.wvalid == 1'b1) begin
                 vif.wready <= 1'b1;
+                if(vif.wlast == 1) begin   // wlast and wvalid also should be high
+                    write_resp_phase(vif.wid);
+                end
             end
+
+            if(vif.arvalid == 1'b1) begin
+                vif.arready <= 1'b1;
+                rd_tx = new("rd_tx");
+                // Remembering all read addr info
+                rd_tx.rid = vif.rid;
+                rd_tx.addr = vif.araddr;
+                rd_tx.burst_len = vif.burst_len;
+                rd_tx.burst_size = vif.burst_size;
+                rd_tx.burst_type = vif.burst_type;
+
+                read_data_phase(vif.arid);
+            end
+
+
 
         end
 
     endtask
 
+
+    task write_resp_phase(bit [3:0] id);
+        // @(posedge vif.aclk);
+        vif.bid           <=      id;
+        vif.bresp         <=      OKAY;
+        vif.bvalid        <=      1;
+        wait(vif.bready == 1);
+
+        @(posedge vif.aclk);
+
+        vif.bid           <=      0;
+        vif.bresp         <=      0;
+        vif.bvalid        <=      0;
+         
+    endtask
+
+
+    task read_data_phase(axi_tx tx);
+
+        for(int i = 0; i <= rd_tx.burst_len; i++) begin
+            @(posedge vif.aclk);
+            vif.wlast = (i == rd_tx.burst_len) ? 1 : 0;
+        end
+
+    endtask
 
 endclass

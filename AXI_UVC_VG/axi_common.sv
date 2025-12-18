@@ -24,9 +24,9 @@ typedef enum bit[1:0] {
     RSVD_LOCK 
 } lock_t;
 
-// typedef enum bit[1:0] {
-//     OKAY   = 2'b00,
-//     EXOKAY = 2'b01,
-//     SLVERR = 2'b10,
-//     DECERR = 2'b11
-// } resp_type_e;
+typedef enum bit[1:0] {
+    OKAY   = 2'b00,
+    EXOKAY = 2'b01,
+    SLVERR = 2'b10,
+    DECERR = 2'b11
+} resp_type_e;

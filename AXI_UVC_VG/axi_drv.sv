@@ -60,28 +60,64 @@ class axi_drv extends uvm_driver#(axi_tx);
 
     task write_data_phase(axi_tx tx);
 
+        for(int i = 0; i <= tx.burst_len; i++) begin
+            @(posedge vif.aclk);
+            vif.wdata     <=     tx.dataQ.pop_front();
+            vif.wstrb     <=     tx.strbQ.pop_front();
+            vif.wid       <=     tx.tx_id;
+            vif.wvalid    <=     1;
+            vif.wlast     <=     (i == tx.burst_len) ? 1 : 0;
 
+            wait(vif.wready == 1);
+
+        end
+
+        @(posedge vif.aclk);
+         reset_write_data_channel();
 
     endtask
 
     task write_resp_phase(axi_tx tx);
 
+        while(vif.bvalid == 0) begin
+            @(posedge vif.aclk);
+        end
 
+        vif.bready    <=     1;
+
+        @(posedge vif.aclk);
+        
+        vif.bready    <=     0;
 
     endtask
 
     task read_addr_phase(axi_tx tx);
+      
+        @(posedge vif.aclk);
+        vif.arid       <=     tx.tx_id;
+        vif.araddr     <=     tx.addr;
+        vif.arlen      <=     tx.burst_len;
+        vif.arsize     <=     tx.burst_size;
+        vif.arburst    <=     tx.burst_type;
+        vif.arlock     <=     tx.lock;
+        vif.arcache    <=     tx.cache;
+        vif.arprot     <=     tx.prot;
+        vif.arvalid    <=     1'b1;
 
+      	wait(vif.arready == 1'b1);
+        @(posedge vif.aclk);
 
+        reset_read_addr_channel();
 
     endtask
 
     task read_data_phase(axi_tx tx);
 
-        
+		        
 
     endtask
 
+//     -------   RESET TASKS ----------    // 
 
     task reset_write_addr_channel();
 
@@ -96,5 +132,30 @@ class axi_drv extends uvm_driver#(axi_tx);
         vif.awvalid    <=    0; 
 
     endtask
+
+    task reset_write_data_channel();
+
+        vif.wdata     <=     0;
+        vif.wstrb     <=     0;
+        vif.wid       <=     0;
+        vif.wvalid    <=     0;
+        vif.wlast     <=     0;
+
+    endtask
+  
+  	task reset_read_addr_channel();
+
+        vif.arid       <=    0; 
+        vif.araddr     <=    0; 
+        vif.arlen      <=    0; 
+        vif.arsize     <=    0; 
+        vif.arburst    <=    0; 
+        vif.arlock     <=    0; 
+        vif.arcache    <=    0; 
+        vif.arprot     <=    0; 
+        vif.arvalid    <= 	 0; 
+
+    endtask
+       
 
 endclass
