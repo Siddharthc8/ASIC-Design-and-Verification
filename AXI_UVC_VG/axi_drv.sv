@@ -52,6 +52,7 @@ class axi_drv extends uvm_driver#(axi_tx);
         vif.awvalid    <=     1'b1;
 
         wait(vif.awready == 1'b1);
+
         @(posedge vif.aclk);
 
         reset_write_addr_channel();
@@ -73,6 +74,7 @@ class axi_drv extends uvm_driver#(axi_tx);
         end
 
         @(posedge vif.aclk);
+
          reset_write_data_channel();
 
     endtask
@@ -105,6 +107,7 @@ class axi_drv extends uvm_driver#(axi_tx);
         vif.arvalid    <=     1'b1;
 
       	wait(vif.arready == 1'b1);
+
         @(posedge vif.aclk);
 
         reset_read_addr_channel();
@@ -113,7 +116,19 @@ class axi_drv extends uvm_driver#(axi_tx);
 
     task read_data_phase(axi_tx tx);
 
-		        
+		for(int i = 0; i <= tx.burst_len; i++) begin
+
+            while(vif.rvalid == 0) begin
+                @(posedge vif.aclk);
+            end
+
+            vif.rready    <=     1;
+
+            @(posedge vif.aclk);
+            
+            vif.rready    <=     0;
+
+        end
 
     endtask
 

@@ -72,8 +72,27 @@ class axi_responder extends uvm_component;
 
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
             @(posedge vif.aclk);
-            vif.wlast = (i == rd_tx.burst_len) ? 1 : 0;
+            vif.rdata     <=      $urandom;
+            vif.rid       <=      id;
+            vif.rlast     <=      (i == rd_tx.burst_len) ? 1 : 0;
+            vif.rvalid    <=      1;
+
+            wait(vif.rready == 1);
+
         end
+
+        @(posedge vif.aclk);
+        
+        reset_read_data();
+
+    endtask
+
+    task reset_read_data();
+
+        vif.rdata     <=      0;
+        vif.rid       <=      0;
+        vif.rlast     <=      0;
+        vif.rvalid    <=      0;
 
     endtask
 
