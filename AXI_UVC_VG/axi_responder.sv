@@ -36,7 +36,7 @@ class axi_responder extends uvm_component;
                 vif.arready <= 1'b1;
                 rd_tx = new("rd_tx");
                 // Remembering all read addr info
-                rd_tx.tx_id          =     vif.rid;
+                rd_tx.tx_id          =     vif.arid;
                 rd_tx.addr           =     vif.araddr;
                 rd_tx.burst_len      =     vif.burst_len;
                 rd_tx.burst_size     =     vif.burst_size;
@@ -82,7 +82,7 @@ class axi_responder extends uvm_component;
         end
 
         @(posedge vif.aclk);
-        
+
         reset_read_data();
 
     endtask
