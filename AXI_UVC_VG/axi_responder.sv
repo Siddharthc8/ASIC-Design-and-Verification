@@ -38,9 +38,9 @@ class axi_responder extends uvm_component;
                 // Remembering all read addr info
                 rd_tx.tx_id          =     vif.arid;
                 rd_tx.addr           =     vif.araddr;
-                rd_tx.burst_len      =     vif.burst_len;
-                rd_tx.burst_size     =     vif.burst_size;
-                rd_tx.burst_type     =     vif.burst_type;
+                rd_tx.burst_len      =     vif.arlen;
+                rd_tx.burst_size     =     vif.arsize;
+                rd_tx.burst_type     =     vif.arburst;
 
                 read_data_phase(vif.arid);
             end
