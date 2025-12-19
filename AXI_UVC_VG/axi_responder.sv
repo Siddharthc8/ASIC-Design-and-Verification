@@ -6,6 +6,7 @@ class axi_responder extends uvm_component;
     axi_tx rd_tx;
     axi_tx wr_tx;
     virtual axi_intf vif;
+    bit [31:0] mem [*];
 
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
@@ -23,10 +24,21 @@ class axi_responder extends uvm_component;
 
             if(vif.awvalid == 1'b1) begin
                 vif.awready <= 1'b1;
+                wr_tx = new("wr_tx");
+                // Remembering all read addr info
+                wr_tx.tx_id          =     vif.awid;
+                wr_tx.addr           =     vif.awaddr;
+                wr_tx.burst_len      =     vif.awlen;
+                wr_tx.burst_size     =     vif.awsize;
+                wr_tx.burst_type     =     vif.awburst;
+
             end
 
             if(vif.wvalid == 1'b1) begin
                 vif.wready <= 1'b1;
+                `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.data), UVM_MEDIUM);
+                mem[wr_tx.addr] = vif.wdata;
+                wr_tx.addr += 2**wr_tx.burst_size;
                 if(vif.wlast == 1) begin   // wlast and wvalid also should be high
                     write_resp_phase(vif.wid);
                 end
@@ -72,7 +84,8 @@ class axi_responder extends uvm_component;
 
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
             @(posedge vif.aclk);
-            vif.rdata     <=      $urandom;
+            vif.rdata     <=      mem[rd_tx.addr];
+            rd_tx.addr    +=      2**rd_tx.burst_size;
             vif.rid       <=      id;
             vif.rlast     <=      (i == rd_tx.burst_len) ? 1 : 0;
             vif.rvalid    <=      1;
