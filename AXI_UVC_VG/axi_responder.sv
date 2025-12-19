@@ -68,7 +68,7 @@ class axi_responder extends uvm_component;
     endtask
 
 
-    task read_data_phase(axi_tx tx);
+  task read_data_phase(bit [3:0] id);
 
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
             @(posedge vif.aclk);
