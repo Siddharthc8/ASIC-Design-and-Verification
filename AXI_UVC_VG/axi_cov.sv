@@ -75,6 +75,15 @@ function void write(axi_tx t);
 
 endfunction
 
+// Extra from claude to print coverage in EDA only
+    function void report_phase(uvm_phase phase);
+        super.report_phase(phase);
+        `uvm_info(get_type_name(), 
+                  $sformatf("\n========================================\n COVERAGE REPORT\n========================================\n Total Coverage = %.2f%%\n========================================", 
+                  axi_cg.get_coverage()), 
+                  UVM_LOW)
+    endfunction
+
 endclass
 
 
