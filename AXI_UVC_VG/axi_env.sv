@@ -13,13 +13,13 @@ function void build(); //_phase(uvm_phase phase);
 // super.build_phase(phase);
     m_agent = axi_master_agent::type_id::create("m_agent", this);
     s_agent = axi_slave_agent::type_id::create("s_agent", this);
-    // sbd = axi_sbd::type_id::create("sbd", this);
+    sbd = axi_sbd::type_id::create("sbd", this);
 endfunction
 
-// function void connect_phase(uvm_phase phase);
-// super.build_phase(phase);
-//     m_agent.mon.ap_port.connect(sbd.imp_master);
-//     s_agent.mon.ap_port.connect(sbd.imp_slave);
-// endfunction
+function void connect_phase(uvm_phase phase);
+super.build_phase(phase);
+    m_agent.mon.ap_port.connect(sbd.imp_m);
+    s_agent.mon.ap_port.connect(sbd.imp_s);
+endfunction
 
 endclass

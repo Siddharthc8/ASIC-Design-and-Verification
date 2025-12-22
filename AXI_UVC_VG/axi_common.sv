@@ -30,3 +30,12 @@ typedef enum bit[1:0] {
     SLVERR = 2'b10,
     DECERR = 2'b11
 } resp_type_e;
+
+
+
+class axi_common;
+
+static int num_matches;
+static int num_mismatches;
+static int total_tx_count = 50;
+endclass

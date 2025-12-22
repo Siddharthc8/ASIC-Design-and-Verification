@@ -12,6 +12,7 @@ import uvm_pkg::*;
 `include "axi_responder.sv"
 `include "axi_master_agent.sv"
 `include "axi_slave_agent.sv"
+`include "axi_sbd.sv"
 `include "axi_env.sv"
 `include "axi_seq_lib.sv"
 `include "test_lib.sv"

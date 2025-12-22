@@ -16,6 +16,12 @@ function void end_of_elaboration(); //_phase(uvm_phase phase);
     factory.print();   // This is not available in UVM 1.2 but we have made something int eh common file to accomodate this
 endfunction
 
+function void report();
+    if(axi_common::num_matches == axi_common::total_tx_count && axi_common::num_matches == 0) begin
+        `uvm_info("Status", $sformatf("---->$s Test Passed", get_type_name()), UVM_MEDIUM);
+    end
+endfunction
+
 
 endclass
 
@@ -29,7 +35,7 @@ class axi_wr_rd_test extends axi_base_test;
 
     function void build();
         super.build();
-        uvm_config_db#(int)::set(null, "*", "COUNT", 5);
+        uvm_config_db#(int)::set(null, "*", "COUNT", axi_common::total_tx_count);
     endfunction
 
     task run_phase(uvm_phase phase);
