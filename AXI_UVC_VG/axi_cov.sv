@@ -27,25 +27,27 @@ covergroup axi_cg;
         bins FIXED            =   {2'b00};
         bins INCR             =   {2'b01};
         bins WRAP             =   {2'b10};
-        bins RSVD_BURST_TYPE  =   {2'b11};
+        bins RSVD_BURST_TYPE  =   default;  // note this does not count towards coverage
     }
 
     BURST_SIZE_CP : coverpoint tx.burst_size {
-        bins SIZE_1B          =   {3'b000};
-        bins SIZE_2B          =   {3'b001};
+        // bins SIZE_1B          =   {3'b000};
+        // bins SIZE_2B          =   {3'b001};
         bins SIZE_4B          =   {3'b010};
-        bins SIZE_8B          =   {3'b011};
-        bins SIZE_16B         =   {3'b100};
-        bins SIZE_32B         =   {3'b101};  
-        bins SIZE_64B         =   {3'b110};
-        bins SIZE_128B        =   {3'b111};
+        // bins SIZE_8B          =   {3'b011};
+        // bins SIZE_16B         =   {3'b100};
+        // bins SIZE_32B         =   {3'b101};  
+        // bins SIZE_64B         =   {3'b110};
+        // bins SIZE_128B        =   {3'b111};
+        bins IGNORE           =   default;  // (OR)     
+        ignore_bins IGNORED   =   {[0:1], [3:7]};  
     }
 
     LOCK_CP : coverpoint tx.lock {
         bins NORMAL           =   {2'b00};
         bins EXCL             =   {2'b01};
         bins LOCKED           =   {2'b10};
-        bins RSVD_LOCK        =   {2'b11};
+        bins RSVD_LOCK        =   default;  // note this does not count towards coverage
     }
 
     RESP_CP : coverpoint tx.respQ[0] {
