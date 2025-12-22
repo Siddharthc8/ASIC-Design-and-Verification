@@ -40,6 +40,7 @@ module tb_ignore_bins();
     
     coverpoint x{
     
+    // NOTE : Ignore bins can only take value/range and NOT DEFAULT
     bins x_bin[] = {[1:100]};    // Considers all possible values from 1-100
     ignore_bins unused_x = {23,45,67,89,93};    // Ignore all these values from x
     ignore_bins unused_x2  = {[3:7]};         // Excluded a range of values
