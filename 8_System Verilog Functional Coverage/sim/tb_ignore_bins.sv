@@ -43,7 +43,7 @@ module tb_ignore_bins();
     bins x_bin[] = {[1:100]};    // Considers all possible values from 1-100
     ignore_bins unused_x = {23,45,67,89,93};    // Ignore all these values from x
     ignore_bins unused_x2  = {[3:7]};         // Excluded a range of values
-    bins unused_x1 = default;
+    bins unused_x1 = default;                // Cool way to ignore without using ignore bins
     }
   endgroup
   
