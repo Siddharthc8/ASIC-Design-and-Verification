@@ -18,10 +18,10 @@ endfunction
 
 function void report();
     if(axi_common::num_matches == 2*axi_common::total_tx_count && axi_common::num_mismatches == 0) begin
-        `uvm_info("Status", $sformatf("---->%s Test Passed", get_type_name()), UVM_MEDIUM);
+        `uvm_info("Status", $sformatf("==========================================/n '%s' Test Passed /n==========================================/n", get_type_name()), UVM_MEDIUM);
     end
     else
-        `uvm_error("Status", $sformatf("---->%s Test Failed matches = %s", get_type_name()));
+        `uvm_error("Status", $sformatf("==========================================/n '%s' Test Failed matches = %s | mismatches /n==========================================/n", get_type_name(), axi_common::num_matches, axi_common::num_mismatches));
 endfunction
 
 
