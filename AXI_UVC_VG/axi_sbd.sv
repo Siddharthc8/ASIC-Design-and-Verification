@@ -15,7 +15,7 @@ class axi_sbd extends uvm_scoreboard;
 
     `NEW_COMP
 
-    function void build_phase(uvm_phase);
+    function void build();
         imp_m = new("imp_m", this);
         imp_s = new("imp_s", this);
     endfunction
@@ -38,10 +38,10 @@ class axi_sbd extends uvm_scoreboard;
             `uvm_info("TX Compare", "Compare passed", UVM_MEDIUM);
             axi_common::num_matches++;
         end
-        else
+        else begin
             `uvm_error("TX Compare", "Compare failed");
             axi_common::num_mismatches++;
-
+        end        
     end
 
     endtask

@@ -16,8 +16,8 @@ function void build(); //_phase(uvm_phase phase);
     sbd = axi_sbd::type_id::create("sbd", this);
 endfunction
 
-function void connect_phase(uvm_phase phase);
-super.build_phase(phase);
+function void connect(); //(uvm_phase phase);
+//super.connect_phase(phase);
     m_agent.mon.ap_port.connect(sbd.imp_m);
     s_agent.mon.ap_port.connect(sbd.imp_s);
 endfunction
