@@ -7,7 +7,7 @@ class axi_env extends uvm_env;
 
 axi_master_agent m_agent;
 axi_slave_agent s_agent;
-// axi_sbd sbd;
+axi_sbd sbd;
 
 function void build(); //_phase(uvm_phase phase);
 // super.build_phase(phase);

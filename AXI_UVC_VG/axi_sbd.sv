@@ -3,7 +3,7 @@
 `uvm_analysis_imp_decl(_s)
 // Creates user-defined TLM classes and then create write functions with _m and _s
 
-class axi_sbd extend uvm_scoreboard;
+class axi_sbd extends uvm_scoreboard;
 `uvm_component_utils(axi_sbd)
 
     uvm_analysis_imp_m #(axi_tx, axi_sbd) imp_m;
