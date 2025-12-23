@@ -56,6 +56,9 @@ class axi_responder extends uvm_component;
 
                 read_data_phase(vif.arid);
             end
+            else begin
+                vif.arready <= 1'b0;
+            end
 
 
 
