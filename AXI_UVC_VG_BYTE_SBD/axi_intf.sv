@@ -1,4 +1,4 @@
-interface axi_intf(input bit aclk, arst);
+interface axi_intf(input bit aclk, input bit arst);
     //WRITE ADDR BUS
     logic  [3:0]             awid;
     logic  [31:0]            awaddr;
