@@ -17,7 +17,7 @@ import uvm_pkg::*;
 `include "axi_seq_lib.sv"
 `include "test_lib.sv"
 
-module top;
+module top();
 
     reg clk, rst; 
     axi_intf vif(clk, rst);
