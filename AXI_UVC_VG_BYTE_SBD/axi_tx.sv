@@ -55,11 +55,26 @@ constraint dataQ_c {
     // RespQ will be updated by the driver
 }
 
+constraint {
+    (burst_type == WRAP) -> (burst_len inside {1,3,7,15});
+    (burst_type == WRAP) -> (addr % (2**burst_size) == 0);
+}
+
 constraint soft_c {
     soft burst_type == INCR;
     soft burst_size == 2;   // 4 bytes by default 
     soft addr % (2**burst_size) == 0;
 }
+
+function void calculate_wrap_range();
+
+    int tx_size = (burst_len + 1) * (2**burst_size);
+    wrap_lower_addr = addr - (addr % tx_size);
+    wrap_upper_addr = wrap_lower_addr _ tx_size - 1;
+    `uvm_info("AXI_TX WRAP CALC", $sformatf(" addr = %h", addr), UVM_MEDIUM);
+    `uvm_info("AXI_TX WRAP CALC", $sformatf(" wrap_lower_addr = %h | wrap_upper_addr = %h", wrap_lower_addr, wrap_upper_addr), UVM_MEDIUM);
+
+endfunction
 
 function void post_randomize();
     if(wr_rd == 0) begin

@@ -31,6 +31,8 @@ class axi_responder extends uvm_component;
                 wr_tx.burst_len      =     vif.slave_cb.awlen;
                 wr_tx.burst_size     =     vif.slave_cb.awsize;
                 wr_tx.burst_type     =     vif.slave_cb.awburst;
+
+                wr_tx.calculate_wrap_range();
             end
             else begin
                 vif.slave_cb.awready <= 1'b0;
@@ -41,6 +43,9 @@ class axi_responder extends uvm_component;
                 `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.slave_cb.wdata), UVM_MEDIUM);
                 mem[wr_tx.addr] = vif.slave_cb.wdata;          //NOTE :// We are storing byte by byte in sbd
                 wr_tx.addr += 2**wr_tx.burst_size;
+                if(wr_tx.addr >= wr_tx.wrap_upper_addr) begin
+                    wr_tx.addr = wr_tx.wrap_upper_addr;
+                end
                 if(vif.slave_cb.wlast == 1) begin   // wlast and wvalid also should be high
                     write_resp_phase(vif.slave_cb.wid);
                 end
@@ -93,7 +98,11 @@ class axi_responder extends uvm_component;
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
             @(vif.slave_cb);
             vif.slave_cb.rdata     <=      mem[rd_tx.addr];
+            `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
             rd_tx.addr    +=      2**rd_tx.burst_size;
+            if(rd_tx.addr >= rd_tx.wrap_upper_addr) begin
+                rd_tx.addr = rd_tx.wrap_upper_addr;
+            end
             vif.slave_cb.rid       <=      id;
             vif.slave_cb.rlast     <=      (i == rd_tx.burst_len) ? 1 : 0;
             vif.slave_cb.rvalid    <=      1;
