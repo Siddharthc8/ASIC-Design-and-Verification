@@ -28,7 +28,7 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
                     axi_common::num_matches++;
                 end
                 else begin
-                `uvm_error("TX COMPARE", $sformatf("Read data matches with write data, MEM_data = %h, Read_data = %h", {mem[tx.addr+3], mem[tx.addr+2], mem[tx.addr+1], mem[tx.addr]}, tx.dataQ[i]));
+                `uvm_error("TX COMPARE", $sformatf("Read data DOES NOT matches with write data, MEM_data = %h, Read_data = %h", {mem[tx.addr+3], mem[tx.addr+2], mem[tx.addr+1], mem[tx.addr]}, tx.dataQ[i]));
                     axi_common::num_mismatches++;
                 end
 
