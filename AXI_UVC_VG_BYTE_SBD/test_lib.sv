@@ -17,11 +17,15 @@ function void end_of_elaboration(); //_phase(uvm_phase phase);
 endfunction
 
 function void report();
-    if(axi_common::num_matches == 2*axi_common::total_tx_count && axi_common::num_mismatches == 0) begin
-        `uvm_info("Status", $sformatf("==========================================/n '%s' Test Passed /n==========================================/n", get_type_name()), UVM_MEDIUM);
+    if(axi_common::num_matches == axi_common::total_beats && axi_common::num_mismatches == 0) begin
+        $display("==========================================");
+        `uvm_info("Status", $sformatf(" '%s' Test Passed total_beats = %d ", get_type_name(), axi_common::total_beats), UVM_MEDIUM);
+        $display("==========================================");
     end
     else
-        `uvm_error("Status", $sformatf("==========================================/n '%s' Test Failed matches = %s | mismatches /n==========================================/n", get_type_name(), axi_common::num_matches, axi_common::num_mismatches));
+        $display("==========================================");
+        `uvm_error("Status", $sformatf(" '%s' Test Failed | total_beats = %d,  matches = %s | mismatches = %d ", get_type_name(), axi_common::total_beats, axi_common::num_matches, axi_common::num_mismatches));
+        $display("==========================================");
 endfunction
 
 

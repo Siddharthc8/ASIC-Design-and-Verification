@@ -61,4 +61,10 @@ constraint soft_c {
     soft addr % (2**burst_size) == 0;
 }
 
+function void post_randomize();
+    if(wr_rd == 0) begin
+        axi_common::total_beats += burst_len+1;
+    end
+endfunction
+
 endclass
