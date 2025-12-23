@@ -18,14 +18,14 @@ endfunction
 
 function void report();
     if(axi_common::num_matches == axi_common::total_beats && axi_common::num_mismatches == 0) begin
-        $display("==========================================");
+        `uvm_info("Status", $sformatf("=========================================="), UVM_MEDIUM);
         `uvm_info("Status", $sformatf(" '%s' Test Passed total_beats = %d ", get_type_name(), axi_common::total_beats), UVM_MEDIUM);
-        $display("==========================================");
+        `uvm_info("Status", $sformatf("=========================================="), UVM_MEDIUM);
     end
     else begin
-        $display("==========================================");
+        `uvm_info("Status", $sformatf("=========================================="), UVM_MEDIUM);
         `uvm_error("Status", $sformatf(" '%s' Test Failed | total_beats = %d,  matches = %d | mismatches = %d ", get_type_name(), axi_common::total_beats, axi_common::num_matches, axi_common::num_mismatches));
-        $display("==========================================");
+        `uvm_info("Status", $sformatf("=========================================="), UVM_MEDIUM);
     end
 endfunction
 
