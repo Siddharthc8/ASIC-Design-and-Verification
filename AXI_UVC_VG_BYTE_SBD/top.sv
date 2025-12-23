@@ -19,7 +19,7 @@ import uvm_pkg::*;
 
 module top;
 
-    reg clk, rst;
+    reg clk, rst; 
     axi_intf vif(clk, rst);
 
     initial begin
