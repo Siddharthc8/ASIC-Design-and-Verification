@@ -73,4 +73,6 @@ interface axi_intf(input bit aclk, input bit arst);
 
     endclocking
 
+    modport slave_mp (clockking slave_cb);
+
 endinterface

@@ -7,7 +7,7 @@ module axi_salve (
     axi_tx wr_tx;
     bit [31:0] mem [*];
 
-    always @(posedge vif.aclk) begin // {
+    always @(posedge vif.slave_cb) begin // {        // NOTE: Clocking block is non-synthesizable so use modport
 
             if(vif.slave_cb.awvalid == 1'b1) begin // {
                 vif.slave_cb.awready <= 1'b1;

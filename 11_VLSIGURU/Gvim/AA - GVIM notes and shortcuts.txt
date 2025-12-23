@@ -147,8 +147,11 @@ N                  - Prev occurance
 :g/<og_word>/s//<replacement>/g       - g stands for globally and s stands for search and substitute
 
 
+// TO FIND THE DIFFERENCE BETWEEN TWO FILES (In the terminal to open files)
 
-
+gvimdiff axi_slave.sv axi_responder.sv
+                (OR)
+tkdiff axi_slave.sv axi_responder.sv             //-> Provides very detailed differences
 
 
 
