@@ -42,8 +42,13 @@ module top;
     end
 
     initial begin
-        $dumpfile("waves.vcd");
-        $dumpvars(0, top);   // Replace with top module name or leave it empty wihtout brackets
+        $fsdbDumpfile("axi.fsdb");
+        $fsdbDumpvars;   // Replace with top module name or leave it empty wihtout brackets
     end
+
+    // initial begin
+    //   $dumpfile("axi.vcd");
+    //     $dumpvars;   // Replace with top module name or leave it empty wihtout brackets
+    // end
 
 endmodule
