@@ -1,5 +1,5 @@
-`include "uvm_macros.svh"
-// `include "uvm_pkg.sv"   //. For VG
+//`include "uvm_macros.svh"
+`include "uvm_pkg.sv"   //. For VG
 import uvm_pkg::*;
 
 `include "axi_intf.sv"
