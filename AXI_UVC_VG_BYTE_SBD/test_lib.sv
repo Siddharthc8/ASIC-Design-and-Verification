@@ -22,10 +22,11 @@ function void report();
         `uvm_info("Status", $sformatf(" '%s' Test Passed total_beats = %d ", get_type_name(), axi_common::total_beats), UVM_MEDIUM);
         $display("==========================================");
     end
-    else
+    else begin
         $display("==========================================");
         `uvm_error("Status", $sformatf(" '%s' Test Failed | total_beats = %d,  matches = %s | mismatches = %d ", get_type_name(), axi_common::total_beats, axi_common::num_matches, axi_common::num_mismatches));
         $display("==========================================");
+    end
 endfunction
 
 
