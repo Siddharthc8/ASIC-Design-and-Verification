@@ -2,8 +2,8 @@
 // `include "uvm_pkg.sv"   //. For VG
 import uvm_pkg::*;
 
-`include "axi_common.sv"
 `include "axi_intf.sv"
+`include "axi_common.sv"
 `include "axi_tx.sv"
 `include "axi_sqr.sv"
 `include "axi_drv.sv"
