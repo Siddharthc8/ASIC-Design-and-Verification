@@ -18,6 +18,7 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
                     mem[tx.addr+1]   =   tx.dataQ[i][15:8];
                     mem[tx.addr+2]   =   tx.dataQ[i][23:16];
                     mem[tx.addr+3]   =   tx.dataQ[i][31:24];
+                    
                     tx.addr += 4;
             end
         end

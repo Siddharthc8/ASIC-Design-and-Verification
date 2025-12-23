@@ -46,7 +46,31 @@ interface axi_intf(input bit aclk, input bit arst);
     logic  [1:0]             rresp;
 
 
-    // Clocking Block
+    // Clocking Block for RESPONDER
+    clocking slave_cb @(posedge aclk);
+
+    default input #0 output #1;
+
+    //--> Write Address Channel:-
+    input  awid, awaddr, awlen, awsize, awburst, awlock, awcache, awprot, awvalid;
+    output awready;
+
+    //--> Write Data Channel:-
+    input  wid, wdata, wstrb, wlast, wvalid;
+    output wready;
+
+    //--> Write Respose Channel:-
+    output  bid, bresp, bvalid;
+    input bready;
+
+    //--> Read Address Channel:-
+    input  arid, araddr, arlen, arsize, arburst, arlock, arcache, arprot, arvalid;
+    output arready;
     
+    //--> Read Data Channel:-
+    output  rid, rdata, rresp, rlast, rvalid;
+    input rready;
+
+    endclocking
 
 endinterface
