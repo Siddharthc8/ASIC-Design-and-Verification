@@ -56,4 +56,4 @@ class axi_n_wr_n_rd_seq extends axi_base_seq;
 
     endtask
 
-endclass
+endclass ///

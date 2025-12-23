@@ -67,4 +67,4 @@ function void post_randomize();
     end
 endfunction
 
-endclass
+endclass //

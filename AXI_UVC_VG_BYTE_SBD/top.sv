@@ -43,7 +43,7 @@ module top;
 
     initial begin
         $dumpfile("waves.vcd");
-        $dumpvars(0, top);   // Replace with top module name
+        $dumpvars(0, top);   // Replace with top module name or leave it empty wihtout brackets
     end
 
 endmodule

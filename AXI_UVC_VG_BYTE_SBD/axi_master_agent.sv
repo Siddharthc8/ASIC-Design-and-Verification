@@ -25,4 +25,4 @@ function void connect(); //_phase(uvm_phase phase);
     mon.ap_port.connect(cov.analysis_export);
 endfunction
 
-endclass
+endclass //

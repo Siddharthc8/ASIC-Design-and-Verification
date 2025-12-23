@@ -39,4 +39,4 @@ static int num_matches;
 static int num_mismatches;
 static int total_tx_count = 50;
 static int total_beats;
-endclass
+endclass //
