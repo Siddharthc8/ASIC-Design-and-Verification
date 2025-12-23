@@ -33,6 +33,9 @@ class axi_responder extends uvm_component;
                 wr_tx.burst_type     =     vif.awburst;
 
             end
+            else begin
+                vif.awready <= 1'b0;
+            end
 
             if(vif.wvalid == 1'b1) begin
                 vif.wready <= 1'b1;
@@ -42,6 +45,9 @@ class axi_responder extends uvm_component;
                 if(vif.wlast == 1) begin   // wlast and wvalid also should be high
                     write_resp_phase(vif.wid);
                 end
+            end
+            else begin
+                vif.wready <= 1'b0;
             end
 
             if(vif.arvalid == 1'b1) begin
