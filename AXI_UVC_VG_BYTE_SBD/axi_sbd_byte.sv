@@ -14,7 +14,7 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
 
         if(tx.wr_rd == 1) begin                         // Only writing
             foreach(tx.dataQ[i]) begin
-                    mem[tx.addr] = tx.dataQ[i][7:0];
+                    mem[tx.addr]   = tx.dataQ[i][7:0];
                     mem[tx.addr+1] = tx.dataQ[i][15:8];
                     mem[tx.addr+2] = tx.dataQ[i][23:16];
                     mem[tx.addr+3] = tx.dataQ[i][31:24];
