@@ -36,7 +36,7 @@ class axi_responder extends uvm_component;
 
             if(vif.wvalid == 1'b1) begin
                 vif.wready <= 1'b1;
-                `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.data), UVM_MEDIUM);
+                `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.wdata), UVM_MEDIUM);
                 mem[wr_tx.addr] = vif.wdata;
                 wr_tx.addr += 2**wr_tx.burst_size;
                 if(vif.wlast == 1) begin   // wlast and wvalid also should be high
