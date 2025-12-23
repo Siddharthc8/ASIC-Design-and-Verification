@@ -24,7 +24,7 @@ function void report();
     end
     else begin
         $display("==========================================");
-        `uvm_error("Status", $sformatf(" '%s' Test Failed | total_beats = %d,  matches = %s | mismatches = %d ", get_type_name(), axi_common::total_beats, axi_common::num_matches, axi_common::num_mismatches));
+        `uvm_error("Status", $sformatf(" '%s' Test Failed | total_beats = %d,  matches = %d | mismatches = %d ", get_type_name(), axi_common::total_beats, axi_common::num_matches, axi_common::num_mismatches));
         $display("==========================================");
     end
 endfunction
