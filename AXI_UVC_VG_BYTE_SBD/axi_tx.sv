@@ -10,7 +10,7 @@ rand bit[3:0]  tx_id;    // For resuability
 rand bit[31:0] addr;       // Not set a awaddr becuase we want to reuse for read and write
 rand bit[3:0]  burst_len; 
 rand bit[2:0]  burst_size;
-rand bit[1:0]  burst_type;
+rand burst_type_t  burst_type;
 rand bit[1:0]  lock;
 rand bit[3:0]  cache;
 rand bit[2:0]  prot;
@@ -31,7 +31,7 @@ bit [31:0] wrap_upper_addr;
 `uvm_field_int(addr, UVM_ALL_ON);
 `uvm_field_int(burst_len, UVM_ALL_ON);
 `uvm_field_int(burst_size, UVM_ALL_ON);
-`uvm_field_int(burst_type, UVM_ALL_ON);
+`uvm_field_enum(burst_type_t, burst_type, UVM_ALL_ON);
 `uvm_field_int(lock, UVM_ALL_ON);
 `uvm_field_int(cache, UVM_ALL_ON);
 `uvm_field_int(prot, UVM_ALL_ON);
@@ -64,7 +64,7 @@ constraint wrap_c {
 }
 
 constraint soft_c {
-    soft burst_type == INCR;
+    // soft burst_type == INCR;
     soft burst_size == 2;   // 4 bytes by default 
     soft addr % (2**burst_size) == 0;
 }
