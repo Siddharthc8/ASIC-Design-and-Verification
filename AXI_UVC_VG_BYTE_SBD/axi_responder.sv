@@ -10,7 +10,7 @@ class axi_responder extends uvm_component;
 
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
-            `uvm_error(get_type_name(), "Interface not able to be retireved");
+            `uvm_error(get_type_name(), "Interface unable to be retrieved");
     endfunction
 
     task run(); //_phase(uvm_phase phase);
@@ -43,9 +43,9 @@ class axi_responder extends uvm_component;
                 `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.slave_cb.wdata), UVM_MEDIUM);
                 mem[wr_tx.addr] = vif.slave_cb.wdata;          //NOTE :// We are storing byte by byte in sbd
                 wr_tx.addr += 2**wr_tx.burst_size;
-                if(wr_tx.addr >= wr_tx.wrap_upper_addr) begin
-                    wr_tx.addr = wr_tx.wrap_upper_addr;
-                end
+
+                wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
+
                 if(vif.slave_cb.wlast == 1) begin   // wlast and wvalid also should be high
                     write_resp_phase(vif.slave_cb.wid);
                 end
@@ -63,6 +63,8 @@ class axi_responder extends uvm_component;
                 rd_tx.burst_len      =     vif.slave_cb.arlen;
                 rd_tx.burst_size     =     vif.slave_cb.arsize;
                 rd_tx.burst_type     =     vif.slave_cb.arburst;
+                
+                rd_tx.calculate_wrap_range();
 
                 read_data_phase(vif.slave_cb.arid);
             end
@@ -100,9 +102,9 @@ class axi_responder extends uvm_component;
             vif.slave_cb.rdata     <=      mem[rd_tx.addr];
             `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
             rd_tx.addr    +=      2**rd_tx.burst_size;
-            if(rd_tx.addr >= rd_tx.wrap_upper_addr) begin
-                rd_tx.addr = rd_tx.wrap_upper_addr;
-            end
+
+            rd_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
+
             vif.slave_cb.rid       <=      id;
             vif.slave_cb.rlast     <=      (i == rd_tx.burst_len) ? 1 : 0;
             vif.slave_cb.rvalid    <=      1;

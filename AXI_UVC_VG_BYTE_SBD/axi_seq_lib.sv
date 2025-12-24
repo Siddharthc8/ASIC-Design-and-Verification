@@ -35,7 +35,7 @@ class axi_n_wr_n_rd_seq extends axi_base_seq;
         uvm_config_db#(int)::get(null, "", "COUNT", count);
         // Write txs
         repeat(count) begin
-            `uvm_do_with(req, {req.wr_rd == 1;})
+            `uvm_do_with(req, {req.wr_rd == 1; req.burst_type == axi_common::burst_type;})
             tx = new req;
             txQ.push_back(tx);
         end

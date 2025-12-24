@@ -39,4 +39,7 @@ static int num_matches;
 static int num_mismatches;
 static int total_tx_count = 50;
 static int total_beats;
+static burst_type_t burst_type = WRAP;
+// static bit [3:0] burst_len = 4;
+
 endclass //

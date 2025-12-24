@@ -20,6 +20,9 @@ rand bit[31:0] dataQ[$];
 rand bit[3:0]  strbQ[$];
 rand bit[1:0]  respQ[$];
 
+// Transaction local signals
+bit [31:0] wrap_lower_addr;
+bit [31:0] wrap_upper_addr;
 
 `uvm_object_utils_begin(axi_tx)
 
@@ -55,7 +58,7 @@ constraint dataQ_c {
     // RespQ will be updated by the driver
 }
 
-constraint {
+constraint wrap_c {
     (burst_type == WRAP) -> (burst_len inside {1,3,7,15});
     (burst_type == WRAP) -> (addr % (2**burst_size) == 0);
 }
@@ -68,12 +71,25 @@ constraint soft_c {
 
 function void calculate_wrap_range();
 
-    int tx_size = (burst_len + 1) * (2**burst_size);
-    wrap_lower_addr = addr - (addr % tx_size);
-    wrap_upper_addr = wrap_lower_addr _ tx_size - 1;
-    `uvm_info("AXI_TX WRAP CALC", $sformatf(" addr = %h", addr), UVM_MEDIUM);
-    `uvm_info("AXI_TX WRAP CALC", $sformatf(" wrap_lower_addr = %h | wrap_upper_addr = %h", wrap_lower_addr, wrap_upper_addr), UVM_MEDIUM);
+    bit [31:0] tx_size;
+    bit [31:0] offset;
 
+    tx_size = (burst_len + 1) * (2**burst_size);
+    offset = (addr % tx_size);
+
+    wrap_lower_addr = addr - offset;
+    wrap_upper_addr = wrap_lower_addr + tx_size - 1;
+
+    `uvm_info("AXI_TX WRAP CALC", $sformatf(" addr = %h", addr), UVM_MEDIUM);
+    `uvm_info("AXI_TX WRAP CALC", $sformatf(" wrap_lower_addr = %h ", wrap_lower_addr), UVM_MEDIUM);
+    `uvm_info("AXI_TX WRAP CALC", $sformatf(" wrap_upper_addr = %h ", wrap_upper_addr), UVM_MEDIUM);
+
+endfunction
+
+function void check_wrap();
+    if(addr >= wrap_upper_addr) begin
+        addr = wrap_lower_addr;
+    end
 endfunction
 
 function void post_randomize();
