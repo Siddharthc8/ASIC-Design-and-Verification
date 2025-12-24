@@ -5,8 +5,10 @@ class axi_responder extends uvm_component;
 
     axi_tx rd_tx;
     axi_tx wr_tx;
-    virtual axi_intf vif;
-    bit [31:0] mem [*];
+    virtual axi_intf vif; 
+    bit [31:0] rd_data;
+    bit [31:0] mem [*];        // For wrap and INCR
+    bit [31:0] fifo [$];      // For Fixed
 
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
@@ -41,11 +43,19 @@ class axi_responder extends uvm_component;
             if(vif.slave_cb.wvalid == 1'b1) begin
                 vif.slave_cb.wready <= 1'b1;
                 `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.slave_cb.wdata), UVM_MEDIUM);
-                mem[wr_tx.addr] = vif.slave_cb.wdata;          //NOTE :// We are storing byte by byte in sbd
-                wr_tx.addr += 2**wr_tx.burst_size;
-
-                wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
-
+                
+                if( wr_tx.burst_type inside {INCR, WRAP} ) begin
+                    mem[wr_tx.addr] = vif.slave_cb.wdata;          
+                    wr_tx.addr += 2**wr_tx.burst_size;
+                    wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
+                end
+                else if( wr_tx.burst_type == FIXED ) begin
+                    fifo.push_back( vif.slave_cb.wdata ); 
+                end
+                else begin
+                    `uvm_error("WRITE RSVD_BURST_TYPE_ERROR", $sformatf("WRITE BURST_TYPE is neither INCR, WRAP, or FIXED"));
+                end
+            
                 if(vif.slave_cb.wlast == 1) begin   // wlast and wvalid also should be high
                     write_resp_phase(vif.slave_cb.wid);
                 end
@@ -71,9 +81,6 @@ class axi_responder extends uvm_component;
             else begin
                 vif.slave_cb.arready <= 1'b0;
             end
-
-
-
         end
 
     endtask
@@ -99,11 +106,21 @@ class axi_responder extends uvm_component;
 
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
             @(vif.slave_cb);
-            vif.slave_cb.rdata     <=      mem[rd_tx.addr];
-            `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
-            rd_tx.addr    +=      2**rd_tx.burst_size;
-
-            rd_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
+            
+            if( rd_tx.burst_type inside {INCR, WRAP} ) begin
+                `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
+                vif.slave_cb.rdata     <=      mem[rd_tx.addr];
+                rd_tx.addr    +=      2**rd_tx.burst_size;
+                rd_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
+            end
+            else if( rd_tx.burst_type == FIXED ) begin
+                rd_data = fifo.pop_front();
+                vif.slave_cb.rdata     <=      rd_data;
+                `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, rd_data), UVM_MEDIUM);
+            end
+            else begin
+                `uvm_error("READ RSVD_BURST_TYPE_ERROR", $sformatf("READ BURST_TYPE is neither INCR, WRAP, or FIXED"));
+            end
 
             vif.slave_cb.rid       <=      id;
             vif.slave_cb.rlast     <=      (i == rd_tx.burst_len) ? 1 : 0;
