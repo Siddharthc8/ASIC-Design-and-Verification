@@ -7,7 +7,7 @@ class axi_tx extends uvm_sequence_item;
 rand bit wr_rd;
 
 rand bit[3:0]  tx_id;    // For resuability
-rand bit[31:0] addr;       // Not set a awaddr becuase we want to reuse for read and write
+rand bit[`ADDR_BUS_WIDTH-1:0] addr;       // Not set a awaddr becuase we want to reuse for read and write
 rand bit[3:0]  burst_len; 
 rand bit[2:0]  burst_size;
 rand burst_type_t  burst_type;
@@ -16,13 +16,13 @@ rand bit[3:0]  cache;
 rand bit[2:0]  prot;
 
 // Data phase fields
-rand bit[31:0] dataQ[$];
-rand bit[3:0]  strbQ[$];
+rand bit[`DATA_BUS_WIDTH-1:0] dataQ[$];
+rand bit[`DATA_BUS_WIDTH/8-1:0]  strbQ[$];
 rand bit[1:0]  respQ[$];
 
 // Transaction local signals
-bit [31:0] wrap_lower_addr;
-bit [31:0] wrap_upper_addr;
+bit [`ADDR_BUS_WIDTH-1:0] wrap_lower_addr;
+bit [`ADDR_BUS_WIDTH-1:0] wrap_upper_addr;
 
 `uvm_object_utils_begin(axi_tx)
 
@@ -65,8 +65,15 @@ constraint wrap_c {
 
 constraint soft_c {
     // soft burst_type == INCR;
-    soft burst_size == 2;   // 4 bytes by default 
-    soft addr % (2**burst_size) == 0;
+    // soft burst_size <= 2;   // 4 bytes by default 
+    soft addr % (2**burst_size) == 0;    // Aligned transfer
+    2**burst_size <= `DATA_BUS_WIDTH/8;
+    // foreach(strbQ[i]) {
+    //     (burst_size == 0) -> ( $onehot(strbq[i]) );
+    //     (burst_size == 1) -> ( strbQ[i] inside {8'b0000_0011,8'b0000_1100,8'b0011_0000,8'b1100_0000} );
+    //     (burst_size == 2) -> ( strbQ[i] inside {8'b0000_1111,8'b1111_0000} );
+    //     (burst_size == 3) -> ( strbQ[i] inside {8'b1111_1111} );
+    // }
 }
 
 function void calculate_wrap_range();

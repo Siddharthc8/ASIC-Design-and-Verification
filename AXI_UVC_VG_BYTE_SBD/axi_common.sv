@@ -1,3 +1,6 @@
+`define ADDR_BUS_WIDTH 32
+`define DATA_BUS_WIDTH 64
+
 `define NEW_COMP \
 function new(string name = "", uvm_component parent = null); \
     super.new(name, parent); \
@@ -37,9 +40,9 @@ class axi_common;
 
 static int num_matches;
 static int num_mismatches;
-static int total_tx_count = 50;
+static int total_tx_count = 30;
 static int total_beats;
-static burst_type_t burst_type = FIXED;
+// static burst_type_t burst_type = FIXED;
 // static bit [3:0] burst_len = 4;
 
 endclass //

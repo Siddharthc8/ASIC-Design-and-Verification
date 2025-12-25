@@ -5,6 +5,9 @@ class axi_drv extends uvm_driver#(axi_tx);
 
     axi_tx tx;
     virtual axi_intf vif;
+    bit [`ADDR_BUS_WIDTH-1:0] addr_t;
+    bit [`DATA_BUS_WIDTH/8-1:0] wstrb_t;
+    int strb_position;
 
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
@@ -65,7 +68,16 @@ class axi_drv extends uvm_driver#(axi_tx);
         for(int i = 0; i <= tx.burst_len; i++) begin
             @(posedge vif.aclk);
             vif.wdata     <=     tx.dataQ.pop_front();
-            vif.wstrb     <=     tx.strbQ.pop_front();
+            addr_t = tx.addr + i * ( 2**tx.burst_size);
+            strb_position = addr_t % (`DATA_BUS_WIDTH/8);
+            wstrb_t = '0;
+            for(int k = 0; k < 2**tx.burst_size; k++) begin
+                wstrb_t[k] = 1'b1;
+            end
+            `uvm_info("STRB_POS", $sformatf("1....wstrb_t = %b, strb_pos=%0d, addr = %h", wstrb_t, strb_position, addr_t), UVM_MEDIUM);
+            wstrb_t <<= strb_position;
+            `uvm_info("STRB_POS", $sformatf("2....wstrb_t = %b, strb_pos=%0d, addr = %h", wstrb_t, strb_position, addr_t), UVM_MEDIUM);
+            vif.wstrb     <=     wstrb_t;
             vif.wid       <=     tx.tx_id;
             vif.wvalid    <=     1;
             vif.wlast     <=     (i == tx.burst_len) ? 1 : 0;

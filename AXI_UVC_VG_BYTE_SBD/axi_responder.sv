@@ -5,10 +5,13 @@ class axi_responder extends uvm_component;
 
     axi_tx rd_tx;
     axi_tx wr_tx;
-    virtual axi_intf vif; 
-    bit [31:0] rd_data;
-    bit [31:0] mem [*];        // For wrap and INCR
-    bit [31:0] fifo [$];      // For Fixed
+    virtual axi_intf vif;
+
+    bit [`DATA_BUS_WIDTH-1:0] wdata; 
+    bit [`DATA_BUS_WIDTH-1:0] rdata;
+
+    bit [`DATA_BUS_WIDTH-1:0] fifo [$];      // For Fixed
+    bit [7:0] mem [*];                       // For wrap and INCR
 
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
@@ -42,10 +45,15 @@ class axi_responder extends uvm_component;
 
             if(vif.slave_cb.wvalid == 1'b1) begin
                 vif.slave_cb.wready <= 1'b1;
-                `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, vif.slave_cb.wdata), UVM_MEDIUM);
+                wdata = vif.slave_cb.wdata;
+                `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, wdata), UVM_MEDIUM);
                 
                 if( wr_tx.burst_type inside {INCR, WRAP} ) begin
-                    mem[wr_tx.addr] = vif.slave_cb.wdata;          
+                    for(int j = 0; j < 2**wr_tx.burst_size; j++) begin
+                        mem[wr_tx.addr+j] = wdata[7:0]; 
+                        wdata >>= 8;     // Shift it to the right by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
+                    end
+                        
                     wr_tx.addr += 2**wr_tx.burst_size;
                     wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
                 end
@@ -108,15 +116,21 @@ class axi_responder extends uvm_component;
             @(vif.slave_cb);
             
             if( rd_tx.burst_type inside {INCR, WRAP} ) begin
+                
+                for(int j = 2**rd_tx.burst_size; j >= 0 ; j--) begin
+                    rdata[7:0] = mem[rd_tx.addr+j];
+                    if(j > 0 ) rdata <<= 8;         // Shift it to the left by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
+                end
+                vif.slave_cb.rdata     <=      rdata;
                 `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
-                vif.slave_cb.rdata     <=      mem[rd_tx.addr];
-                rd_tx.addr    +=      2**rd_tx.burst_size;
+
+                rd_tx.addr    +=      2**rd_tx.burst_size;          
                 rd_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
             end
             else if( rd_tx.burst_type == FIXED ) begin
-                rd_data = fifo.pop_front();
-                vif.slave_cb.rdata     <=      rd_data;
-                `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, rd_data), UVM_MEDIUM);
+                rdata = fifo.pop_front();
+                vif.slave_cb.rdata     <=      rdata;
+                `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, rdata), UVM_MEDIUM);
             end
             else begin
                 `uvm_error("READ RSVD_BURST_TYPE_ERROR", $sformatf("READ BURST_TYPE is neither INCR, WRAP, or FIXED"));
