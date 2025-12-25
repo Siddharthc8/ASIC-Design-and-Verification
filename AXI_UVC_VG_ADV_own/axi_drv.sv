@@ -76,6 +76,7 @@ class axi_drv extends uvm_driver#(axi_tx);
         for(int i = 0; i <= tx.burst_len; i++) begin
             wd_smp.get(1);                           // You get semaphore after for loop --. Interleaving supported
             @(posedge vif.aclk);
+            // Making sdjustments or strb
             vif.wdata     <=     tx.dataQ.pop_front();
             addr_t = tx.addr + i * ( 2**tx.burst_size);
             strb_position = addr_t % (`DATA_BUS_WIDTH/8);
@@ -83,9 +84,9 @@ class axi_drv extends uvm_driver#(axi_tx);
             for(int k = 0; k < 2**tx.burst_size; k++) begin
                 wstrb_t[k] = 1'b1;
             end
-            `uvm_info("STRB_POS", $sformatf("1....wstrb_t = %b, strb_pos=%0d, addr = %h", wstrb_t, strb_position, addr_t), UVM_MEDIUM);
+            // `uvm_info("STRB_POS", $sformatf("1....wstrb_t = %b, strb_pos=%0d, addr = %h", wstrb_t, strb_position, addr_t), UVM_MEDIUM);
             wstrb_t <<= strb_position;
-            `uvm_info("STRB_POS", $sformatf("2....wstrb_t = %b, strb_pos=%0d, addr = %h", wstrb_t, strb_position, addr_t), UVM_MEDIUM);
+            `uvm_info("STRB_POS", $sformatf("...................wstrb_t = %b, strb_pos=%0d, addr = %h", wstrb_t, strb_position, addr_t), UVM_MEDIUM);
             vif.wstrb     <=     wstrb_t;
             vif.wid       <=     tx.tx_id;
             vif.wvalid    <=     1;
