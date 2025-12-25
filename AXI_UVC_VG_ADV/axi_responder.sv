@@ -6,6 +6,7 @@ class axi_responder extends uvm_component;
     axi_tx rd_tx;
     axi_tx wr_tx;
     virtual axi_intf vif;
+    semaphore rd_smp = new(1);
 
     bit [`DATA_BUS_WIDTH-1:0] wdata; 
     bit [`DATA_BUS_WIDTH-1:0] rdata;
@@ -27,6 +28,10 @@ class axi_responder extends uvm_component;
 
             @(vif.slave_cb);
 
+            //----------------------------------------------------------------------------------------//
+            //                                ADDR WRITE CHANNEL                                        
+            //----------------------------------------------------------------------------------------//  
+
             if(vif.slave_cb.awvalid == 1'b1) begin
                 vif.slave_cb.awready <= 1'b1;
                 wr_tx = new("wr_tx");
@@ -42,6 +47,10 @@ class axi_responder extends uvm_component;
             else begin
                 vif.slave_cb.awready <= 1'b0;
             end
+
+            //----------------------------------------------------------------------------------------//
+            //                                DATA WRITE CHANNEL                                        
+            //----------------------------------------------------------------------------------------//
 
             if(vif.slave_cb.wvalid == 1'b1) begin
                 vif.slave_cb.wready <= 1'b1;
@@ -72,6 +81,10 @@ class axi_responder extends uvm_component;
                 vif.slave_cb.wready <= 1'b0;
             end
 
+            //----------------------------------------------------------------------------------------//
+            //                                ADDR READ CHANNEL                                        
+            //----------------------------------------------------------------------------------------//
+
             if(vif.slave_cb.arvalid == 1'b1) begin
                 vif.slave_cb.arready <= 1'b1;
                 rd_tx = new("rd_tx");
@@ -83,8 +96,9 @@ class axi_responder extends uvm_component;
                 rd_tx.burst_type     =     vif.slave_cb.arburst;
                 
                 rd_tx.calculate_wrap_range();
-
+                fork
                 read_data_phase(vif.slave_cb.arid);
+                join_none
             end
             else begin
                 vif.slave_cb.arready <= 1'b0;
@@ -112,15 +126,28 @@ class axi_responder extends uvm_component;
 
   task read_data_phase(bit [3:0] id);
 
+        int rd_delay;
+
+        rd_delay = $urandom_range(5,20);
+        repeat(rd_delay) @(vif.slave_cb);
+
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
+
+            rd_smp.get(1);         // Semaphore to control overwriting on the read data channel
+
             @(vif.slave_cb);
             
             if( rd_tx.burst_type inside {INCR, WRAP} ) begin
-                
-                for(int j = 2**rd_tx.burst_size; j >= 0 ; j--) begin
-                    rdata[7:0] = mem[rd_tx.addr+j];
-                    if(j > 0 ) rdata <<= 8;         // Shift it to the left by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
+                rdata = '0;
+                // for(int j = 2**rd_tx.burst_size; j >= 0 ; j--) begin
+                //     rdata[7:0] = mem[rd_tx.addr+j];
+                //     if(j > 0 ) rdata <<= 8;         // Shift it to the left by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
+                // end
+
+                for(int j = 0; j < 2**rd_tx.burst_size; j++) begin
+                    rdata[j*8 +: 8] = mem[rd_tx.addr + j];  // Cleaner bit slice assignment
                 end
+
                 vif.slave_cb.rdata     <=      rdata;
                 `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
 
@@ -142,9 +169,10 @@ class axi_responder extends uvm_component;
 
             wait(vif.slave_cb.rready == 1);
 
+            rd_smp.put(1);              // Semaphore to control overwriting on the read data channel
         end
 
-        @(vif.slave_cb);
+        @(vif.slave_cb);               
 
         reset_read_data();
 

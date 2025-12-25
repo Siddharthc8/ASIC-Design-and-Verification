@@ -2,12 +2,16 @@ class axi_drv extends uvm_driver#(axi_tx);
 `uvm_component_utils(axi_drv)
 
     `NEW_COMP
-
+    
     axi_tx tx;
     virtual axi_intf vif;
     bit [`ADDR_BUS_WIDTH-1:0] addr_t;
     bit [`DATA_BUS_WIDTH/8-1:0] wstrb_t;
     int strb_position;
+
+    // Semaphores for Write_Data and Write_Response
+    semaphore wd_smp = new(1);
+    semaphore wr_smp = new(1);
 
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
@@ -20,9 +24,12 @@ class axi_drv extends uvm_driver#(axi_tx);
         forever begin
 
             seq_item_port.get_next_item(req);
-            req.print();
-            drive_tx(req);
+            // req.print();
+            fork 
+                drive_tx(req);
+            join_none
             seq_item_port.item_done();
+            #70;
 
         end
 
@@ -64,8 +71,9 @@ class axi_drv extends uvm_driver#(axi_tx);
     endtask
 
     task write_data_phase(axi_tx tx);
-
+            // wd_smp.get(1);                        // You get semaphore before for loop --. Interleaving NOT supported
         for(int i = 0; i <= tx.burst_len; i++) begin
+            wd_smp.get(1);                           // You get semaphore after for loop --. Interleaving supported
             @(posedge vif.aclk);
             vif.wdata     <=     tx.dataQ.pop_front();
             addr_t = tx.addr + i * ( 2**tx.burst_size);
@@ -83,9 +91,10 @@ class axi_drv extends uvm_driver#(axi_tx);
             vif.wlast     <=     (i == tx.burst_len) ? 1 : 0;
 
             wait(vif.wready == 1);
+            wd_smp.put(1);                          // You put semaphore for each "for" loop --. Interleaving supported
 
         end
-
+        // wd_smp.put(1);                          // You put semaphore after for loop --. Interleaving NOT supported
         @(posedge vif.aclk);
 
          reset_write_data_channel();
@@ -97,12 +106,13 @@ class axi_drv extends uvm_driver#(axi_tx);
         while(vif.bvalid == 0) begin
             @(posedge vif.aclk);
         end
-
+        wr_smp.get(1);
         vif.bready    <=     1;
 
         @(posedge vif.aclk);
         
         vif.bready    <=     0;
+        wr_smp.get(1);
 
     endtask
 

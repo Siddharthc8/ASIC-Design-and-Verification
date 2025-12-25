@@ -50,7 +50,7 @@ class axi_wr_rd_test extends axi_base_test;
         axi_n_wr_n_rd_seq wr_rd_seq;
         wr_rd_seq = axi_n_wr_n_rd_seq::type_id::create("wr_rd_seq");
         phase.raise_objection(this);
-        phase.phase_done.set_drain_time(this, 100);
+        phase.phase_done.set_drain_time(this, 1500);
         wr_rd_seq.start(env.m_agent.sqr);
         phase.drop_objection(this);
 
