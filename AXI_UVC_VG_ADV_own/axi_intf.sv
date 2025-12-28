@@ -14,7 +14,7 @@ interface axi_intf(input bit aclk, input bit arst);
     //WRITE DATA BUS
     logic  [3:0]             wid;
     logic  [`DATA_BUS_WIDTH-1:0]            wdata;
-    logic  [`DATA_BUS_WIDTH/8-1:0]             wstrb;
+    logic  [`STRB_WIDTH-1:0]             wstrb;
     logic                    wlast;
     logic                    wvalid;
     logic                    wready;

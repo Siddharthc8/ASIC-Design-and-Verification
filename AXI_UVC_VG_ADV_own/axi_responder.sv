@@ -75,12 +75,7 @@ class axi_responder extends uvm_component;
                             mem[wr_tx.addr + j] = wdata[lane*8 +: 8];
                         end
                     end
-                    // foreach(wstrb[j]) begin
-                    //     if(wstrb[j]) begin
-                    //         mem[wr_tx.addr] = wdata[j*8 +: 8];
-                    //         wr_tx.addr ++;
-                    //     end
-                    // end
+
                     wr_tx.addr += 2**wr_tx.burst_size;        // Incrementing the address by the burst_size
                     wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
                 end
@@ -160,11 +155,8 @@ class axi_responder extends uvm_component;
             @(vif.slave_cb);
             
             if( rd_tx.burst_type inside {INCR, WRAP} ) begin
-                // for(int j = 2**rd_tx.burst_size; j >= 0 ; j--) begin
-                //     rdata[7:0] = mem[rd_tx.addr+j];
-                //     if(j > 0 ) rdata <<= 8;         // Shift it to the left by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
-                // end
-                lane_offset = wr_tx.addr % `STRB_WIDTH;
+
+                lane_offset = rd_tx.addr % `STRB_WIDTH;
                 rdata = '0;
                 for(int j = 0; j < 2**rd_tx.burst_size; j++) begin
                     int lane = lane_offset + j;

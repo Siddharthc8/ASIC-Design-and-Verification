@@ -17,7 +17,7 @@ rand bit[2:0]  prot;
 
 // Data phase fields
 rand bit[`DATA_BUS_WIDTH-1:0] dataQ[$];
-rand bit[`DATA_BUS_WIDTH/8-1:0]  strbQ[$];
+rand bit[`STRB_WIDTH-1:0]  strbQ[$];
 rand bit[1:0]  respQ[$];
 
 // Transaction local signals

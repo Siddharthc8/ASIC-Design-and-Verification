@@ -6,7 +6,7 @@ class axi_drv extends uvm_driver#(axi_tx);
     axi_tx tx;
     virtual axi_intf vif;
     bit [`ADDR_BUS_WIDTH-1:0] addr_t;
-    bit [`DATA_BUS_WIDTH/8-1:0] wstrb_t; 
+    bit [`STRB_WIDTH-1:0] wstrb_t; 
     bit [`DATA_BUS_WIDTH-1:0] data; 
     bit [`DATA_BUS_WIDTH-1:0] data_ref;
     int strb_position;
