@@ -18,6 +18,9 @@ class axi_responder extends uvm_component;
     bit [`DATA_BUS_WIDTH-1:0] fifo [$];      // For Fixed
     bit [7:0] mem [*];                       // For wrap and INCR
 
+    int unsigned lane_offset;
+    // int unsigned base_addr;
+
     function void build(); //_phase(uvm_phase phase);
         if(!uvm_config_db#(virtual axi_intf)::get(null, "", "PIF", vif))
             `uvm_error(get_type_name(), "Interface unable to be retrieved");
@@ -62,15 +65,22 @@ class axi_responder extends uvm_component;
                 wstrb = vif.slave_cb.wstrb;
                 
                 if( wr_tx.burst_type inside {INCR, WRAP} ) begin
-                    for(int j = 0; j < 2**wr_tx.burst_size; j++) begin
-                        // mem[wr_tx.addr+j] = wdata[7:0]; 
-                        // wdata >>= 8;     // Shift it to the right by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
-                        if(wstrb[j]) 
-                            mem[wr_tx.addr + j] = wdata[j*8 +: 8];
-                        else
-                            mem[wr_tx.addr + j] = '0;
-                    end
+                    
                     `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, wdata), UVM_MEDIUM);
+
+                    lane_offset = wr_tx.addr % `STRB_WIDTH;
+                    for (int j = 0; j < 2**wr_tx.burst_size; j++) begin
+                        int lane = lane_offset + j;
+                        if (wstrb[lane]) begin
+                            mem[wr_tx.addr + j] = wdata[lane*8 +: 8];
+                        end
+                    end
+                    // foreach(wstrb[j]) begin
+                    //     if(wstrb[j]) begin
+                    //         mem[wr_tx.addr] = wdata[j*8 +: 8];
+                    //         wr_tx.addr ++;
+                    //     end
+                    // end
                     wr_tx.addr += 2**wr_tx.burst_size;        // Incrementing the address by the burst_size
                     wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
                 end
@@ -154,9 +164,11 @@ class axi_responder extends uvm_component;
                 //     rdata[7:0] = mem[rd_tx.addr+j];
                 //     if(j > 0 ) rdata <<= 8;         // Shift it to the left by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
                 // end
+                lane_offset = wr_tx.addr % `STRB_WIDTH;
                 rdata = '0;
                 for(int j = 0; j < 2**rd_tx.burst_size; j++) begin
-                    rdata[j*8 +: 8] = mem[rd_tx.addr + j];  // Cleaner bit slice assignment
+                    int lane = lane_offset + j;
+                    rdata[lane*8 +: 8] = mem[rd_tx.addr + j];  // Cleaner bit slice assignment
                 end
 
                 vif.slave_cb.rdata     <=      rdata;

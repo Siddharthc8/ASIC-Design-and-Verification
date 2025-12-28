@@ -1,5 +1,6 @@
 `define ADDR_BUS_WIDTH 32
 `define DATA_BUS_WIDTH 32
+`define STRB_WIDTH `DATA_BUS_WIDTH/8
 
 `define NEW_COMP \
 function new(string name = "", uvm_component parent = null); \
