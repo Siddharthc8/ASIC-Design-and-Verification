@@ -11,6 +11,10 @@ class axi_responder extends uvm_component;
     bit [`DATA_BUS_WIDTH-1:0] wdata; 
     bit [`DATA_BUS_WIDTH-1:0] rdata;
 
+    bit [`DATA_BUS_WIDTH-1:0] data_ref;
+
+    bit [`DATA_BUS_WIDTH/8-1:0] wstrb;
+
     bit [`DATA_BUS_WIDTH-1:0] fifo [$];      // For Fixed
     bit [7:0] mem [*];                       // For wrap and INCR
 
@@ -55,17 +59,22 @@ class axi_responder extends uvm_component;
             if(vif.slave_cb.wvalid == 1'b1) begin
                 vif.slave_cb.wready <= 1'b1;
                 wdata = vif.slave_cb.wdata;
-                `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, wdata), UVM_MEDIUM);
+                wstrb = vif.slave_cb.wstrb;
                 
                 if( wr_tx.burst_type inside {INCR, WRAP} ) begin
                     for(int j = 0; j < 2**wr_tx.burst_size; j++) begin
-                        mem[wr_tx.addr+j] = wdata[7:0]; 
-                        wdata >>= 8;     // Shift it to the right by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
+                        // mem[wr_tx.addr+j] = wdata[7:0]; 
+                        // wdata >>= 8;     // Shift it to the right by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
+                        if(wstrb[j]) 
+                            mem[wr_tx.addr + j] = wdata[j*8 +: 8];
+                        else
+                            mem[wr_tx.addr + j] = '0;
                     end
-                        
-                    wr_tx.addr += 2**wr_tx.burst_size;
+                    `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, wdata), UVM_MEDIUM);
+                    wr_tx.addr += 2**wr_tx.burst_size;        // Incrementing the address by the burst_size
                     wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
                 end
+                // 
                 else if( wr_tx.burst_type == FIXED ) begin
                     fifo.push_back( vif.slave_cb.wdata ); 
                 end
@@ -80,6 +89,7 @@ class axi_responder extends uvm_component;
             else begin
                 vif.slave_cb.wready <= 1'b0;
             end
+            
 
             //----------------------------------------------------------------------------------------//
             //                                ADDR READ CHANNEL                                        
@@ -130,27 +140,27 @@ class axi_responder extends uvm_component;
         int rd_delay;
 
         rd_delay = $urandom_range(5,20);
-        repeat(rd_delay) @(vif.slave_cb);
+        // repeat(rd_delay) @(vif.slave_cb);
 
+        rd_smp.get(1);
         for(int i = 0; i <= rd_tx.burst_len; i++) begin
 
-            rd_smp.get(1);         // Semaphore to control overwriting on the read data channel
+            // rd_smp.get(1);         // Semaphore to control overwriting on the read data channel
 
             @(vif.slave_cb);
             
             if( rd_tx.burst_type inside {INCR, WRAP} ) begin
-                rdata = '0;
                 // for(int j = 2**rd_tx.burst_size; j >= 0 ; j--) begin
                 //     rdata[7:0] = mem[rd_tx.addr+j];
                 //     if(j > 0 ) rdata <<= 8;         // Shift it to the left by 8 bits (OR) ONE LINER  mem[wr_tx.addr+j] = wr_data[j*8 +: 8];
                 // end
-
+                rdata = '0;
                 for(int j = 0; j < 2**rd_tx.burst_size; j++) begin
                     rdata[j*8 +: 8] = mem[rd_tx.addr + j];  // Cleaner bit slice assignment
                 end
 
                 vif.slave_cb.rdata     <=      rdata;
-                `uvm_info(get_type_name(), $sformatf("Reading at addr = %h, data = %h", rd_tx.addr, mem[rd_tx.addr]), UVM_MEDIUM);
+                `uvm_info(get_type_name(), $sformatf("Reading to intf at addr = %h, data = %h", rd_tx.addr, rdata), UVM_MEDIUM);
 
                 rd_tx.addr    +=      2**rd_tx.burst_size;          
                 rd_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
@@ -166,13 +176,13 @@ class axi_responder extends uvm_component;
 
             vif.slave_cb.rid       <=      rd_tx.tx_id;
             vif.slave_cb.rlast     <=      (i == rd_tx.burst_len) ? 1 : 0;
-            vif.slave_cb.rvalid    <=      1;
+            vif.slave_cb.rvalid    <=      1'b1;
 
             wait(vif.slave_cb.rready == 1);
 
-            rd_smp.put(1);              // Semaphore to control overwriting on the read data channel
+            // rd_smp.put(1);              // Semaphore to control overwriting on the read data channel
         end
-
+        rd_smp.put(1); 
         @(vif.slave_cb);               
 
         reset_read_data();

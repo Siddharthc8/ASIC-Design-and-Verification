@@ -5,6 +5,8 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
     axi_tx s_tx;
     axi_tx tx;
     byte mem[*];
+    bit [`DATA_BUS_WIDTH-1:0] mem_data;
+    int all_pass;
 
     `NEW_COMP
 
@@ -14,32 +16,44 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
 
         if(tx.wr_rd == 1) begin                         // Only writing
             foreach(tx.dataQ[i]) begin
-                    mem[tx.addr]     =   tx.dataQ[i][7:0];
-                    mem[tx.addr+1]   =   tx.dataQ[i][15:8];
-                    mem[tx.addr+2]   =   tx.dataQ[i][23:16];
-                    mem[tx.addr+3]   =   tx.dataQ[i][31:24];
-
-                    tx.addr += 4;
+                for(int j = 0; j < 2**tx.burst_size; j++) begin
+                    if(tx.strbQ[i][j])
+                        mem[tx.addr + j]    =   tx.dataQ[i][j*8 +: 8];
+                    else
+                        mem[tx.addr + j] = '0;
+                end
+                `uvm_info(get_type_name(), $sformatf(" %d Writing at addr = %h, data = %h",i, tx.addr, tx.dataQ[i]), UVM_MEDIUM);
+                tx.addr += 2**tx.burst_size;
             end
+
         end
         else begin                                      // Comparing only during read
-            foreach(tx.dataQ[i]) begin                  
-                if( mem[tx.addr] == tx.dataQ[i][7:0] && mem[tx.addr+1] == tx.dataQ[i][15:8] && mem[tx.addr+2] == tx.dataQ[i][23:16] && mem[tx.addr+3] == tx.dataQ[i][31:24]) begin
-                    `uvm_info("TX COMPARE", $sformatf("Read data matches with write data"), UVM_MEDIUM);
+            foreach(tx.dataQ[i]) begin
+                mem_data = '0;
+                for(int k = 0; k < 2**tx.burst_size; k++) begin
+                    mem_data[k*8 +: 8] = mem[tx.addr + k];
+                end
+                all_pass = 1;
+                for(int j = 0; j < 2**tx.burst_size; j++) begin                  
+                    if( mem[tx.addr+j] != tx.dataQ[i][j*8+:8]) begin
+                        `uvm_error("TX COMPARE", $sformatf("Read data DOES NOT matches with write data, ADDR = %h , MEM_data = %h, Read_data = %h", tx.addr, mem_data, tx.dataQ[i]));
+                        axi_common::num_mismatches++;
+                        all_pass = 0;
+                    end
+                end
+                if(all_pass) begin
+                    `uvm_info("TX COMPARE", $sformatf("Read data matches with write data, ADDR = %h , MEM_data = %h, Read_data = %h", tx.addr, mem_data, tx.dataQ[i]), UVM_MEDIUM);
                     axi_common::num_matches++;
                 end
-                else begin
-                `uvm_error("TX COMPARE", $sformatf("Read data DOES NOT matches with write data, MEM_data = %h, Read_data = %h", {mem[tx.addr+3], mem[tx.addr+2], mem[tx.addr+1], mem[tx.addr]}, tx.dataQ[i]));
-                    axi_common::num_mismatches++;
-                end
 
-                tx.addr += 4;
+                tx.addr += 2**tx.burst_size;
                     
             end
         end
 
     endfunction
 
+    
 
     // Run task not required as the data is being compared in write_m
 

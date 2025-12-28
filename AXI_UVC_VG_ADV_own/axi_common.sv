@@ -1,5 +1,5 @@
 `define ADDR_BUS_WIDTH 32
-`define DATA_BUS_WIDTH 64
+`define DATA_BUS_WIDTH 32
 
 `define NEW_COMP \
 function new(string name = "", uvm_component parent = null); \
@@ -42,7 +42,7 @@ static int num_matches;
 static int num_mismatches;
 static int total_tx_count = 5;
 static int total_beats;
-// static burst_type_t burst_type = FIXED;
+static burst_type_t burst_type = INCR;
 // static bit [3:0] burst_len = 4;
 
 endclass //

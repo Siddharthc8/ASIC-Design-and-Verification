@@ -65,9 +65,9 @@ constraint wrap_c {
 
 constraint soft_c {
     // soft burst_type == INCR;
-    // soft burst_size <= 2;   // 4 bytes by default 
+    soft burst_size <= 3;   // 4 bytes by default 
     soft addr % (2**burst_size) == 0;    // Aligned transfer
-    2**burst_size <= `DATA_BUS_WIDTH/8;
+    // 2**burst_size <= `DATA_BUS_WIDTH/8;
     // foreach(strbQ[i]) {
     //     (burst_size == 0) -> ( $onehot(strbq[i]) );
     //     (burst_size == 1) -> ( strbQ[i] inside {8'b0000_0011,8'b0000_1100,8'b0011_0000,8'b1100_0000} );

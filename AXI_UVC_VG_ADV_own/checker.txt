@@ -1,0 +1,60 @@
+Writing at addr = 7b1e10b4, data = 0d52c41900000000
+Writing at addr = 7b1e10b8, data = 0000000035d4b1d8
+Writing at addr = 7b1e10bc, data = 449efd9300000000
+Writing at addr = 7b1e10c0, data = 00000000c4587109
+Writing at addr = 7b1e10c4, data = 172bf92400000000
+Writing at addr = 6a4b0814, data = 00000000e29b475c
+Writing at addr = 6a4b0818, data = 82f0005a00000000
+Writing at addr = 6a4b081c, data = 00000000cac985a8
+ Writing at addr = 6a4b0820, data = 4dfd161a00000000
+ Writing at addr = 6a4b0824, data = c94dbb8600000000
+ Writing at addr = 6a4b0828, data = 00000000048370a5
+ Writing at addr = 6a4b082c, data = 00000000ae4b3037
+ Writing at addr = 67137bec, data = 7a53e77c00000000
+ Writing at addr = 67137bc8, data = 000000007924fb34
+ Writing at addr = 67137bcc, data = fed9961400000000
+ Writing at addr = 67137bd0, data = 45ae746500000000
+ Writing at addr = 67137bd4, data = 00000000dfd736a7
+ Writing at addr = ab3e221c, data = 00000000672b5c09
+ Writing at addr = ab3e2220, data = a310b88800000000
+ Writing at addr = ab3e21f8, data = 7f571c2900000000
+ Writing at addr = ab3e21fc, data = 000000007763c711
+ Writing at addr = ab3e2200, data = f662953800000000
+ Writing at addr = ab3e2204, data = 000000001d045e41
+ Writing at addr = ab3e2208, data = a228fa4f00000000
+ Writing at addr = a7433878, data = 00000000c8e262b9
+ Writing at addr = a743387c, data = 6217c15900000000
+ Writing at addr = a7433878, data = 000000002ea39c3d
+ Writing at addr = a743387c, data = 0eed3d4000000000
+ Writing at addr = a7433878, data = 000000004769d44a
+ Writing at addr = a743387c, data = 000000008c822e73
+ Writing at addr = a7433878, data = 70bb4ddb00000000
+ Writing at addr = a743387c, data = 00000000c9aef26b
+ Writing at addr = a7433878, data = 63a3e9aa00000000
+ Writing at addr = a743387c, data = ee74d7a800000000
+ Writing at addr = a7433878, data = 00000000ef8a04b6
+ Writing at addr = a743387c, data = 00000000cef9884b
+ Writing at addr = a7433878, data = b3eafcc000000000
+ Writing at addr = a743387c, data = 7ae677e800000000
+ Writing at addr = a7433878, data = 000000008b57c008
+ Writing at addr = a743387c, data = 00000000e5d5bbd5
+ Writing at addr = a7433878, data = 8d8c6df700000000
+ Reading at addr = 7b1e10b4, data = 00
+ Reading at addr = 7b1e10b8, data = d8
+ Reading at addr = 7b1e10bc, data = 00
+ Reading at addr = 7b1e10c0, data = 09
+ Reading at addr = 7b1e10c4, data = 00
+ Reading at addr = 7b1e10c8, data = 00
+ Reading at addr = 7b1e10cc, data = 00
+ Reading at addr = 7b1e10d0, data = 00
+ Reading at addr = 7b1e10d4, data = 00
+ Reading at addr = 7b1e10b0, data = 00
+ Reading at addr = 6a4b0814, data = 5c
+ Reading at addr = ab3e221c, data = 09
+ Reading at addr = 6a4b0818, data = 00
+ Reading at addr = ab3e2220, data = 00
+ Reading at addr = 6a4b081c, data = a8
+ Reading at addr = ab3e21f8, data = 00
+ Reading at addr = 67137bec, data = 00
+ Reading at addr = 6a4b0820, data = 00
+ Reading at addr = ab3e21fc, data = 11

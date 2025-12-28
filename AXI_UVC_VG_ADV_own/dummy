@@ -1,0 +1,152 @@
+UVM_INFO axi_responder.sv(27) @ 0: uvm_test_top.env.s_agent.responder [axi_responder] Run Phase on Responder tx
+UVM_INFO axi_drv.sv(44) @ 0: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_tx.sv(90) @ 5: reporter@@wr_tx [AXI_TX WRAP CALC]  addr = 7b1e10b4
+UVM_INFO axi_tx.sv(91) @ 5: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_lower_addr = 7b1e10b0 
+UVM_INFO axi_tx.sv(92) @ 5: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_upper_addr = 7b1e10d7 
+UVM_INFO axi_drv.sv(101) @ 25: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 0d52c41900000000, wstrb_t = 11110000, strb_pos=4, addr = 7b1e10b4 
+UVM_INFO axi_responder.sv(61) @ 25: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 7b1e10b4, data = 0d52c41900000000
+UVM_INFO axi_drv.sv(101) @ 35: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 0000000035d4b1d8, wstrb_t = 00001111, strb_pos=0, addr = 7b1e10b8 
+UVM_INFO axi_responder.sv(61) @ 35: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 7b1e10b8, data = 0000000035d4b1d8
+UVM_INFO axi_drv.sv(101) @ 45: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 449efd9300000000, wstrb_t = 11110000, strb_pos=4, addr = 7b1e10bc 
+UVM_INFO axi_responder.sv(61) @ 45: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 7b1e10bc, data = 449efd9300000000
+UVM_INFO axi_drv.sv(101) @ 55: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000c4587109, wstrb_t = 00001111, strb_pos=0, addr = 7b1e10c0 
+UVM_INFO axi_responder.sv(61) @ 55: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 7b1e10c0, data = 00000000c4587109
+UVM_INFO axi_drv.sv(101) @ 65: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 172bf92400000000, wstrb_t = 11110000, strb_pos=4, addr = 7b1e10c4 
+UVM_INFO axi_responder.sv(61) @ 65: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 7b1e10c4, data = 172bf92400000000
+UVM_INFO axi_drv.sv(44) @ 70: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_drv.sv(101) @ 75: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000e29b475c, wstrb_t = 00001111, strb_pos=0, addr = 7b1e10c8 
+UVM_INFO axi_tx.sv(90) @ 75: reporter@@wr_tx [AXI_TX WRAP CALC]  addr = 6a4b0814
+UVM_INFO axi_tx.sv(91) @ 75: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_lower_addr = 6a4b07f8 
+UVM_INFO axi_tx.sv(92) @ 75: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_upper_addr = 6a4b082f 
+UVM_INFO axi_responder.sv(61) @ 75: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b0814, data = 00000000e29b475c
+UVM_INFO axi_drv.sv(101) @ 85: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 82f0005a00000000, wstrb_t = 11110000, strb_pos=4, addr = 7b1e10cc 
+UVM_INFO axi_responder.sv(61) @ 85: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b0818, data = 82f0005a00000000
+UVM_INFO axi_drv.sv(101) @ 95: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000cac985a8, wstrb_t = 00001111, strb_pos=0, addr = 7b1e10d0 
+UVM_INFO axi_responder.sv(61) @ 95: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b081c, data = 00000000cac985a8
+UVM_INFO axi_drv.sv(101) @ 105: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 4dfd161a00000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b0814 
+UVM_INFO axi_responder.sv(61) @ 105: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b0820, data = 4dfd161a00000000
+UVM_INFO axi_drv.sv(101) @ 115: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = c94dbb8600000000, wstrb_t = 11110000, strb_pos=4, addr = 7b1e10d4 
+UVM_INFO axi_responder.sv(61) @ 115: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b0824, data = c94dbb8600000000
+UVM_INFO axi_drv.sv(101) @ 125: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000048370a5, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0818 
+UVM_INFO axi_responder.sv(61) @ 125: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b0828, data = 00000000048370a5
+UVM_INFO axi_drv.sv(101) @ 135: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000ae4b3037, wstrb_t = 00001111, strb_pos=0, addr = 7b1e10d8 
+UVM_INFO axi_responder.sv(61) @ 135: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 6a4b082c, data = 00000000ae4b3037
+UVM_INFO axi_drv.sv(44) @ 140: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_drv.sv(101) @ 145: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 2c6d782b00000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b081c 
+UVM_INFO axi_drv.sv(101) @ 155: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000d0bd2f92, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0820 
+UVM_INFO axi_drv.sv(101) @ 165: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 7a53e77c00000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b0824 
+UVM_INFO axi_tx.sv(90) @ 165: reporter@@wr_tx [AXI_TX WRAP CALC]  addr = 67137bec
+UVM_INFO axi_tx.sv(91) @ 165: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_lower_addr = 67137bc8 
+UVM_INFO axi_tx.sv(92) @ 165: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_upper_addr = 67137bef 
+UVM_INFO axi_responder.sv(61) @ 165: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 67137bec, data = 7a53e77c00000000
+UVM_INFO axi_drv.sv(101) @ 175: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000007924fb34, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0828 
+UVM_INFO axi_responder.sv(61) @ 175: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 67137bc8, data = 000000007924fb34
+UVM_INFO axi_drv.sv(101) @ 185: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = fed9961400000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b082c 
+UVM_INFO axi_responder.sv(61) @ 185: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 67137bcc, data = fed9961400000000
+UVM_INFO axi_drv.sv(101) @ 195: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 45ae746500000000, wstrb_t = 11110000, strb_pos=4, addr = 67137bec 
+UVM_INFO axi_responder.sv(61) @ 195: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 67137bd0, data = 45ae746500000000
+UVM_INFO axi_drv.sv(101) @ 205: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000dfd736a7, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0830 
+UVM_INFO axi_responder.sv(61) @ 205: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = 67137bd4, data = 00000000dfd736a7
+UVM_INFO axi_drv.sv(44) @ 210: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_drv.sv(101) @ 215: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000672b5c09, wstrb_t = 00001111, strb_pos=0, addr = 67137bf0 
+UVM_INFO axi_tx.sv(90) @ 215: reporter@@wr_tx [AXI_TX WRAP CALC]  addr = ab3e221c
+UVM_INFO axi_tx.sv(91) @ 215: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_lower_addr = ab3e21f8 
+UVM_INFO axi_tx.sv(92) @ 215: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_upper_addr = ab3e2223 
+UVM_INFO axi_responder.sv(61) @ 215: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e221c, data = 00000000672b5c09
+UVM_INFO axi_drv.sv(101) @ 225: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = a310b88800000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b0834 
+UVM_INFO axi_responder.sv(61) @ 225: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e2220, data = a310b88800000000
+UVM_INFO axi_drv.sv(101) @ 235: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 7f571c2900000000, wstrb_t = 11110000, strb_pos=4, addr = 67137bf4 
+UVM_INFO axi_responder.sv(61) @ 235: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e21f8, data = 7f571c2900000000
+UVM_INFO axi_drv.sv(101) @ 245: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000007763c711, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0838 
+UVM_INFO axi_responder.sv(61) @ 245: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e21fc, data = 000000007763c711
+UVM_INFO axi_drv.sv(101) @ 255: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = f662953800000000, wstrb_t = 11110000, strb_pos=4, addr = ab3e221c 
+UVM_INFO axi_responder.sv(61) @ 255: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e2200, data = f662953800000000
+UVM_INFO axi_drv.sv(101) @ 265: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000001d045e41, wstrb_t = 00001111, strb_pos=0, addr = 67137bf8 
+UVM_INFO axi_responder.sv(61) @ 265: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e2204, data = 000000001d045e41
+UVM_INFO axi_drv.sv(101) @ 275: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = a228fa4f00000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b083c 
+UVM_INFO axi_responder.sv(61) @ 275: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = ab3e2208, data = a228fa4f00000000
+UVM_INFO axi_drv.sv(44) @ 280: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_drv.sv(101) @ 285: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000c8e262b9, wstrb_t = 00001111, strb_pos=0, addr = ab3e2220 
+UVM_INFO axi_tx.sv(90) @ 285: reporter@@wr_tx [AXI_TX WRAP CALC]  addr = a7433878
+UVM_INFO axi_tx.sv(91) @ 285: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_lower_addr = a7433878 
+UVM_INFO axi_tx.sv(92) @ 285: reporter@@wr_tx [AXI_TX WRAP CALC]  wrap_upper_addr = a743387f 
+UVM_INFO axi_responder.sv(61) @ 285: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 00000000c8e262b9
+UVM_INFO axi_drv.sv(101) @ 295: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 6217c15900000000, wstrb_t = 11110000, strb_pos=4, addr = 67137bfc 
+UVM_INFO axi_responder.sv(61) @ 295: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 6217c15900000000
+UVM_INFO axi_drv.sv(101) @ 305: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000002ea39c3d, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0840 
+UVM_INFO axi_responder.sv(61) @ 305: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 000000002ea39c3d
+UVM_INFO axi_drv.sv(101) @ 315: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 0eed3d4000000000, wstrb_t = 11110000, strb_pos=4, addr = ab3e2224 
+UVM_INFO axi_responder.sv(61) @ 315: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 0eed3d4000000000
+UVM_INFO axi_drv.sv(101) @ 325: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000004769d44a, wstrb_t = 00001111, strb_pos=0, addr = 67137c00 
+UVM_INFO axi_responder.sv(61) @ 325: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 000000004769d44a
+UVM_INFO axi_drv.sv(101) @ 335: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000008c822e73, wstrb_t = 00001111, strb_pos=0, addr = a7433878 
+UVM_INFO axi_responder.sv(61) @ 335: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 000000008c822e73
+UVM_INFO axi_drv.sv(101) @ 345: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 70bb4ddb00000000, wstrb_t = 11110000, strb_pos=4, addr = 6a4b0844 
+UVM_INFO axi_responder.sv(61) @ 345: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 70bb4ddb00000000
+UVM_INFO axi_drv.sv(44) @ 350: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_drv.sv(101) @ 355: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000c9aef26b, wstrb_t = 00001111, strb_pos=0, addr = ab3e2228 
+UVM_INFO axi_responder.sv(61) @ 355: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 00000000c9aef26b
+UVM_INFO axi_tx.sv(90) @ 355: reporter@@rd_tx [AXI_TX WRAP CALC]  addr = 7b1e10b4
+UVM_INFO axi_tx.sv(91) @ 355: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_lower_addr = 7b1e10b0 
+UVM_INFO axi_tx.sv(92) @ 355: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_upper_addr = 7b1e10d7 
+UVM_INFO axi_drv.sv(101) @ 365: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 63a3e9aa00000000, wstrb_t = 11110000, strb_pos=4, addr = 67137c04 
+UVM_INFO axi_responder.sv(61) @ 365: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 63a3e9aa00000000
+UVM_INFO axi_drv.sv(101) @ 375: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = ee74d7a800000000, wstrb_t = 11110000, strb_pos=4, addr = a743387c 
+UVM_INFO axi_responder.sv(61) @ 375: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = ee74d7a800000000
+UVM_INFO axi_drv.sv(101) @ 385: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000e6217cc0, wstrb_t = 00001111, strb_pos=0, addr = 6a4b0848 
+UVM_INFO axi_drv.sv(101) @ 395: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 030402df00000000, wstrb_t = 11110000, strb_pos=4, addr = ab3e222c 
+UVM_INFO axi_drv.sv(101) @ 405: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000ef8a04b6, wstrb_t = 00001111, strb_pos=0, addr = 67137c08 
+UVM_INFO axi_responder.sv(61) @ 405: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 00000000ef8a04b6
+UVM_INFO axi_drv.sv(101) @ 415: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000cef9884b, wstrb_t = 00001111, strb_pos=0, addr = ab3e2230 
+UVM_INFO axi_responder.sv(61) @ 415: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 00000000cef9884b
+UVM_INFO axi_drv.sv(44) @ 420: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_drv.sv(101) @ 425: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = b3eafcc000000000, wstrb_t = 11110000, strb_pos=4, addr = 67137c0c 
+UVM_INFO axi_responder.sv(61) @ 425: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = b3eafcc000000000
+UVM_INFO axi_tx.sv(90) @ 425: reporter@@rd_tx [AXI_TX WRAP CALC]  addr = 6a4b0814
+UVM_INFO axi_tx.sv(91) @ 425: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_lower_addr = 6a4b07f8 
+UVM_INFO axi_tx.sv(92) @ 425: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_upper_addr = 6a4b082f 
+UVM_INFO axi_drv.sv(101) @ 435: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 7ae677e800000000, wstrb_t = 11110000, strb_pos=4, addr = ab3e2234 
+UVM_INFO axi_responder.sv(61) @ 435: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 7ae677e800000000
+UVM_INFO axi_drv.sv(101) @ 445: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 000000008b57c008, wstrb_t = 00001111, strb_pos=0, addr = 67137c10 
+UVM_INFO axi_responder.sv(61) @ 445: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 000000008b57c008
+UVM_INFO axi_drv.sv(101) @ 455: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 0000000036ce6277, wstrb_t = 00001111, strb_pos=0, addr = ab3e2238 
+UVM_INFO axi_drv.sv(101) @ 465: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = c51e64d000000000, wstrb_t = 11110000, strb_pos=4, addr = ab3e223c 
+UVM_INFO axi_drv.sv(101) @ 475: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 00000000e5d5bbd5, wstrb_t = 00001111, strb_pos=0, addr = ab3e2240 
+UVM_INFO axi_responder.sv(61) @ 475: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a743387c, data = 00000000e5d5bbd5
+UVM_INFO axi_responder.sv(158) @ 475: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10b4, data = 00
+UVM_INFO axi_drv.sv(101) @ 485: uvm_test_top.env.m_agent.drv [STRB_POS] ................... data_ref = 8d8c6df700000000, wstrb_t = 11110000, strb_pos=4, addr = ab3e2244 
+UVM_INFO axi_responder.sv(61) @ 485: uvm_test_top.env.s_agent.responder [axi_responder] Writing at addr = a7433878, data = 8d8c6df700000000
+UVM_INFO axi_responder.sv(158) @ 485: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10b8, data = d8
+UVM_INFO axi_drv.sv(44) @ 490: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_responder.sv(158) @ 495: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10bc, data = 00
+UVM_INFO axi_tx.sv(90) @ 505: reporter@@rd_tx [AXI_TX WRAP CALC]  addr = 67137bec
+UVM_INFO axi_tx.sv(91) @ 505: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_lower_addr = 67137bc8 
+UVM_INFO axi_tx.sv(92) @ 505: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_upper_addr = 67137bef 
+UVM_INFO axi_responder.sv(158) @ 505: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10c0, data = 09
+UVM_INFO axi_responder.sv(158) @ 515: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10c4, data = 00
+UVM_INFO axi_responder.sv(158) @ 525: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10c8, data = 00
+UVM_INFO axi_responder.sv(158) @ 535: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10cc, data = 00
+UVM_INFO axi_responder.sv(158) @ 545: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10d0, data = 00
+UVM_INFO axi_responder.sv(158) @ 555: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10d4, data = 00
+UVM_INFO axi_drv.sv(44) @ 560: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_tx.sv(90) @ 565: reporter@@rd_tx [AXI_TX WRAP CALC]  addr = ab3e221c
+UVM_INFO axi_tx.sv(91) @ 565: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_lower_addr = ab3e21f8 
+UVM_INFO axi_tx.sv(92) @ 565: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_upper_addr = ab3e2223 
+UVM_INFO axi_responder.sv(158) @ 565: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 7b1e10b0, data = 00
+UVM_INFO axi_sbd_byte.sv(46) @ 575: uvm_test_top.env.sbd [TX COMPARE] Read data matches with write data, ADDR = ab3e221c , MEM_data = 0000000000000000, Read_data = 0000000000000000
+UVM_INFO axi_responder.sv(158) @ 625: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 6a4b0814, data = 5c
+UVM_INFO axi_drv.sv(44) @ 630: uvm_test_top.env.m_agent.drv [axi_drv] Driving tx
+UVM_INFO axi_tx.sv(90) @ 635: reporter@@rd_tx [AXI_TX WRAP CALC]  addr = a7433878
+UVM_INFO axi_tx.sv(91) @ 635: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_lower_addr = a7433878 
+UVM_INFO axi_tx.sv(92) @ 635: reporter@@rd_tx [AXI_TX WRAP CALC]  wrap_upper_addr = a743387f 
+UVM_INFO axi_responder.sv(158) @ 645: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = ab3e221c, data = 09
+UVM_INFO axi_responder.sv(158) @ 655: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 6a4b0818, data = 00
+UVM_INFO axi_responder.sv(158) @ 665: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = ab3e2220, data = 00
+UVM_INFO axi_responder.sv(158) @ 685: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 6a4b081c, data = a8
+UVM_INFO axi_responder.sv(158) @ 695: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = ab3e21f8, data = 00
+UVM_INFO axi_responder.sv(158) @ 705: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 67137bec, data = 00
+UVM_INFO axi_responder.sv(158) @ 715: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 6a4b0820, data = 00
+UVM_INFO axi_responder.sv(158) @ 725: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = ab3e21fc, data = 11
+UVM_INFO axi_responder.sv(158) @ 735: uvm_test_top.env.s_agent.responder [axi_responder] Reading at addr = 67137bc8, data = 34
+UVM_INFO /apps/vcsmx/vcs/U-2023.03-SP2//etc/uvm-1.2/src/base/uvm_objection.svh(1276) @ 2130: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+UVM_INFO axi_cov.sv(83) @ 2130: uvm_test_top.env.m_agent.cov [axi_cov] 
