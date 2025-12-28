@@ -35,7 +35,7 @@ class axi_drv extends uvm_driver#(axi_tx);
                 drive_tx(req);
             join
             seq_item_port.item_done();
-            #70;
+            // #70;
 
         end
 
