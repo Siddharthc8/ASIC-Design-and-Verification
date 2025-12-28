@@ -73,7 +73,7 @@ class axi_responder extends uvm_component;
                         int lane = lane_offset + j;
                         if (wstrb[lane]) begin
                             mem[wr_tx.addr + j] = wdata[lane*8 +: 8];
-                            `uvm_info("MEM_WRITE", $sformatf("mem[%h] = wdata[%d:%d]", wr_tx.addr+j,lane*8+8,lane*8), UVM_MEDIUM);
+                            `uvm_info("MEM_WRITE", $sformatf("i = %0d, mem[%h] = wdata[%0d:%0d], data = %0h",j, wr_tx.addr+j,lane*8+8,lane*8, wdata[lane*8 +: 8]), UVM_MEDIUM);
                         end
                     end
                     `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h, strb = %b", wr_tx.addr, wdata, wstrb), UVM_MEDIUM);

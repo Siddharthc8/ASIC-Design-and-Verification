@@ -81,7 +81,7 @@ class axi_drv extends uvm_driver#(axi_tx);
         for(int i = 0; i <= tx.burst_len; i++) begin
 //             wd_smp.get(1);                           // You get semaphore after for loop --. Interleaving supported
             @(posedge vif.aclk);
-            // Making adjustments or strb
+            
             addr_t = tx.addr + i * ( 2**tx.burst_size);
             strb_position = addr_t % (`DATA_BUS_WIDTH/8);
             wstrb_t = '0;
