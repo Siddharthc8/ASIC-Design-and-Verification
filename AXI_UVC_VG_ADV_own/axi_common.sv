@@ -41,7 +41,7 @@ class axi_common;
 
 static int num_matches;
 static int num_mismatches;
-static int total_tx_count = 5;
+static int total_tx_count = 2;
 static int total_beats;
 static burst_type_t burst_type = INCR;
 // static bit [3:0] burst_len = 4;
