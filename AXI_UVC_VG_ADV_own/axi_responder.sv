@@ -13,7 +13,7 @@ class axi_responder extends uvm_component;
 
     bit [`DATA_BUS_WIDTH-1:0] data_ref;
 
-    bit [`DATA_BUS_WIDTH/8-1:0] wstrb;
+    bit [`STRB_WIDTH-1:0] wstrb;
 
     bit [`DATA_BUS_WIDTH-1:0] fifo [$];      // For Fixed
     bit [7:0] mem [*];                       // For wrap and INCR
@@ -66,16 +66,17 @@ class axi_responder extends uvm_component;
                 
                 if( wr_tx.burst_type inside {INCR, WRAP} ) begin
                     
-                    `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h", wr_tx.addr, wdata), UVM_MEDIUM);
+                    `uvm_info(get_type_name(), $sformatf("DATA at responder addr = %h, data = %h, strb = %b", wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
 
                     lane_offset = wr_tx.addr % `STRB_WIDTH;
                     for (int j = 0; j < 2**wr_tx.burst_size; j++) begin
                         int lane = lane_offset + j;
                         if (wstrb[lane]) begin
                             mem[wr_tx.addr + j] = wdata[lane*8 +: 8];
+                            `uvm_info("MEM_WRITE", $sformatf("mem[%h] = wdata[%d:%d]", wr_tx.addr+j,lane*8+8,lane*8), UVM_MEDIUM);
                         end
                     end
-
+                    `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h, strb = %b", wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
                     wr_tx.addr += 2**wr_tx.burst_size;        // Incrementing the address by the burst_size
                     wr_tx.check_wrap();                                  // Resets the addr to lower_boundary when it reaches the upper boundary
                 end
