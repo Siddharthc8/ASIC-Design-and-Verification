@@ -9,6 +9,7 @@ class axi_drv extends uvm_driver#(axi_tx);
     bit [`STRB_WIDTH-1:0] wstrb_t; 
     bit [`DATA_BUS_WIDTH-1:0] data; 
     bit [`DATA_BUS_WIDTH-1:0] data_ref;
+    bit [`ADDR_BUS_WIDTH-1:0] base_addr;
     int strb_position;
 
 
@@ -77,18 +78,25 @@ class axi_drv extends uvm_driver#(axi_tx);
     endtask
 
     task write_data_phase(axi_tx tx);
-            wd_smp.get(1);                        // You get semaphore before for loop --. Interleaving NOT supported
+
+        wd_smp.get(1);                        // You get semaphore before for loop --. Interleaving NOT supported
+
+        base_addr = tx.addr;  
+
         for(int i = 0; i <= tx.burst_len; i++) begin
 //             wd_smp.get(1);                           // You get semaphore after for loop --. Interleaving supported
             @(posedge vif.aclk);
             
-            addr_t = tx.addr + i * ( 2**tx.burst_size);
+            addr_t = base_addr + i * ( 2**tx.burst_size);
             strb_position = addr_t % (`DATA_BUS_WIDTH/8);
             wstrb_t = '0;
+
             for(int k = 0; k < 2**tx.burst_size; k++) begin
                 wstrb_t[k] = 1'b1;
             end
+
             wstrb_t <<= strb_position;
+
             data = tx.dataQ.pop_front();
             foreach(wstrb_t[j]) begin
                 if(wstrb_t[j]) begin
@@ -109,11 +117,10 @@ class axi_drv extends uvm_driver#(axi_tx);
 
             wait(vif.wready == 1);
 //             wd_smp.put(1);                          // You put semaphore for each "for" loop --. Interleaving supported
-
         end
-        // `uvm_info("DRV_END", $sformatf("========================================================================= "), UVM_MEDIUM);
-            // vif.wdata     <=    data ;            
+
         wd_smp.put(1);                          // You put semaphore after for loop --. Interleaving NOT supported
+
         @(posedge vif.aclk);
 
          reset_write_data_channel();

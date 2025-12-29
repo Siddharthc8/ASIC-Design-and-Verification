@@ -10,6 +10,7 @@ class axi_responder extends uvm_component;
 
     bit [`DATA_BUS_WIDTH-1:0] wdata; 
     bit [`DATA_BUS_WIDTH-1:0] rdata;
+    int unsigned awsize; 
 
     bit [`DATA_BUS_WIDTH-1:0] data_ref;
 
@@ -18,7 +19,11 @@ class axi_responder extends uvm_component;
     bit [`DATA_BUS_WIDTH-1:0] fifo [$];      // For Fixed
     bit [7:0] mem [*];                       // For wrap and INCR
 
-    int unsigned lane_offset;
+    int unsigned lane_offset_w;
+    int unsigned lane_offset_r;
+    int unsigned num_bytes;
+    int lane_w;
+    int lane_r;
     // int unsigned base_addr;
 
     function void build(); //_phase(uvm_phase phase);
@@ -48,6 +53,8 @@ class axi_responder extends uvm_component;
                 wr_tx.burst_len      =     vif.slave_cb.awlen;
                 wr_tx.burst_size     =     vif.slave_cb.awsize;
                 wr_tx.burst_type     =     vif.slave_cb.awburst;
+                awsize = wr_tx.burst_size;
+                `uvm_info("AWSIZE_DEBUG", $sformatf("Captured awsize = %0d, tx.burst_size = %0d, vif.bursts_size = %0d from interface",awsize, wr_tx.burst_size, vif.slave_cb.awsize), UVM_MEDIUM);
 
                 wr_tx.calculate_wrap_range();
             end
@@ -63,17 +70,19 @@ class axi_responder extends uvm_component;
                 vif.slave_cb.wready <= 1'b1;
                 wdata = vif.slave_cb.wdata;
                 wstrb = vif.slave_cb.wstrb;
+                // awsize = wr_tx.burst_size;
                 
                 if( wr_tx.burst_type inside {INCR, WRAP} ) begin
                     
-                    `uvm_info(get_type_name(), $sformatf("DATA at responder addr = %h, data = %h, strb = %b", wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
-
-                    lane_offset = wr_tx.addr % `STRB_WIDTH;
-                    for (int j = 0; j < 2**wr_tx.burst_size; j++) begin
-                        int lane = lane_offset + j;
-                        if (wstrb[lane]) begin
-                            mem[wr_tx.addr + j] = wdata[lane*8 +: 8];
-                            `uvm_info("MEM_WRITE", $sformatf("i = %0d, mem[%h] = wdata[%0d:%0d], data = %0h",j, wr_tx.addr+j,lane*8+8,lane*8, wdata[lane*8 +: 8]), UVM_MEDIUM);
+                    `uvm_info(get_type_name(), $sformatf("DATA at responder awsize = %0d, addr = %h, data = %h, strb = %b",awsize, wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
+                    num_bytes = 1 << awsize;
+                    lane_offset_w = wr_tx.addr % (`DATA_BUS_WIDTH/8);
+                    `uvm_info("NUM_BYTES_DEBUG", $sformatf("Captured num_bytes = %0d, lane_offset = %0d, strb_width = %0d", num_bytes, lane_offset_w, `STRB_WIDTH), UVM_MEDIUM);
+                    for (int j = 0; j < num_bytes; j++) begin
+                        lane_w = lane_offset_w + j;
+                        if (wstrb[lane_w]) begin
+                            mem[wr_tx.addr + j] = wdata[lane_w*8 +: 8];
+                            `uvm_info("MEM_WRITE", $sformatf("j = %0d, mem[%h] = wdata[%0d:%0d], data = %0h",j, wr_tx.addr+j,lane_w*8+8,lane_w*8, wdata[lane_w*8 +: 8]), UVM_MEDIUM);
                         end
                     end
                     `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h, strb = %b", wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
@@ -157,11 +166,11 @@ class axi_responder extends uvm_component;
             
             if( rd_tx.burst_type inside {INCR, WRAP} ) begin
 
-                lane_offset = rd_tx.addr % `STRB_WIDTH;
+                lane_offset_r = rd_tx.addr % (`STRB_WIDTH);
                 rdata = '0;
                 for(int j = 0; j < 2**rd_tx.burst_size; j++) begin
-                    int lane = lane_offset + j;
-                    rdata[lane*8 +: 8] = mem[rd_tx.addr + j];  // Cleaner bit slice assignment
+                    int lane_r = lane_offset_r + j;
+                    rdata[lane_r*8 +: 8] = mem[rd_tx.addr + j];  // Cleaner bit slice assignment
                 end
 
                 vif.slave_cb.rdata     <=      rdata;
