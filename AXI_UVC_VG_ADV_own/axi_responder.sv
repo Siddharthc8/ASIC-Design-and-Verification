@@ -77,12 +77,12 @@ class axi_responder extends uvm_component;
                     `uvm_info(get_type_name(), $sformatf("DATA at responder awsize = %0d, addr = %h, data = %h, strb = %b",awsize, wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
                     num_bytes = 1 << awsize;
                     lane_offset_w = wr_tx.addr % (`DATA_BUS_WIDTH/8);
-                    `uvm_info("NUM_BYTES_DEBUG", $sformatf("Captured num_bytes = %0d, lane_offset = %0d, strb_width = %0d", num_bytes, lane_offset_w, `STRB_WIDTH), UVM_MEDIUM);
+                    // `uvm_info("NUM_BYTES_DEBUG", $sformatf("Captured num_bytes = %0d, lane_offset = %0d, strb_width = %0d", num_bytes, lane_offset_w, `STRB_WIDTH), UVM_MEDIUM);
                     for (int j = 0; j < num_bytes; j++) begin
                         lane_w = lane_offset_w + j;
                         if (wstrb[lane_w]) begin
                             mem[wr_tx.addr + j] = wdata[lane_w*8 +: 8];
-                            `uvm_info("MEM_WRITE", $sformatf("j = %0d, mem[%h] = wdata[%0d:%0d], data = %0h",j, wr_tx.addr+j,lane_w*8+8,lane_w*8, wdata[lane_w*8 +: 8]), UVM_MEDIUM);
+                            // `uvm_info("MEM_WRITE", $sformatf("j = %0d, mem[%h] = wdata[%0d:%0d], data = %0h",j, wr_tx.addr+j,lane_w*8+8,lane_w*8, wdata[lane_w*8 +: 8]), UVM_MEDIUM);
                         end
                     end
                     `uvm_info(get_type_name(), $sformatf("Writing at addr = %h, data = %h, strb = %b", wr_tx.addr, wdata, wstrb), UVM_MEDIUM);
