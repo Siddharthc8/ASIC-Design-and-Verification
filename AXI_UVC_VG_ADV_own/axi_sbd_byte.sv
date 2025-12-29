@@ -19,7 +19,7 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
         if(tx.wr_rd == 1) begin                         // Only writing
             foreach(tx.dataQ[i]) begin
                 
-                `uvm_info(get_type_name(), $sformatf(" %d Writing at addr = %h, data = %h",i, addr, tx.dataQ[i]), UVM_MEDIUM);
+                `uvm_info(get_type_name(), $sformatf(" %d Writing at addr = %h, data = %h",i, tx.addr, tx.dataQ[i]), UVM_MEDIUM);
                 lane_offset = tx.addr % (`DATA_BUS_WIDTH/8);
                 for (int j = 0; j < 2**tx.burst_size; j++) begin
                     lane = lane_offset + j;
