@@ -8,7 +8,6 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
     bit [`DATA_BUS_WIDTH-1:0] mem_data;
     int lane;
     int lane_offset;
-    bit [`ADDR_BUS_WIDTH-1:0] addr;
 
     `NEW_COMP
 
@@ -16,7 +15,6 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
 
         tx = new t;
         tx.calculate_wrap_range();
-        addr = tx.addr;
 
         if(tx.wr_rd == 1) begin                         // Only writing
             foreach(tx.dataQ[i]) begin
@@ -31,18 +29,11 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
                 end
                 tx.addr += 2**tx.burst_size;
                 tx.check_wrap();
-                // if(tx.burst_type == WRAP) begin
-                //     if(tx.addr >= tx.wrap_upper_addr) begin
-                //         tx.addr = tx.wrap_lower_addr;
-                //     end
-                // end
+                
             end
-
         end
+
         else begin                                      // Comparing only during read
-
-            addr = tx.addr;
-
             foreach(tx.dataQ[i]) begin
                 
                 lane_offset = tx.addr % (`DATA_BUS_WIDTH/8);
@@ -67,21 +58,12 @@ class axi_sbd extends uvm_subscriber#(axi_tx);      // Changed to subscriber
 
                 tx.addr += 2**tx.burst_size;
                 tx.check_wrap();
-                // if(tx.burst_type == WRAP) begin
-                //     if(tx.addr >= tx.wrap_upper_addr) begin
-                //         tx.tx.addr = tx.wrap_lower_addr;
-                //     end
-                // end
                     
             end
         end
 
     endfunction
 
-    
-
     // Run task not required as the data is being compared in write_m
-
-
 
 endclass //
