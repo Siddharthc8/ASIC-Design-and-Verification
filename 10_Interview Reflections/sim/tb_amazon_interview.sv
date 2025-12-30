@@ -131,10 +131,19 @@ class monitor extends uvm_monitor;
                 end
             end
             
-            if(vif.eop) begin
+            //     WRONG CODE  below 
+            if(vif.eop) begin    // Error can't be "if" should be "while" becuase if eop is high and valid not high the task ends without waiting for valid high
                 if(vif.valid) begin       // This "if" statement is my own
                     tr.data[i++] = vif.data;
                     @(posedge vif.clk);
+                end
+            end
+            //    WRONG CODE  above ^^^^^^^^^
+
+            while(vif.eop) begin    // USING "while" is recommended 
+                if(vif.valid) begin       // This "if" statement is my own
+                    tr.data[i++] = vif.data;
+                    break;
                 end
             end
             
@@ -164,10 +173,7 @@ class monitor extends uvm_monitor;
         while (1) begin        // Suggestion is that do not iterate over pkt_len as it may contain error
             @(posedge vif.clk);
             
-            if(!vif.valid) begin     // Actually not needed 
-                continue;
-            end
-            else if(vif.valid && !vif.eop) begin
+            if(vif.valid && !vif.eop) begin
                 tr.data[i++] = vif.data;
             end
             else if(vif.valid && vif.eop) begin
