@@ -101,7 +101,7 @@ endfunction
 
 function void post_randomize();
     if(wr_rd == 0) begin
-        axi_common::total_beats += burst_len+1;
+        axi_common::total_beats += burst_len+1;   // Since comparing is done only during read
     end
 endfunction
 

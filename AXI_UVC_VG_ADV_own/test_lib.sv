@@ -13,7 +13,7 @@ endfunction
 function void end_of_elaboration(); //_phase(uvm_phase phase);
     // super.end_of_elaboration_phase(phase);
     uvm_top.print_topology();
-    factory.print();   // This is not available in UVM 1.2 but we have made something int eh common file to accomodate this
+    factory.print();   // This is not available in UVM 1.2 but we have made something in the common file to accomodate this
 endfunction
 
 function void report();
