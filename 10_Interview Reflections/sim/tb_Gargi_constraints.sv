@@ -270,7 +270,7 @@ class C;
 constraint noadj_7s {
   
    foreach(a[i]) 
-    if(a[i] >0 && a[i]==7) a[i-1] !=7;
+    if(i > 0 && a[i]==7) a[i-1] !=7;
    }
   
   
