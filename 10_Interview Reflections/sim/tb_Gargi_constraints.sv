@@ -278,7 +278,7 @@ constraint noadj_7s {
   constraint uniq {
     foreach(a[i]) {
       foreach(a[j]) {
-        if ((i!=j) && !(a[i] ==7 && a[j] ==7))a[i]!=a[j];
+        if ((i!=j) && !(a[i] ==7 && a[j] ==7)) a[i]!=a[j];
       }}}
   
   
