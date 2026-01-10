@@ -54,7 +54,7 @@ class transaction;
     
         foreach(matrix[i,j]) begin                   // NOTE : 4 state variables can only be assigend in post-randomize nad not inside constraints
         
-            if(i == j && i == $size(matrix)-1 ) begin       // Without this constraint and not randomizing by setting rand_mode 0 will default to "x"
+            if(i == j && i == $size(matrix)-1 ) begin       // Without this constraint and not randomizing by setting rand_mode 0 will default to "x" because of logic type
                 matrix[i][j] = 'z;
             end
             
