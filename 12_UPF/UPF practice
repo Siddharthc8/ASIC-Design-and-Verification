@@ -1,0 +1,70 @@
+// 2:1 Multiplexer
+module mux2 (
+    input  logic iso_enable,
+    input  logic a,
+    input  logic b,
+    input  logic sel,
+    output logic y
+);
+    always_comb begin
+        if (sel)
+            y = b;
+        else
+            y = a;
+    end
+endmodule
+
+
+// D Flip-Flop with synchronous reset
+module dff (
+    input  logic save,
+    input  logic restore,
+    input  logic clk,
+    input  logic rst,
+    input  logic d,
+    output logic q
+);
+    always_ff @(posedge clk) begin
+        if (rst)
+            q <= 1'b0;
+        else
+            q <= d;
+    end
+endmodule
+
+
+// Top Module
+module top (
+    input logic iso_enable, 
+    input logic save, 
+    input logic restore,
+    input  logic clk,
+    input  logic rst,
+    input  logic in0,
+    input  logic in1,
+    input  logic sel,
+    output logic out
+);
+
+    logic mux_out;
+
+    // Mux instantiation
+    mux2 u_mux (
+        .a   (in0),
+        .b   (in1),
+        .sel (sel),
+        .y   (mux_out),
+        .iso_enable(iso_enable)
+    );
+
+    // Flip-flop instantiation
+    dff u_dff (
+        .clk (clk),
+        .rst (rst),
+        .d   (mux_out),
+        .q   (out),
+        .save(save),
+        .restore(restore)
+    );
+
+endmodule

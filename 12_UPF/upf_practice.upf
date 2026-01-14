@@ -1,0 +1,69 @@
+set_design_top tb_top/dut             // sets the scope to dut
+              <tb_name>/<dut>
+
+create_supply_port VDD_TOP -direction in    // by default it is "in"
+create_supply_port VSS_TOP -direction in
+
+create_supply_net vdd_top 
+create_supply_net vss_top 
+
+connect_supply_net vdd_top -ports VDD_TOP
+connect_supply_net vss_top -ports VSS_TOP
+
+create_power_domain PD_DUT  -include_scope
+create_power_domain PD_DUT  -elements {.}     // "." includes everything
+
+set_domain_supply_net PD_DUT -primary_power_net vdd_top -primary_ground_net vss_top
+
+// Now for creating a sub_domain for mux and flip_flop
+
+// MUX
+create_supply_port VDD_MUX -direction in 
+create_supply_net vdd_mux 
+
+connect_supply_net vdd_mux -ports VDD_MUX
+
+// FLIP_FLOP
+create_supply_port VDD_FLOP -direction in 
+create_supply_net vdd_flop
+
+connect_supply_net vdd_flop -ports VDD_FLOP
+
+
+create_power_domain PD_MUX  -elements {u_mux} // -exclude_elements {u_mux/block_inst2}    // The element name has to match with the instantiation name
+set_domain_supply_net PD_MUX -primary_power_net vdd_mux -primary_ground_net vss_top
+
+
+create_power_domain PD_FLOP  -elements {u_dff}  // The element name has to match with the instantiation name
+set_domain_supply_net PD_FLOP -primary_power_net vdd_flop -primary_ground_net vss_top
+
+
+
+// ISOLATION MUX
+
+set_isolation iso_mux -domain PD_MUX -elements {u_mux/y} \
+-isolation_power_net vdd_top -isolation_ground_net vss_top \
+-isolation_signal iso_enable -isolation_sense high \
+-clamp_value 1 \
+-location self    // self, parent, fanout
+                        (OR)
+set_isolation iso_mux -domain PD_MUX -applies_to outputs -isolation_power_net vdd_top -isolation_ground_net vss_top
+
+// ISOLATION FLOP
+    //write on your own
+
+// RETENTION FLOP
+
+    // cannot use -applies to for retention
+set_retention iso_flop -domain PD_FLOP -elements {u_dff/q} \
+-retention_power_net vdd_top -retention_ground_net vss_top \
+-save_signal {save high} \
+-restore_signal {restore high}    // Note : save and restore cannot be high at the same time 
+
+
+
+// Example UPF 2.0
+
+create_supply_set TOP_SET -function {power vdd_top} -function {ground vss_top}
+
+create_power_domain PD_DUT  -include_scope -supply {primary TOP_SET}
