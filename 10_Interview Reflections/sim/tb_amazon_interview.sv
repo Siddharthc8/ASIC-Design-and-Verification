@@ -132,7 +132,7 @@ class monitor extends uvm_monitor;
             end
             
             //     WRONG CODE  below 
-            if(vif.eop) begin    // Error can't be "if" should be "while" becuase if eop is high and valid not high the task ends without waiting for valid high
+            if(vif.eop) begin    // "while" because if eop is high and valid not high the task ends without waiting for valid high
                 if(vif.valid) begin       // This "if" statement is my own
                     tr.data[i++] = vif.data;
                     @(posedge vif.clk);
