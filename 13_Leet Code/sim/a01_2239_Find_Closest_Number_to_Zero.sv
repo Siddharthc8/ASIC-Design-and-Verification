@@ -20,7 +20,7 @@ module a01_2239_Find_Closest_Number_to_Zero();
       int closest = nums[0];
       foreach (nums[i]) begin
         if (abs(nums[i]) < abs(closest)) 
-          closest = nums[i];
+          closest = nums[i]; 
         else if (abs(nums[i]) == abs(closest))
           closest = nums[i] > closest ? nums[i] : closest;
       end
