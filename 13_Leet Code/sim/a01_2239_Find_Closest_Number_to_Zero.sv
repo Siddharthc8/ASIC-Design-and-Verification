@@ -36,7 +36,7 @@ module a01_2239_Find_Closest_Number_to_Zero();
         else if (abs(nums[i]) == abs(closest) && nums[i] > closest)
           closest = nums[i];
       end
-      return closest;
+      return closest; 
     endfunction
 
 
