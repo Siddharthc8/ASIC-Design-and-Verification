@@ -21,7 +21,7 @@ class Solutions;
         end
         return j; // Length of unique elements
     endfunction
-    
+     
     //-----------------------------------------------------
     
     typedef int int_q[$];
