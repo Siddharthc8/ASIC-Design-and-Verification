@@ -20,6 +20,6 @@ class ahb_drv extends uvm_driver#(ahb_tx);
             seq_item_port.item_done();
         end
 
-   endtask
+   endtask 
 
 endclass
