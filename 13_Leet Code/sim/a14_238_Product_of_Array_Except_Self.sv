@@ -26,7 +26,7 @@ class solutions;
         for(int i=0; i< n; i++) begin
             
             res[i] *= pre;
-            pre *= nums[i];
+            pre *= nums[i]; 
             
             res[n-1-i] *= post;
             post *= nums[n-1-i];
