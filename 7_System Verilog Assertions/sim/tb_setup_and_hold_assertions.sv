@@ -9,5 +9,4 @@ $hold(posedge clk, hold, 500);
 // SETUP AND HOLD CHECK 
 $setuphold(data, posedge clk, 500);
 
-
 endmodule
