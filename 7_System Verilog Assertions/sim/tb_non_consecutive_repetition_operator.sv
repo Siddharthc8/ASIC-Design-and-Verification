@@ -45,7 +45,7 @@ module tb_non_consecutive_repetition_operator();
  temp = 1;
  #185;
  temp = 0;
- end
+ end 
  
  initial begin
  #20;
