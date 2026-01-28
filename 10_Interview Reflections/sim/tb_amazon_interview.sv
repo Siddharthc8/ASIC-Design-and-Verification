@@ -49,6 +49,7 @@ module tb_amazon_interview();
     assert property( @(posedge clk) disable iff (rst) $rose(req) |-> $stable(req) throughout ##[1:10] $rose(grant)) else `uvm_error("ASSERT", "Assertion failed check logs"); 
     // This will not work as -> P throughout Q means P must hold during every cycle when Q holds - but Q must be a sequence that describes a time range or event pattern, not a delay operator.
     
+    // Simple and effective
     assert property (@(posedge clk) disable iff (rst) req |-> (req && !grant)[*0:9] ##1 (req && grant)) else `uvm_error("ASSERT", "Assertion failed check logs"); 
     assert property (@(posedge clk) disable iff (rst) req |-> (req && !grant)[*0:9] ##1 (!req)) `uvm_error("ASSERT", "Assertion failed check logs");
 
@@ -57,18 +58,22 @@ module tb_amazon_interview();
 
 /* Ans) * Class: uvm_tlm_fifo #(T)
         * Type: UVM TLM (Transaction-Level Modeling) FIFO
+        * Works with uvm_blocking_put_port / uvm_blocking_put_import
         * Point-to-point communication   --->   Producer to Consumer
         * Supports blocking and non-blocking read/write (e.g., get, peek, try_get, put, etc.) 
-        * Transactions are removed once read.    
+        * Transactions are removed once read.  
+        * Backpressure present  
         * Use Case: When you want direct, synchronized communication between two components (e.g., driver and monitor, or sequencer and driver).  
         
-        * Type: UVM Analysis FIFO (subscriber)
         * Class: uvm_analysis_fifo #(T)
+        * Type: UVM Analysis FIFO (subscriber)
         * Works with uvm_analysis_port / uvm_analysis_imp
         * Transactions are broadcast to all connected subscribers.  -->   One Host to Many Subscribers
         * Does not support blocking reads; it receives data using write(T t) and stores it in the FIFO.
         * Supports pull-type access (e.g., get, peek) after the transaction has been pushed via analysis.
+        * Backpressure present
         * Use Case: When you want to monitor, log, or analyze transactions without affecting the main data flow (e.g., scoreboard, coverage collection).
+        
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
