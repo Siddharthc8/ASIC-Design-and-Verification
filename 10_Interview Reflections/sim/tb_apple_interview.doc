@@ -1,0 +1,37 @@
+// Screening 
+180 IPs
+
+Intro : Low Power, Pipelined, Non-Pipelined Memories
+1)
+
+| A | B | C | Out|
+|---|---|---|--- |
+| 0 | 0 | 0 | 1  |
+| 0 | 0 | 1 | 0  |
+| 0 | 1 | 0 | 0  |
+| 0 | 1 | 1 | 0  |
+| 1 | 0 | 0 | Z  |
+| 1 | 0 | 1 | Z  |
+| 1 | 1 | 0 | Z  |
+| 1 | 1 | 1 | Z  |
+
+A)                       Vdd
+                          |
+                       [PMOS A]
+                          |
+                       [PMOS B]
+                          |
+                       [PMOS C]
+                          |
+                   +---------+----------+
+                   |         |          |
+                 [NMOS A] [NMOS B] [NMOS C]
+                   |         |          |
+                   +---------+----------+
+                             |
+                          [PMOS A]
+                             |
+                            GND
+
+
+

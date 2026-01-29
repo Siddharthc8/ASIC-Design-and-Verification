@@ -47,60 +47,65 @@ class transaction;
 //   }
     
     function void pre_randomize();
+
+        foreach(matrix[i,j]) begin
+            if( i == j && i == $size(matrix, 1) - 1 )
+                matrix[i][j] =  'z;  
+        end
         
     endfunction
     
     function void post_randomize();
     
         foreach(matrix[i,j]) begin                   // NOTE : 4 state variables can only be assigend in post-randomize nad not inside constraints
-        
-            if(i == j && i == $size(matrix)-1 ) begin       // Without this constraint and not randomizing by setting rand_mode 0 will default to "x" because of logic type
-                matrix[i][j] = 'z;
-            end
-            
-            else if(i == j && i != $size(matrix) - 1) begin                                                                                                            
-                matrix[i][j] = 'z;                                                                                                 
-            end
-            
+            if( i == j && i != $size(matrix, 1) - 1 )
+                matrix[i][j] =  'x;
         end
         
     endfunction
     
     constraint arr2d_ { 
     foreach(matrix[i,j]) {
-        // Last element remains 'Z' (unchanged)
-//        if(i == j && i == $size(matrix, 1) - 1) {
-//            soft matrix[i][j] == '1;  // Here we set it to zero. To not touch it, we have set matrix[3][3].rand_mode(0) in the initial block before randomizing
-//        }                             // But make sure to use soft in case there is an existing constraint                     
-        // Diagonal elements (1)                                                                                                
-//        if(i == j) {                                                                                                            
-//            matrix[i][j] == 'x;      // Cannot assign 4 state variables in constraints                                                                                             
-//        }                                                                                                                       
+
+        // Last element remains 'Z' (untouched)
+        // if(i == j && i == $size(matrix, 1) - 1) {
+            //    soft matrix[i][j] == matrix[i][j];   // THIS DOES NOT WORK
+        // }                             // But make sure to use soft in case there is an existing constraint        
+                        
+            // Diagonal elements (X)                                                                                                
+        // if(i == j) {                                                                                                            
+            //    matrix[i][j] == 'x;      // Cannot assign 4 state variables in constraints so done in post_randomize                                                                                      
+        // }      
+
         // Even positions (E) - where (i+j) is even AND not diagonal                                                            
-        if((i+j) % 2 == 0) {                                                                                               
+        if( (i != j) && (i+j) % 2 == 0 ) {                                                                                               
             matrix[i][j] % 2 == 0;  // Must be even                                                                             
         }                                                                                                                       
         // Odd positions (O) - where (i+j) is odd AND not diagonal                                                              
-        else {                                                                                                                  
+        else if( (i != j) && (i+j) % 2 != 0 ) {               // This if else affects solvency - Don't use "else"                                                                                     
             matrix[i][j] % 2 != 0;  // Must be odd                                                                              
         }                                                                                                                       
                                                                                                                                 
         // Restrict all values 0 to 20 except diagonal values                                                                   
         if(i != j ) {                                                                                                           
-            matrix[i][j] inside {[2:20]};                                                                                       
+            matrix[i][j] inside {[1:2]};                                                                                       
         }                                                                                                                       
     }                                                                                                                           
 }                                                                                                                               
 endclass                                                                                                                        
                                                                                                                                 
-    initial begin                                                                                                               
+    initial begin     
+
     automatic transaction tr = new(); 
+
     tr.matrix[3][3].rand_mode(0);             // Here we have turned off the constraint
-    if(!tr.randomize()) $display("error");                                                                                             
+
+    if(!tr.randomize()) $display("error");    
+
     else begin
         for(int i=0; i<4; i++) begin
             for(int j=0; j<4; j++) begin
-                $write("%d ", tr.matrix[i][j]);
+                $write("%0d ", tr.matrix[i][j]);
             end
             $display("");
         end
