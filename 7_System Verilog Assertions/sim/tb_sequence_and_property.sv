@@ -77,7 +77,7 @@ module tb_sequence_and_property();
   
   
   
-  property p2(logic a,logic b);    // While property can also take arguments and mention the funstion inside the property
+  property p2(logic a,logic b);    // While property can also take arguments and mention the function inside the property
     (@(posedge clk) $fell(rst) |=> (a && b));      
   endproperty
   
