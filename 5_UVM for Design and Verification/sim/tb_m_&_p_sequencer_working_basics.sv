@@ -1,4 +1,4 @@
-module tb_m_&_p_sequencer_wroking_basics();
+module tb_m_&_p_sequencer_working_basics();
 
 class parent;
   
